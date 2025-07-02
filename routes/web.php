@@ -3,12 +3,16 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/admin', function () {
     return view('welcome');
 });
 
+Route::get('/', function () {
+    return view('Main-user/dashboard');
+});
+
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('AdminDashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
