@@ -66,7 +66,7 @@
             <section class="mb-16">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-bold text-gray-900">Kategori Lot Lelang</h2>
-                    <a href="#" class="text-red-600 hover:text-red-700 font-medium flex items-center">
+                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center">
                         See all
                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"></path>
@@ -117,7 +117,7 @@
             <section class="mb-16">
                 <div class="flex justify-between items-center mb-8">
                     <h2 class="text-2xl font-bold text-gray-900">Rekomendasi Properti Baru</h2>
-                    <a href="#" class="text-red-600 hover:text-red-700 font-medium flex items-center">
+                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center">
                         See all
                         <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"></path>
@@ -129,7 +129,7 @@
                 <div class="overflow-x-auto scrollbar-hide">
                     <div class="flex space-x-6 pb-4" style="width: max-content;">
                         <!-- Property Card 1 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80" onclick="window.location.href='/properties/{property}'">
                             <div class="h-48 bg-gradient-to-br from-teal-400 to-teal-600"></div>
                             <div class="p-6">
                                 <h3 class="font-semibold text-gray-900 mb-2">Modern House</h3>

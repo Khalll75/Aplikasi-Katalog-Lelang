@@ -11,6 +11,13 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in as admin!") }}
                 </div>
+                <div class="mt-4">
+                    <form action="{{ route('admin.properties.createStep1') }}" method="get" style="display:inline;">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                            Tambah Properti Baru
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
