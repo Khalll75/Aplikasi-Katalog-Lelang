@@ -343,6 +343,6 @@ class PropertyController extends Controller
 
             return redirect()->back()
                 ->with('error', 'Failed to delete property: ' . $e->getMessage());
-        }
     }
+}
 }
