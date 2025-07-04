@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\AdminUserVerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin', function () {
@@ -24,7 +25,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('properties/store-step1', [PropertyController::class, 'storeStep1'])->name('properties.storeStep1');
     Route::get('properties/{property}/add-details', [PropertyController::class, 'createStep2'])->name('properties.createStep2');
     Route::post('properties/{property}/store-details', [PropertyController::class, 'storeStep2'])->name('properties.storeStep2');
-    // ... resource routes jika perlu ...
+    Route::get('/users/unverified', [AdminUserVerificationController::class, 'index'])->name('users.unverified');
+    Route::post('/users/verify/{id}', [AdminUserVerificationController::class, 'verify'])->name('users.verify');
 });
 
 Route::middleware('auth')->group(function () {
@@ -32,5 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
 
 require __DIR__.'/auth.php';

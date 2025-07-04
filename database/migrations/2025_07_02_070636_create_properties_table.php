@@ -18,6 +18,8 @@ return new class extends Migration {
             $table->string('listrik');
             $table->string('air');
             $table->string('kondisi');
+            $table->string('kategori_lot');
+            $table->string('status_tanah')->nullable();
             $table->timestamps();
         });
     }

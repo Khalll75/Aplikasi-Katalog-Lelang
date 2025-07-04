@@ -135,12 +135,13 @@ class PropertyController extends Controller
             }
         }
         // Lelang Schedule
-        if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('harga_limit')) {
+        if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('harga_limit_awal') || $request->filled('harga_limit_akhir')) {
             LelangSchedule::create([
                 'property_id' => $property->id,
                 'tanggal' => $request->input('tanggal_lelang'),
                 'lokasi' => $request->input('lokasi_lelang'),
-                'harga_limit' => $request->input('harga_limit'),
+                'harga_limit_awal' => $request->input('harga_limit_awal'),
+                'harga_limit_akhir' => $request->input('harga_limit_akhir'),
             ]);
         }
         // Points of Interest
@@ -186,6 +187,7 @@ class PropertyController extends Controller
             'listrik' => 'nullable|string|max:255',
             'air' => 'nullable|string|max:255',
             'kondisi' => 'required',
+            'kategori_lot' => 'required|in:rumah,ruko,tanah',
 
             // Images validation
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -196,7 +198,8 @@ class PropertyController extends Controller
             // Lelang Schedule validation
             'tanggal_lelang' => 'nullable|date',
             'lokasi_lelang' => 'nullable|string|max:255',
-            'harga_limit' => 'nullable|numeric|min:0',
+            'harga_limit_awal' => 'nullable|numeric|min:0',
+            'harga_limit_akhir' => 'nullable|numeric|min:0',
 
             // Points of Interest validation
             'points_of_interest.*' => 'nullable|string|max:500',
@@ -225,6 +228,7 @@ class PropertyController extends Controller
                 'listrik' => $validatedData['listrik'] ?? null,
                 'air' => $validatedData['air'] ?? null,
                 'kondisi' => is_array($validatedData['kondisi']) ? implode('/', $validatedData['kondisi']) : $validatedData['kondisi'],
+                'kategori_lot' => $validatedData['kategori_lot'],
             ]);
 
             // Handle image deletions
@@ -255,13 +259,14 @@ class PropertyController extends Controller
             }
 
             // Update lelang schedule
-            if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('harga_limit')) {
+            if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('harga_limit_awal') || $request->filled('harga_limit_akhir')) {
                 $property->lelangSchedule()->updateOrCreate(
                     ['property_id' => $property->id],
                     [
                         'tanggal' => $request->input('tanggal_lelang'),
                         'lokasi' => $request->input('lokasi_lelang'),
-                        'harga_limit' => $request->input('harga_limit'),
+                        'harga_limit_awal' => $request->input('harga_limit_awal'),
+                        'harga_limit_akhir' => $request->input('harga_limit_akhir'),
                     ]
                 );
             } else {

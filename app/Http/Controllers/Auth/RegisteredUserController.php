@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Mail;
 
 class RegisteredUserController extends Controller
 {
@@ -39,7 +40,15 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'user',
+            // is_verified default false
         ]);
+
+        // Kirim email ke admin
+        Mail::raw('Ada user baru mendaftar: ' . $user->name . ' (' . $user->email . ')', function ($message) {
+            $message->to('admin@yourdomain.com')
+                ->subject('User Baru Mendaftar');
+        });
 
         event(new Registered($user));
 
