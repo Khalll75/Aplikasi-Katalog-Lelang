@@ -27,6 +27,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::post('properties/{property}/store-details', [PropertyController::class, 'storeStep2'])->name('properties.storeStep2');
     Route::get('/users/unverified', [AdminUserVerificationController::class, 'index'])->name('users.unverified');
     Route::post('/users/verify/{id}', [AdminUserVerificationController::class, 'verify'])->name('users.verify');
+    Route::get('/lelang', [PropertyController::class, 'adminLelangIndex'])->name('lelang.index');
+    Route::get('properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit');
+    Route::put('properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
+    Route::delete('properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
 });
 
 Route::middleware('auth')->group(function () {
@@ -34,7 +38,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
 
 require __DIR__.'/auth.php';

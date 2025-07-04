@@ -107,6 +107,7 @@ class PropertyController extends Controller
             'listrik' => 'nullable|string|max:255',
             'air' => 'nullable|string|max:255',
             'kondisi' => 'required|array',
+            'kategori_lot' => 'required|string',
         ]);
         $validated['kondisi'] = implode('/', $validated['kondisi']);
         $property = Property::create($validated);
@@ -350,4 +351,20 @@ class PropertyController extends Controller
                 ->with('error', 'Failed to delete property: ' . $e->getMessage());
     }
 }
+
+    /**
+     * Admin: Tampilkan daftar lelang beserta properti terkait
+     */
+    public function adminLelangIndex()
+    {
+        $lelangs = \App\Models\LelangSchedule::with('property')->orderByDesc('tanggal')->paginate(15);
+        return view('admin.lelang-index', compact('lelangs'));
+    }
+
+    public function edit(Property $property)
+    {
+        // tampilkan form edit property
+        return view('admin.property-edit', compact('property'));
+    }
+
 }
