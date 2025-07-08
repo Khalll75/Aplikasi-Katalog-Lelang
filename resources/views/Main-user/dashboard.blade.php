@@ -124,113 +124,37 @@
                         </svg>
                     </a>
                 </div>
-
-                <!-- Horizontal Scrollable Container -->
                 <div class="overflow-x-auto scrollbar-hide">
                     <div class="flex space-x-6 pb-4" style="width: max-content;">
-                        <!-- Property Card 1 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80" onclick="window.location.href='/properties/{property}'">
-                            <div class="h-48 bg-gradient-to-br from-teal-400 to-teal-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Modern House</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 2.5M</span>
-                                    <span class="text-sm text-gray-500">3 bed • 2 bath</span>
+                        @forelse($properties as $property)
+                            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80 cursor-pointer"
+                                 onclick="window.location.href='{{ route('properties.show', $property->id) }}'">
+                                @php
+                                    $mainImage = $property->images->where('is_main', true)->first() ?? $property->images->first();
+                                    $lelang = $property->lelangSchedule;
+                                @endphp
+                                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                                    @if($mainImage)
+                                        <img src="{{ asset('storage/'.$mainImage->image_url) }}" alt="{{ $property->nama }}" class="object-cover w-full h-full">
+                                    @else
+                                        <span class="text-gray-400">No Image</span>
+                                    @endif
+                                </div>
+                                <div class="p-6">
+                                    <div class="text-xs text-gray-500 mb-1">Kode Properti: <span class="font-semibold">{{ $property->kode_aset }}</span></div>
+                                    <div class="text-gray-900 font-bold text-lg mb-2">
+                                        @if($lelang)
+                                            Rp {{ number_format($lelang->harga_limit_akhir, 0, ',', '.') }}
+                                        @else
+                                            <span class="text-gray-400">Harga belum tersedia</span>
+                                        @endif
+                                    </div>
+                                    <div class="text-gray-600 text-sm truncate">{{ $property->alamat }}</div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Property Card 2 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
-                            <div class="h-48 bg-gradient-to-br from-blue-400 to-blue-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Property</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 4.2M</span>
-                                    <span class="text-sm text-gray-500">5 bed • 3 bath</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Property Card 3 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
-                            <div class="h-48 bg-gradient-to-br from-pink-400 to-pink-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Property</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 1.8M</span>
-                                    <span class="text-sm text-gray-500">2 bed • 1 bath</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Property Card 4 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
-                            <div class="h-48 bg-gradient-to-br from-purple-400 to-purple-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Property</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 3.1M</span>
-                                    <span class="text-sm text-gray-500">4 bed • 2 bath</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Property Card 5 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
-                            <div class="h-48 bg-gradient-to-br from-green-400 to-green-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Property</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 1.2M</span>
-                                    <span class="text-sm text-gray-500">1 bed • 1 bath</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Property Card 6 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
-                            <div class="h-48 bg-gradient-to-br from-orange-400 to-orange-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Property</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 2.8M</span>
-                                    <span class="text-sm text-gray-500">3 bed • 2 bath</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Property Card 7 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
-                            <div class="h-48 bg-gradient-to-br from-red-400 to-red-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Property</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 6.5M</span>
-                                    <span class="text-sm text-gray-500">4 bed • 3 bath</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Property Card 8 -->
-                        <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80">
-                            <div class="h-48 bg-gradient-to-br from-indigo-400 to-indigo-600"></div>
-                            <div class="p-6">
-                                <h3 class="font-semibold text-gray-900 mb-2">Property</h3>
-                                <p class="text-gray-600 text-sm">Deskripsi</p>
-                                <div class="mt-4 flex justify-between items-center">
-                                    <span class="text-lg font-bold text-gray-900">Rp 3.7M</span>
-                                    <span class="text-sm text-gray-500">4 bed • 3 bath</span>
-                                </div>
-                            </div>
-                        </div>
+                        @empty
+                            <div class="text-gray-500">Belum ada properti.</div>
+                        @endforelse
                     </div>
                 </div>
             </section>
