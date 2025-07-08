@@ -20,240 +20,203 @@
 
 <div class="container mx-auto px-4 py-6 pt-24">
     <!-- Search and Filter Section -->
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+    <form method="GET" action="{{ route('search') }}">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
 
-        <!-- Sidebar Filters -->
-        <div class="lg:col-span-1">
-            <!-- Kategori Lot Lelang -->
-            <div class="bg-white border-2 border-red-200 rounded-lg p-4 mb-6">
-                <h3 class="font-semibold mb-4 text-gray-800">Kategori Lot Lelang</h3>
-                <div class="space-y-2">
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">APARTEMEN</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">BANGUNAN</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">GUDANG</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">KAVELING</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">KENDARAAN</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">PETERNAKAN</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">PERTANIAN</span>
-                    </label>
-                    <label class="flex items-center">
-                        <input type="checkbox" class="mr-2">
-                        <span class="text-sm">RUMAH TINGGAL</span>
-                    </label>
-                </div>
-            </div>
-
-            <!-- Harga -->
-            <div class="bg-white border-2 border-red-200 rounded-lg p-4">
-                <h3 class="font-semibold mb-4 text-gray-800">Harga</h3>
-                <div class="grid grid-cols-[1fr_auto_1fr] gap-2 items-center">
-                    <input type="text" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
-                    <span class="text-gray-500 text-lg">—</span>
-                    <input type="text" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="lg:col-span-3">
-            <!-- Search Bar and Buttons -->
-            <div class="flex flex-wrap items-center gap-4 mb-6">
-                <div class="flex-1 min-w-0">
-                    <input type="search" placeholder="Cari lelang..."
-                           class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-red-500 focus:outline-none">
-                </div>
-                <button class="bg-yellow-400 text-gray-800 px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
-                    Cari Lelang
-                </button>
-                <button id="resetFilterBtn" class="bg-gray-400 text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-500 transition-colors">
-                    Reset Filter
-                </button>
-            </div>
-
-            <!-- Filter Sections -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <!-- Spesifikasi Properti -->
-                <div class="bg-white border border-gray-200 rounded-lg p-4">
-                    <h3 class="font-semibold mb-4 text-gray-800">Spesifikasi Properti</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Luas Tanah (M²)</label>
-                            <div class="grid grid-cols-2 gap-2">
-                                <input type="text" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm">
-                                <input type="text" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700 mb-1">Luas Bangunan (M²)</label>
-                            <div class="grid grid-cols-2 gap-2">
-                                <input type="text" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm">
-                                <input type="text" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Tidur</label>
-                                <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
-                                    <option>Pilih...</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Daya Listrik</label>
-                                <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
-                                    <option>Pilih...</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Mandi</label>
-                                <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
-                                    <option>Pilih...</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Sumber Air</label>
-                                <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
-                                    <option>Pilih...</option>
-                                </select>
-                            </div>
-                        </div>
+            <!-- Sidebar Filters -->
+            <div class="lg:col-span-1">
+                <!-- Kategori Lot Lelang -->
+                <div class="bg-white border-2 border-red-200 rounded-lg p-4 mb-6">
+                    <h3 class="font-semibold mb-4 text-gray-800">Kategori Lot Lelang</h3>
+                    <div class="space-y-2">
+                        @foreach(['rumah' => 'Rumah', 'ruko' => 'Ruko', 'tanah' => 'Tanah'] as $key => $label)
+                            <label class="flex items-center">
+                                <input type="radio" name="kategori_lot" value="{{ $key }}" class="mr-2"
+                                    {{ request('kategori_lot') === $key ? 'checked' : '' }}>
+                                <span class="text-sm">{{ $label }}</span>
+                            </label>
+                        @endforeach
                     </div>
                 </div>
 
-                <!-- Lokasi and Kondisi -->
-                <div class="space-y-6">
-                    <!-- Lokasi -->
+                <!-- Harga -->
+                <div class="bg-white border-2 border-red-200 rounded-lg p-4">
+                    <h3 class="font-semibold mb-4 text-gray-800">Harga</h3>
+                    <div class="grid grid-cols-[1fr_auto_1fr] gap-2 items-center">
+                        <input type="text" name="harga_min" value="{{ request('harga_min') }}" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
+                        <span class="text-gray-500 text-lg">—</span>
+                        <input type="text" name="harga_max" value="{{ request('harga_max') }}" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="lg:col-span-3">
+                <!-- Search Bar and Buttons -->
+                <div class="flex flex-wrap items-center gap-4 mb-6">
+                    <div class="flex-1 min-w-0">
+                        <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari lelang..."
+                               class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-red-500 focus:outline-none">
+                    </div>
+                    <button type="submit" class="bg-yellow-400 text-gray-800 px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
+                        Cari Lelang
+                    </button>
+                    <a href="{{ route('search') }}" id="resetFilterBtn" class="bg-gray-400 text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-500 transition-colors">
+                        Reset Filter
+                    </a>
+                </div>
+
+                <!-- Filter Sections (unchanged, keep your existing code for other filters) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <!-- Spesifikasi Properti -->
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
-                        <h3 class="font-semibold mb-4 text-gray-800">Lokasi</h3>
-                        <div class="grid grid-cols-2 gap-4">
+                        <h3 class="font-semibold mb-4 text-gray-800">Spesifikasi Properti</h3>
+                        <div class="space-y-4">
+                            <!-- Luas Tanah -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Kota/Kabupaten</label>
-                                <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
-                                    <option>Pilih...</option>
-                                </select>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Luas Tanah (M²)</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="text" name="luas_tanah_min" value="{{ request('luas_tanah_min') }}" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm">
+                                    <input type="text" name="luas_tanah_max" value="{{ request('luas_tanah_max') }}" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm">
+                                </div>
                             </div>
+                            <!-- Luas Bangunan -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                                <select class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
-                                    <option>Pilih...</option>
-                                </select>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Luas Bangunan (M²)</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <input type="text" name="luas_bangunan_min" value="{{ request('luas_bangunan_min') }}" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm">
+                                    <input type="text" name="luas_bangunan_max" value="{{ request('luas_bangunan_max') }}" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Kamar Tidur -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Tidur</label>
+                                    <select name="kamar_tidur" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                        <option value="">Pilih...</option>
+                                        @for($i=1;$i<=10;$i++)
+                                            <option value="{{ $i }}" {{ request('kamar_tidur') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <!-- Daya Listrik -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Daya Listrik</label>
+                                    <select name="listrik" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                        <option value="">Pilih...</option>
+                                        @foreach(['450', '900', '1300', '2200', '3500', '4400', '5500', '6600', 'lebih'] as $val)
+                                            <option value="{{ $val }}" {{ request('listrik') == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Kamar Mandi -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Mandi</label>
+                                    <select name="kamar_mandi" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                        <option value="">Pilih...</option>
+                                        @for($i=1;$i<=10;$i++)
+                                            <option value="{{ $i }}" {{ request('kamar_mandi') == $i ? 'selected' : '' }}>{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <!-- Sumber Air -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumber Air</label>
+                                    <select name="air" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                        <option value="">Pilih...</option>
+                                        @foreach(['PDAM', 'Sumur', 'Lainnya'] as $val)
+                                            <option value="{{ $val }}" {{ request('air') == $val ? 'selected' : '' }}>{{ $val }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Kondisi -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-4">
-                        <h3 class="font-semibold mb-4 text-gray-800 flex items-center">
-                            Kondisi
-                            <button type="button" id="conditionInfoBtn"
-                                class="ml-2 w-6 h-6 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 focus:outline-none transition-colors"
-                                title="Info tentang kondisi">
-                                ?
-                            </button>
-                        </h3>
-                        <div class="grid grid-cols-4 gap-y-2 gap-x-8 text-lg">
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>L</span></label>
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>K</span></label>
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>AP</span></label>
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>SH</span></label>
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>AJB</span></label>
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>TK</span></label>
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>TP</span></label>
-                            <label class="flex items-center"><input type="checkbox" class="mr-2"><span>BR</span></label>
+                    <!-- Lokasi and Kondisi -->
+                    <div class="space-y-6">
+                        <!-- Lokasi -->
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h3 class="font-semibold mb-4 text-gray-800">Lokasi</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <!-- Kota/Kabupaten -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Kota/Kabupaten</label>
+                                    <input type="text" name="kota" value="{{ request('kota') }}" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
+                                </div>
+                                <!-- Kecamatan -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
+                                    <input type="text" name="kecamatan" value="{{ request('kecamatan') }}" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Kondisi -->
+                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                            <h3 class="font-semibold mb-4 text-gray-800 flex items-center">
+                                Kondisi
+                                <button type="button" id="conditionInfoBtn"
+                                    class="ml-2 w-6 h-6 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 focus:outline-none transition-colors"
+                                    title="Info tentang kondisi">
+                                    ?
+                                </button>
+                            </h3>
+                            <div class="grid grid-cols-4 gap-y-2 gap-x-8 text-lg">
+                                @foreach(['L','K','AP','SH','AJB','TK','TP','BR'] as $kondisi)
+                                    <label class="flex items-center">
+                                        <input type="checkbox" name="kondisi[]" value="{{ $kondisi }}" {{ is_array(request('kondisi')) && in_array($kondisi, request('kondisi')) ? 'checked' : '' }} class="mr-2">
+                                        <span>{{ $kondisi }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
     <!-- Property Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <!-- Property Cards -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span class="text-gray-400">Image Placeholder</span>
-            </div>
-            <div class="p-4">
-                <h4 class="font-semibold text-gray-800 mb-2">Property Title 1</h4>
-                <p class="text-gray-600 text-sm mb-2">Location Details</p>
-                <p class="text-red-600 font-bold">Rp 0,000,000</p>
-                <div class="mt-3 flex justify-between text-xs text-gray-500">
-                    <span>0 bed</span>
-                    <span>0 bath</span>
-                    <span>0 m²</span>
+        @forelse($query as $property)
+            <a href="{{ route('properties.show', $property->id) }}" class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow block">
+                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                    @php
+                        $mainImage = $property->images->where('is_main', true)->first() ?? $property->images->first();
+                    @endphp
+                    @if($mainImage)
+                        <img src="{{ asset('storage/'.$mainImage->image_url) }}" alt="{{ $property->nama }}" class="object-cover w-full h-full">
+                    @else
+                        <span class="text-gray-400">No Image</span>
+                    @endif
                 </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span class="text-gray-400">Image Placeholder</span>
-            </div>
-            <div class="p-4">
-                <h4 class="font-semibold text-gray-800 mb-2">Property Title 2</h4>
-                <p class="text-gray-600 text-sm mb-2">Location Details</p>
-                <p class="text-red-600 font-bold">Rp 0,000,000</p>
-                <div class="mt-3 flex justify-between text-xs text-gray-500">
-                    <span>0 bed</span>
-                    <span>0 bath</span>
-                    <span>0 m²</span>
+                <div class="p-4">
+                    <h4 class="font-semibold text-gray-800 mb-2">{{ $property->nama }}</h4>
+                    <p class="text-gray-600 text-sm mb-2">{{ $property->alamat }}</p>
+                    <p class="text-red-600 font-bold">
+                        @if($property->lelangSchedule)
+                            Rp {{ number_format($property->lelangSchedule->harga_limit_awal, 0, ',', '.') }} - Rp {{ number_format($property->lelangSchedule->harga_limit_akhir, 0, ',', '.') }}
+                        @else
+                            <span class="text-gray-400">Harga belum tersedia</span>
+                        @endif
+                    </p>
+                    <div class="mt-3 flex justify-between text-xs text-gray-500">
+                        <span>{{ $property->kamar_tidur ?? '-' }} bed</span>
+                        <span>{{ $property->kamar_mandi ?? '-' }} bath</span>
+                        <span>{{ $property->luas_tanah ?? '-' }} m²</span>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span class="text-gray-400">Image Placeholder</span>
-            </div>
-            <div class="p-4">
-                <h4 class="font-semibold text-gray-800 mb-2">Property Title 3</h4>
-                <p class="text-gray-600 text-sm mb-2">Location Details</p>
-                <p class="text-red-600 font-bold">Rp 0,000,000</p>
-                <div class="mt-3 flex justify-between text-xs text-gray-500">
-                    <span>0 bed</span>
-                    <span>0 bath</span>
-                    <span>0 m²</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <span class="text-gray-400">Image Placeholder</span>
-            </div>
-            <div class="p-4">
-                <h4 class="font-semibold text-gray-800 mb-2">Property Title 4</h4>
-                <p class="text-gray-600 text-sm mb-2">Location Details</p>
-                <p class="text-red-600 font-bold">Rp 0,000,000</p>
-                <div class="mt-3 flex justify-between text-xs text-gray-500">
-                    <span>0 bed</span>
-                    <span>0 bath</span>
-                    <span>0 m²</span>
-                </div>
-            </div>
-        </div>
+            </a>
+        @empty
+            <div class="col-span-4 text-center text-gray-500 py-12">Tidak ada properti ditemukan.</div>
+        @endforelse
+    </div>
+    <!-- Pagination -->
+    <div>
+        {{ $query->withQueryString()->links() }}
     </div>
 </div>
 
@@ -352,71 +315,24 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-red-900 text-white py-12">
+<footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12">
     <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <!-- Logo and Description -->
-            <div class="md:col-span-1">
-                <div class="flex items-center mb-4">
-                    <div class="w-8 h-8 bg-blue-600 rounded-full mr-2"></div>
-                    <span class="font-bold text-lg">logoipsum</span>
-                </div>
-                <p class="text-sm text-gray-300 leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <div class="flex space-x-3 mt-4">
-                    <a href="#" class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center hover:bg-blue-700 transition-colors">
-                        <i class="fab fa-facebook-f text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 bg-blue-400 rounded flex items-center justify-center hover:bg-blue-500 transition-colors">
-                        <i class="fab fa-twitter text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 bg-pink-600 rounded flex items-center justify-center hover:bg-pink-700 transition-colors">
-                        <i class="fab fa-instagram text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 bg-blue-800 rounded flex items-center justify-center hover:bg-blue-900 transition-colors">
-                        <i class="fab fa-linkedin-in text-sm"></i>
-                    </a>
-                </div>
-                <p class="text-xs text-gray-400 mt-4">© 2021 - All rights reserved.</p>
-            </div>
-
-            <!-- Quick Links Column 1 -->
+        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
+            <!-- Nama Aplikasi -->
             <div>
-                <h4 class="font-semibold mb-4">Take a tour</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Partners</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Product</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Support</a></li>
-                </ul>
+                <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
+                <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
             </div>
-
-            <!-- Quick Links Column 2 -->
+            <!-- Kontak -->
             <div>
-                <h4 class="font-semibold mb-4">Our Company</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Agents</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Media</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
-                </ul>
+                <h2 class="text-xl font-bold mb-1">Kontak</h2>
+                <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
+                <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
             </div>
-
-            <!-- Newsletter -->
-            <div>
-                <h4 class="font-semibold mb-4">Subscribe</h4>
-                <p class="text-sm text-gray-300 mb-4">Subscribe to get latest property, blog, news from us</p>
-                <div class="flex">
-                    <input type="email" placeholder="Enter your email"
-                           class="flex-1 px-3 py-2 rounded-l-lg border-0 text-gray-800 text-sm focus:outline-none">
-                    <button class="bg-blue-600 px-4 py-2 rounded-r-lg hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
+        </div>
+        <hr class="border-gray-700 my-2">
+        <div class="text-center text-xs text-gray-400 pt-2">
+            © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
         </div>
     </div>
 </footer>

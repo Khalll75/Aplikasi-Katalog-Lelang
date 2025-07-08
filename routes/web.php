@@ -12,7 +12,7 @@ Route::get('/admin', function () {
 // Public routes
 Route::get('/', [PropertyController::class, 'index'])->name('home');
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
-Route::get('/search', [PropertyController::class, 'search'])->name('property.search');
+Route::get('/search', [PropertyController::class, 'search'])->name('search');
 
 // Admin routes
 Route::get('/dashboard', function () {

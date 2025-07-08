@@ -77,16 +77,97 @@ class PropertyController extends Controller
 
     public function search(Request $request)
     {
-        $query = $request->input('q');
-        $properties = [];
+        $query = Property::with(['images', 'lelangSchedule']);
 
-        if ($query) {
-            $properties = Property::where('nama', 'like', "%$query%")
-                ->orWhere('alamat', 'like', "%$query%")
-                ->get();
+        // Kategori Lot
+        if ($request->filled('kategori_lot')) {
+            $query->where('kategori_lot', $request->kategori_lot);
         }
 
-        return view('Main-user.pencarianLelang', compact('properties', 'query'));
+        // Keyword
+        if ($request->filled('q')) {
+            $q = $request->q;
+            $query->where(function ($sub) use ($q) {
+                $sub->where('nama', 'like', "%{$q}%")
+                    ->orWhere('alamat', 'like', "%{$q}%")
+                    ->orWhere('kode_aset', 'like', "%{$q}%");
+            });
+        }
+
+        // Harga
+        if ($request->filled('harga_min')) {
+            $query->whereHas('lelangSchedule', function ($q) use ($request) {
+                $q->where('harga_limit_akhir', '>=', $request->harga_min);
+            });
+        }
+        if ($request->filled('harga_max')) {
+            $query->whereHas('lelangSchedule', function ($q) use ($request) {
+                $q->where('harga_limit_akhir', '<=', $request->harga_max);
+            });
+        }
+
+        // Luas Tanah
+        if ($request->filled('luas_tanah_min')) {
+            $query->where('luas_tanah', '>=', $request->luas_tanah_min);
+        }
+        if ($request->filled('luas_tanah_max')) {
+            $query->where('luas_tanah', '<=', $request->luas_tanah_max);
+        }
+
+        // Luas Bangunan
+        if ($request->filled('luas_bangunan_min')) {
+            $query->where('luas_bangunan', '>=', $request->luas_bangunan_min);
+        }
+        if ($request->filled('luas_bangunan_max')) {
+            $query->where('luas_bangunan', '<=', $request->luas_bangunan_max);
+        }
+
+        // Kamar Tidur
+        if ($request->filled('kamar_tidur')) {
+            $query->where('kamar_tidur', $request->kamar_tidur);
+        }
+
+        // Kamar Mandi
+        if ($request->filled('kamar_mandi')) {
+            $query->where('kamar_mandi', $request->kamar_mandi);
+        }
+
+        // Listrik
+        if ($request->filled('listrik')) {
+            $query->where('listrik', $request->listrik);
+        }
+
+        // Air
+        if ($request->filled('air')) {
+            $query->where('air', $request->air);
+        }
+
+        // Kota/Kabupaten
+        if ($request->filled('kota')) {
+            $query->where('alamat', 'like', '%' . $request->kota . '%');
+        }
+
+        // Kecamatan
+        if ($request->filled('kecamatan')) {
+            $query->where('alamat', 'like', '%' . $request->kecamatan . '%');
+        }
+
+        // Kondisi (array, match any)
+        if ($request->filled('kondisi')) {
+            $kondisiArr = $request->input('kondisi');
+            $query->where(function ($q) use ($kondisiArr) {
+                foreach ($kondisiArr as $kondisi) {
+                    $q->orWhere('kondisi', 'like', '%' . $kondisi . '%');
+                }
+            });
+        }
+
+        $query = $query->latest()->paginate(12)->withQueryString();
+
+        $kategori_lot = $request->kategori_lot;
+        $search = $request->q;
+
+        return view('Main-user.pencarianLelang', compact('query', 'kategori_lot', 'search'));
     }
 
     public function createStep1()

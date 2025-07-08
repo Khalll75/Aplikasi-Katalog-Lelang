@@ -7,6 +7,30 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        /* Add this in your <head> or a <style> block */
+        .main-image-frame {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Remove fixed height! */
+        }
+        .main-image-frame img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            max-height: 70vh; /* Prevents image from being too tall */
+            margin: 0 auto;
+            object-fit: contain;
+            background: #000;
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
 
@@ -14,9 +38,9 @@
 <header class="bg-red-900 text-white py-4">
     <div class="container mx-auto px-4 flex justify-between items-center">
         <div class="flex items-center space-x-8">
-            <h1 class="text-xl font-bold">Beranda</h1>
+            <a href="/" class="text-xl font-bold hover:underline">Beranda</a>
             <nav class="hidden md:flex space-x-6">
-                <a href="#" class="hover:text-gray-300 transition-colors">Properti</a>
+               <a href="/search" class="text-xl font-bold hover:underline">Properti</a>
             </nav>
         </div>
         <div class="flex items-center space-x-4">
@@ -42,20 +66,18 @@
                 <!-- Image Gallery Section -->
                 <div class="relative">
                     <!-- Main Image Container -->
-                    <div class="relative w-full h-96 bg-black rounded-lg overflow-hidden">
-                        <div class="swiper mySwiperMain w-full h-full">
+                    <div class="main-image-frame relative">
+                        <div class="swiper mySwiperMain w-full">
                             <div class="swiper-wrapper">
                                 @forelse($property->images as $img)
                                     <div class="swiper-slide flex items-center justify-center">
                                         <img src="{{ asset('storage/'.$img->image_url) }}"
-                                             alt="Property Image"
-                                             class="object-cover w-full h-full" />
+                                             alt="Property Image" />
                                     </div>
                                 @empty
                                     <div class="swiper-slide flex items-center justify-center">
                                         <img src="https://placehold.co/800x400/e2e8f0/64748b?text=No+Image"
-                                             alt="No Image"
-                                             class="object-cover w-full h-full" />
+                                             alt="No Image" />
                                     </div>
                                 @endforelse
                             </div>
@@ -222,71 +244,24 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-red-900 text-white py-12 mt-12">
+<footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12">
     <div class="container mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <!-- Logo and Description -->
-            <div class="md:col-span-1">
-                <div class="flex items-center mb-4">
-                    <div class="w-8 h-8 bg-blue-600 rounded-full mr-2"></div>
-                    <span class="font-bold text-lg">logoipsum</span>
-                </div>
-                <p class="text-sm text-gray-300 leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
-                <div class="flex space-x-3 mt-4">
-                    <a href="#" class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center hover:bg-blue-700 transition-colors">
-                        <i class="fab fa-facebook-f text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 bg-blue-400 rounded flex items-center justify-center hover:bg-blue-500 transition-colors">
-                        <i class="fab fa-twitter text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 bg-pink-600 rounded flex items-center justify-center hover:bg-pink-700 transition-colors">
-                        <i class="fab fa-instagram text-sm"></i>
-                    </a>
-                    <a href="#" class="w-8 h-8 bg-blue-800 rounded flex items-center justify-center hover:bg-blue-900 transition-colors">
-                        <i class="fab fa-linkedin-in text-sm"></i>
-                    </a>
-                </div>
-                <p class="text-xs text-gray-400 mt-4">© 2021 - All rights reserved.</p>
-            </div>
-
-            <!-- Quick Links Column 1 -->
+        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
+            <!-- Nama Aplikasi -->
             <div>
-                <h4 class="font-semibold mb-4">Take a tour</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Features</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Partners</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Pricing</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Product</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Support</a></li>
-                </ul>
+                <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
+                <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
             </div>
-
-            <!-- Quick Links Column 2 -->
+            <!-- Kontak -->
             <div>
-                <h4 class="font-semibold mb-4">Our Company</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Agents</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Blog</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Media</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-white transition-colors">Contact Us</a></li>
-                </ul>
+                <h2 class="text-xl font-bold mb-1">Kontak</h2>
+                <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
+                <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
             </div>
-
-            <!-- Newsletter -->
-            <div>
-                <h4 class="font-semibold mb-4">Subscribe</h4>
-                <p class="text-sm text-gray-300 mb-4">Subscribe to get latest property, blog, news from us</p>
-                <div class="flex">
-                    <input type="email" placeholder="Enter your email"
-                           class="flex-1 px-3 py-2 rounded-l-lg border-0 text-gray-800 text-sm focus:outline-none">
-                    <button class="bg-blue-600 px-4 py-2 rounded-r-lg hover:bg-blue-700 transition-colors">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
+        </div>
+        <hr class="border-gray-700 my-2">
+        <div class="text-center text-xs text-gray-400 pt-2">
+            © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
         </div>
     </div>
 </footer>
