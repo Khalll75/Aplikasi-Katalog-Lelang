@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,18 +7,20 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 text-gray-800">
 <!-- Header -->
-<header class="bg-red-900 text-white py-4 fixed top-0 left-0 w-full z-50 shadow">
+<header class="bg-red-900 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-md">
     <div class="container mx-auto px-4 flex justify-between items-center">
-        <a href="/" class="text-xl font-bold hover:underline">Beranda</a>
-        <button class="bg-white text-red-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors">
+        <a href="/" class="text-2xl font-bold hover:underline tracking-wide">Beranda</a>
+        <button class="bg-white text-red-900 px-5 py-2 rounded-full font-medium hover:bg-red-100 transition duration-300">
             Contact Us
         </button>
     </div>
 </header>
 
-<div class="container mx-auto px-4 py-6 pt-24">
+<!-- Main Container -->
+<div class="container mx-auto px-4 pt-28 pb-12">
+
     <!-- Search and Filter Section -->
     <form method="GET" action="{{ route('search') }}">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
@@ -66,7 +68,7 @@
                     </a>
                 </div>
 
-                <!-- Filter Sections (unchanged, keep your existing code for other filters) -->
+                <!-- Filter Sections -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <!-- Spesifikasi Properti -->
                     <div class="bg-white border border-gray-200 rounded-lg p-4">
@@ -89,14 +91,16 @@
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
-                                <!-- Kamar Tidur -->
+                                <!-- Jumlah Kamar Tidur -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Tidur</label>
                                     <select name="kamar_tidur" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
                                         <option value="">Pilih...</option>
-                                        @for($i=1;$i<=10;$i++)
-                                            <option value="{{ $i }}" {{ request('kamar_tidur') == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                        @endfor
+                                        <option value="1" {{ request('kamar_tidur') == '1' ? 'selected' : '' }}>1</option>
+                                        <option value="2" {{ request('kamar_tidur') == '2' ? 'selected' : '' }}>2</option>
+                                        <option value="3" {{ request('kamar_tidur') == '3' ? 'selected' : '' }}>3</option>
+                                        <option value="4" {{ request('kamar_tidur') == '4' ? 'selected' : '' }}>4</option>
+                                        <option value="5" {{ request('kamar_tidur') == '5' ? 'selected' : '' }}>5+</option>
                                     </select>
                                 </div>
                                 <!-- Daya Listrik -->
@@ -104,21 +108,27 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Daya Listrik</label>
                                     <select name="listrik" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
                                         <option value="">Pilih...</option>
-                                        @foreach(['450', '900', '1300', '2200', '3500', '4400', '5500', '6600', 'lebih'] as $val)
-                                            <option value="{{ $val }}" {{ request('listrik') == $val ? 'selected' : '' }}>{{ $val }}</option>
-                                        @endforeach
+                                        <option value="450 VA" {{ request('listrik') == '450 VA' ? 'selected' : '' }}>450 VA</option>
+                                        <option value="900 VA" {{ request('listrik') == '900 VA' ? 'selected' : '' }}>900 VA</option>
+                                        <option value="1300 VA" {{ request('listrik') == '1300 VA' ? 'selected' : '' }}>1300 VA</option>
+                                        <option value="2200 VA" {{ request('listrik') == '2200 VA' ? 'selected' : '' }}>2200 VA</option>
+                                        <option value="3500 VA" {{ request('listrik') == '3500 VA' ? 'selected' : '' }}>3500 VA</option>
+                                        <option value="4400 VA" {{ request('listrik') == '4400 VA' ? 'selected' : '' }}>4400 VA</option>
+                                        <option value="5500 VA" {{ request('listrik') == '5500 VA' ? 'selected' : '' }}>5500 VA</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
-                                <!-- Kamar Mandi -->
+                                <!-- Jumlah Kamar Mandi -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Mandi</label>
                                     <select name="kamar_mandi" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
                                         <option value="">Pilih...</option>
-                                        @for($i=1;$i<=10;$i++)
-                                            <option value="{{ $i }}" {{ request('kamar_mandi') == $i ? 'selected' : '' }}>{{ $i }}</option>
-                                        @endfor
+                                        <option value="1" {{ request('kamar_mandi') == '1' ? 'selected' : '' }}>1</option>
+                                        <option value="2" {{ request('kamar_mandi') == '2' ? 'selected' : '' }}>2</option>
+                                        <option value="3" {{ request('kamar_mandi') == '3' ? 'selected' : '' }}>3</option>
+                                        <option value="4" {{ request('kamar_mandi') == '4' ? 'selected' : '' }}>4</option>
+                                        <option value="5" {{ request('kamar_mandi') == '5' ? 'selected' : '' }}>5+</option>
                                     </select>
                                 </div>
                                 <!-- Sumber Air -->
@@ -126,9 +136,10 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Sumber Air</label>
                                     <select name="air" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
                                         <option value="">Pilih...</option>
-                                        @foreach(['PDAM', 'Sumur', 'Lainnya'] as $val)
-                                            <option value="{{ $val }}" {{ request('air') == $val ? 'selected' : '' }}>{{ $val }}</option>
-                                        @endforeach
+                                        <option value="PDAM" {{ request('air') == 'PDAM' ? 'selected' : '' }}>PDAM</option>
+                                        <option value="Sumur Bor" {{ request('air') == 'Sumur Bor' ? 'selected' : '' }}>Sumur Bor</option>
+                                        <option value="Sumur Gali" {{ request('air') == 'Sumur Gali' ? 'selected' : '' }}>Sumur Gali</option>
+                                        <option value="Air Tanah" {{ request('air') == 'Air Tanah' ? 'selected' : '' }}>Air Tanah</option>
                                     </select>
                                 </div>
                             </div>
@@ -235,7 +246,6 @@
                 </button>
             </div>
         </div>
-
         <!-- Modal Content -->
         <div class="p-6 space-y-6">
             <!-- 1. Cara Penjualan -->
@@ -255,7 +265,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 2. Ada tidaknya penghuni -->
             <div class="border-b border-gray-200 pb-4">
                 <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
@@ -273,7 +282,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 3. Ada tidaknya penguasaan -->
             <div class="border-b border-gray-200 pb-4">
                 <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
@@ -292,7 +300,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- 4. Kondisi Bangunan -->
             <div>
                 <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
@@ -315,25 +322,21 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12">
+<footer class="bg-gray-900 text-gray-200 pt-10 pb-6 mt-20">
     <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
-            <!-- Nama Aplikasi -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8">
             <div>
-                <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
-                <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
+                <h2 class="text-xl font-bold mb-2">Katalog Lelang Properti</h2>
+                <p class="text-sm">Platform pencarian dan informasi lelang properti terbaik untuk wilayah Indonesia.</p>
             </div>
-            <!-- Kontak -->
             <div>
-                <h2 class="text-xl font-bold mb-1">Kontak</h2>
-                <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
-                <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
+                <h2 class="text-xl font-bold mb-2">Kontak</h2>
+                <p class="text-sm">Email: info@kataloglelang.id</p>
+                <p class="text-sm">Telepon: (021) 9876-5432</p>
             </div>
         </div>
-        <hr class="border-gray-700 my-2">
-        <div class="text-center text-xs text-gray-400 pt-2">
-            © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
-        </div>
+        <hr class="border-gray-700">
+        <p class="text-center text-xs text-gray-500 pt-4">© 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.</p>
     </div>
 </footer>
 

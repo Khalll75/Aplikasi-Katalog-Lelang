@@ -11,55 +11,273 @@
         body {
             font-family: 'Inter', sans-serif;
         }
+
         /* Hide scrollbar for horizontal scroll */
         .scrollbar-hide {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
         .scrollbar-hide::-webkit-scrollbar {
-            display: none;  /* Safari and Chrome */
+            display: none;
+        }
+
+        /* Smooth animations */
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hover effects */
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Custom gradient */
+        .gradient-bg {
+            background: linear-gradient(135deg, #7c2d12 0%, #991b1b 100%);
+        }
+
+        .category-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .category-card:hover::before {
+            left: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .property-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .property-card img {
+            transition: transform 0.3s ease;
+        }
+
+        .property-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Steps animation */
+        .step-item {
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .step-item:hover {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        .step-number {
+            transition: all 0.3s ease;
+        }
+
+        .step-item:hover .step-number {
+            transform: scale(1.1);
+        }
+
+        /* Search input focus effect */
+        .search-input {
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3);
+        }
+
+        /* Button hover effects */
+        .btn-primary {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Parallax effect for hero */
+        .hero-parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Icon animation */
+        .icon-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Pulse effect for status badges */
+        .pulse-badge {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        /* Loading state */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50">
     <div class="min-h-screen">
         <!-- Header -->
-        <header class="bg-red-800 text-white py-4 sticky top-0 z-50 shadow-md">
+        <header class="gradient-bg text-white py-4 sticky top-0 z-50 shadow-lg backdrop-blur-sm">
             <div class="container mx-auto px-4 flex justify-end">
-                <button class="bg-white text-red-800 px-6 py-2 rounded text-base font-semibold hover:bg-gray-100 transition-colors shadow">
+                <button class="btn-primary bg-white text-red-800 px-6 py-2 rounded-lg text-base font-semibold hover:bg-gray-100 transition-colors shadow-md">
+                    <i class="fas fa-phone mr-2"></i>
                     Contact Us
                 </button>
             </div>
         </header>
 
         <!-- Hero Section -->
-        <section class="relative bg-cover bg-center h-[32rem] text-white" style="background-image: url('/img/jambi-banner.jpg')">
-        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div class="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
-            <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
-            <span class="text-yellow-400">PROPERTI AREA JAMBI</span>
-            </h2>
-            <form action="{{ route('search') }}" method="GET" class="w-full max-w-lg">
-            <div class="relative">
-                <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari properti..." class="w-full py-3 px-5 pl-12 rounded-full text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                <div class="absolute inset-y-0 left-4 flex items-center">
-                <i class="fa fa-search text-gray-400"></i>
-                </div>
+        <section class="relative bg-cover bg-center h-[32rem] text-white hero-parallax" style="background-image: url('/img/jambi-banner.jpg')">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50"></div>
+            <div class="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                    <span class="text-yellow-400 drop-shadow-lg">PROPERTI AREA JAMBI</span>
+                </h2>
+                <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
+                    Temukan properti impian Anda melalui lelang dengan harga terbaik
+                </p>
+                <form action="{{ route('search') }}" method="GET" class="w-full max-w-lg">
+                    <div class="relative">
+                        <input type="text" name="q" value="{{ request('q') }}"
+                               placeholder="Cari properti berdasarkan lokasi, kode, atau jenis..."
+                               class="search-input w-full py-4 px-6 pl-14 rounded-full text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-lg">
+                        <div class="absolute inset-y-0 left-5 flex items-center">
+                            <i class="fa fa-search text-gray-400 text-lg"></i>
+                        </div>
+                        <button type="submit" class="absolute right-2 top-2 bg-yellow-400 text-gray-900 px-6 py-2 rounded-full hover:bg-yellow-500 transition-colors font-semibold">
+                            Cari
+                        </button>
+                    </div>
+                </form>
             </div>
-            </form>
-        </div>
         </section>
 
         <!-- Main Content -->
         <div class="container mx-auto px-4 py-12">
 
             <!-- Kategori Lot Lelang Section -->
-            <section class="mb-16">
+            <section class="mb-16 animate-slide-up">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900">Kategori Lot Lelang</h2>
-                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center">
-                        See all
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Kategori Lot Lelang</h2>
+                        <p class="text-gray-600">Pilih kategori properti yang Anda minati</p>
+                    </div>
+                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center group">
+                        Lihat Semua
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"></path>
                         </svg>
                     </a>
@@ -67,44 +285,53 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Rumah -->
-                    <a href="{{ route('search', ['kategori_lot' => 'rumah']) }}" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow text-center block">
-                        <div class="w-12 h-12 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
-                            <i class="fa-solid fa-house text-2xl text-red-700"></i>
+                    <a href="{{ route('search', ['kategori_lot' => 'rumah']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-red-50 rounded-xl flex items-center justify-center group-hover:bg-red-100 transition-colors">
+                            <i class="fa-solid fa-house text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                         </div>
-                        <div class="font-semibold text-gray-800">Rumah</div>
+                        <div class="font-semibold text-gray-800 text-lg mb-1">Rumah</div>
+                        <div class="text-gray-500 text-sm">Hunian untuk keluarga</div>
                     </a>
+
                     <!-- Ruko -->
-                    <a href="{{ route('search', ['kategori_lot' => 'ruko']) }}" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow text-center block">
-                        <div class="w-12 h-12 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
-                            <i class="fa-solid fa-store text-2xl text-yellow-600"></i>
+                    <a href="{{ route('search', ['kategori_lot' => 'ruko']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-yellow-50 rounded-xl flex items-center justify-center group-hover:bg-yellow-100 transition-colors">
+                            <i class="fa-solid fa-store text-2xl text-yellow-600 group-hover:scale-110 transition-transform"></i>
                         </div>
-                        <div class="font-semibold text-gray-800">Ruko</div>
+                        <div class="font-semibold text-gray-800 text-lg mb-1">Ruko</div>
+                        <div class="text-gray-500 text-sm">Properti komersial</div>
                     </a>
+
                     <!-- Tanah -->
-                    <a href="{{ route('search', ['kategori_lot' => 'tanah']) }}" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow text-center block">
-                        <div class="w-12 h-12 mx-auto mb-4 bg-gray-100 rounded-lg flex items-center justify-center">
-                            <i class="fa-solid fa-mountain text-2xl text-green-700"></i>
+                    <a href="{{ route('search', ['kategori_lot' => 'tanah']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                            <i class="fa-solid fa-mountain text-2xl text-green-600 group-hover:scale-110 transition-transform"></i>
                         </div>
-                        <div class="font-semibold text-gray-800">Tanah</div>
+                        <div class="font-semibold text-gray-800 text-lg mb-1">Tanah</div>
+                        <div class="text-gray-500 text-sm">Investasi masa depan</div>
                     </a>
                 </div>
             </section>
 
             <!-- Rekomendasi Properti Baru Section -->
-            <section class="mb-16">
+            <section class="mb-16 animate-slide-up">
                 <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-2xl font-bold text-gray-900">Rekomendasi Properti Baru</h2>
-                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center">
-                        See all
-                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Rekomendasi Properti Baru</h2>
+                        <p class="text-gray-600">Properti terbaru dengan harga terbaik</p>
+                    </div>
+                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center group">
+                        Lihat Semua
+                        <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
+
                 <div class="overflow-x-auto scrollbar-hide">
                     <div class="flex space-x-6 pb-4" style="width: max-content;">
                         @forelse($properties as $property)
-                            <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80 cursor-pointer"
+                            <div class="property-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all flex-shrink-0 w-80 cursor-pointer group"
                                  onclick="window.location.href='{{ route('properties.show', $property->id) }}'"
                                  role="button" aria-label="Lihat detail properti">
                                 @php
@@ -113,188 +340,248 @@
                                     $kategori = ucfirst($property->kategori_lot ?? 'Properti');
                                     $status = $lelang && $lelang->is_selesai ? 'Lelang Selesai' : 'Tersedia';
                                 @endphp
-                                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                                <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
                                     @if($mainImage)
-                                        <img src="{{ asset('storage/'.$mainImage->image_url) }}" alt="{{ $property->nama }}" class="object-cover w-full h-full">
+                                        <img src="{{ asset('storage/'.$mainImage->image_url) }}"
+                                             alt="{{ $property->nama }}"
+                                             class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                                     @else
-                                        <span class="text-gray-400">No Image</span>
+                                        <div class="text-gray-400 flex flex-col items-center">
+                                            <i class="fas fa-image text-4xl mb-2"></i>
+                                            <span>No Image</span>
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="p-6">
-                                    <span class="inline-block {{ $status == 'Tersedia' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500' }} text-xs px-2 py-1 rounded-full mb-2">{{ $status }}</span>
-                                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mb-2 ml-2">{{ $kategori }}</span>
-                                    <div class="text-xs text-gray-500 mb-1">Kode Properti: <span class="font-semibold">{{ $property->kode_aset }}</span></div>
-                                    <div class="text-gray-900 font-bold text-lg mb-2">
+                                    <div class="flex items-center gap-2 mb-3">
+                                        <span class="inline-block {{ $status == 'Tersedia' ? 'bg-green-100 text-green-700 pulse-badge' : 'bg-gray-200 text-gray-500' }} text-xs px-3 py-1 rounded-full font-medium">
+                                            {{ $status }}
+                                        </span>
+                                        <span class="inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full font-medium">
+                                            {{ $kategori }}
+                                        </span>
+                                    </div>
+                                    <div class="text-xs text-gray-500 mb-2">
+                                        Kode: <span class="font-semibold text-gray-700">{{ $property->kode_aset }}</span>
+                                    </div>
+                                    <div class="text-gray-900 font-bold text-xl mb-3">
                                         @if($lelang)
-                                            Rp {{ number_format($lelang->harga_limit_akhir, 0, ',', '.') }}
+                                            <span class="text-green-600">Rp {{ number_format($lelang->harga_limit_akhir, 0, ',', '.') }}</span>
                                         @else
                                             <span class="text-gray-400">Harga belum tersedia</span>
                                         @endif
                                     </div>
-                                    <div class="text-gray-600 text-sm truncate">{{ $property->alamat }}</div>
+                                    <div class="text-gray-600 text-sm flex items-center">
+                                        <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                        <span class="line-clamp-2">{{ $property->alamat }}</span>
+                                    </div>
                                 </div>
                             </div>
                         @empty
-                            <div class="text-gray-500">Belum ada properti.</div>
+                            <div class="text-center py-12 text-gray-500 w-full">
+                                <i class="fas fa-home text-4xl mb-4"></i>
+                                <p>Belum ada properti tersedia.</p>
+                            </div>
                         @endforelse
                     </div>
                 </div>
             </section>
 
             <!-- Call to Action Section -->
-            <section class="mb-16">
-                <div class="bg-white rounded-3xl shadow-lg border border-yellow-300 p-8 md:p-12 max-w-5xl mx-auto">
-                    <h2 class="text-2xl md:text-3xl font-bold text-green-900 mb-8 text-center">
-                        Membeli Asset Agunan Pembiayaan Bank
+            <section class="mb-16 animate-slide-up">
+                <div class="bg-gradient-to-br from-white to-blue-50 rounded-3xl shadow-lg border border-blue-200 p-8 md:p-12 max-w-5xl mx-auto">
+                    <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-4 text-center">
+                        Keunggulan Membeli Asset Agunan Pembiayaan Bank
                     </h2>
+                    <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+                        Dapatkan properti berkualitas dengan harga terbaik dan proses yang mudah
+                    </p>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- 1 -->
-                        <div class="flex items-start space-x-4">
+                        <div class="step-item flex items-start space-x-4">
                             <div class="flex-shrink-0">
-                                <div class="w-12 h-12 rounded-full bg-blue-100 border-4 border-blue-400 flex items-center justify-center text-blue-700 font-bold text-lg">01</div>
+                                <div class="step-number w-12 h-12 rounded-full bg-blue-100 border-2 border-blue-400 flex items-center justify-center text-blue-700 font-bold text-lg">01</div>
                             </div>
                             <div>
-                                <div class="font-semibold text-blue-900">Aset Variatif</div>
-                                <div class="text-gray-700 text-sm">(Tanah, Rumah dan Ruko)</div>
+                                <div class="font-semibold text-blue-900 text-lg mb-1">Aset Variatif</div>
+                                <div class="text-gray-700">(Tanah, Rumah dan Ruko)</div>
                             </div>
                         </div>
                         <!-- 2 -->
-                        <div class="flex items-start space-x-4">
+                        <div class="step-item flex items-start space-x-4">
                             <div class="flex-shrink-0">
-                                <div class="w-12 h-12 rounded-full bg-red-100 border-4 border-red-400 flex items-center justify-center text-red-700 font-bold text-lg">02</div>
+                                <div class="step-number w-12 h-12 rounded-full bg-red-100 border-2 border-red-400 flex items-center justify-center text-red-700 font-bold text-lg">02</div>
                             </div>
                             <div>
-                                <div class="font-semibold text-red-900">Harga dibawah pasaran</div>
-                                <div class="text-gray-700 text-sm">dan lokasi jaminan strategis</div>
+                                <div class="font-semibold text-red-900 text-lg mb-1">Harga Dibawah Pasaran</div>
+                                <div class="text-gray-700">dan lokasi jaminan strategis</div>
                             </div>
                         </div>
                         <!-- 3 -->
-                        <div class="flex items-start space-x-4">
+                        <div class="step-item flex items-start space-x-4">
                             <div class="flex-shrink-0">
-                                <div class="w-12 h-12 rounded-full bg-purple-100 border-4 border-purple-400 flex items-center justify-center text-purple-700 font-bold text-lg">03</div>
+                                <div class="step-number w-12 h-12 rounded-full bg-purple-100 border-2 border-purple-400 flex items-center justify-center text-purple-700 font-bold text-lg">03</div>
                             </div>
                             <div>
-                                <div class="font-semibold text-purple-900">Dibantu pengelola</div>
-                                <div class="text-gray-700 text-sm">untuk survey terlebih dahulu</div>
+                                <div class="font-semibold text-purple-900 text-lg mb-1">Dibantu Pengelola</div>
+                                <div class="text-gray-700">untuk survey terlebih dahulu</div>
                             </div>
                         </div>
                         <!-- 4 -->
-                        <div class="flex items-start space-x-4">
+                        <div class="step-item flex items-start space-x-4">
                             <div class="flex-shrink-0">
-                                <div class="w-12 h-12 rounded-full bg-green-100 border-4 border-green-400 flex items-center justify-center text-green-700 font-bold text-lg">04</div>
+                                <div class="step-number w-12 h-12 rounded-full bg-green-100 border-2 border-green-400 flex items-center justify-center text-green-700 font-bold text-lg">04</div>
                             </div>
                             <div>
-                                <div class="font-semibold text-green-900">Proses lelang mudah dan cepat</div>
-                                <div class="text-gray-700 text-sm">(Online)</div>
+                                <div class="font-semibold text-green-900 text-lg mb-1">Proses Lelang Mudah</div>
+                                <div class="text-gray-700">dan cepat (Online)</div>
                             </div>
                         </div>
                         <!-- 5 -->
-                        <div class="flex items-start space-x-4">
+                        <div class="step-item flex items-start space-x-4">
                             <div class="flex-shrink-0">
-                                <div class="w-12 h-12 rounded-full bg-blue-100 border-4 border-blue-400 flex items-center justify-center text-blue-700 font-bold text-lg">05</div>
+                                <div class="step-number w-12 h-12 rounded-full bg-blue-100 border-2 border-blue-400 flex items-center justify-center text-blue-700 font-bold text-lg">05</div>
                             </div>
                             <div>
-                                <div class="font-semibold text-blue-900">Bisa langsung proses Pembiayaan*</div>
-                                <div class="text-gray-700 text-xs">*SnK Berlaku</div>
+                                <div class="font-semibold text-blue-900 text-lg mb-1">Proses Pembiayaan</div>
+                                <div class="text-gray-700">bisa langsung diproses*</div>
+                                <div class="text-gray-500 text-xs mt-1">*SnK Berlaku</div>
                             </div>
                         </div>
                         <!-- 6 -->
-                        <div class="flex items-start space-x-4">
+                        <div class="step-item flex items-start space-x-4">
                             <div class="flex-shrink-0">
-                                <div class="w-12 h-12 rounded-full bg-purple-100 border-4 border-purple-400 flex items-center justify-center text-purple-700 font-bold text-lg">06</div>
+                                <div class="step-number w-12 h-12 rounded-full bg-purple-100 border-2 border-purple-400 flex items-center justify-center text-purple-700 font-bold text-lg">06</div>
                             </div>
                             <div>
-                                <div class="font-semibold text-purple-900">Dokumen kepemilikan lebih terjamin</div>
+                                <div class="font-semibold text-purple-900 text-lg mb-1">Dokumen Terjamin</div>
+                                <div class="text-gray-700">kepemilikan lebih terjamin</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-
-
             <!-- Tata Cara Mengikuti Lelang E-Auction Section -->
-            <section class="mb-16">
-                <div class="bg-white rounded-3xl shadow-lg border border-yellow-300 p-8 md:p-12 max-w-5xl mx-auto">
-                    <h2 class="text-2xl md:text-3xl font-bold text-green-900 mb-8 text-center">
-                        TATA CARA MENGIKUTI LELANG E-AUCTION <span class="text-yellow-500">(LELANG.GO.ID)</span>
+            <section class="mb-16 animate-slide-up">
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl shadow-lg border border-orange-200 p-8 md:p-12 max-w-5xl mx-auto">
+                    <h2 class="text-2xl md:text-3xl font-bold text-orange-900 mb-4 text-center">
+                        TATA CARA MENGIKUTI LELANG E-AUCTION
                     </h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center mb-8">
+                        <span class="inline-block bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full font-semibold text-sm">
+                            LELANG.GO.ID
+                        </span>
+                        <p class="text-gray-600 mt-2">Ikuti langkah-langkah berikut untuk mengikuti lelang</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <!-- Left column: Steps 1, 3, 5, 7 -->
-                        <div class="space-y-8">
+                        <div class="space-y-6">
                             <!-- Step 1 -->
-                            <div class="flex items-center space-x-4">
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0a2 2 0 002 2h2a2 2 0 002-2m-6 0V7a2 2 0 012-2h2a2 2 0 012 2v10"/></svg>
+                                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user-plus text-blue-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Peminat Sign in/Sign Up di lelang.go.id</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Sign in/Sign Up</div>
+                                    <div class="text-gray-600 text-sm">Peminat registrasi di lelang.go.id</div>
                                 </div>
                             </div>
+
                             <!-- Step 3 -->
-                            <div class="flex items-center space-x-4">
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c-4.418 0-8-1.79-8-4V6a2 2 0 012-2h12a2 2 0 012 2v8c0 2.21-3.582 4-8 4z"/></svg>
+                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-money-check text-green-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Setor Uang Jaminan Lelang</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Setor Jaminan</div>
+                                    <div class="text-gray-600 text-sm">Setor uang jaminan lelang</div>
                                 </div>
                             </div>
+
                             <!-- Step 5 -->
-                            <div class="flex items-center space-x-4">
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 17l-4 4m0 0l-4-4m4 4V3"/></svg>
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-trophy text-yellow-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Pemenang Lelang</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Pemenang Lelang</div>
+                                    <div class="text-gray-600 text-sm">Pengumuman hasil lelang</div>
                                 </div>
                             </div>
+
                             <!-- Step 7 -->
-                            <div class="flex items-center space-x-4">
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c-4.418 0-8-1.79-8-4V6a2 2 0 012-2h12a2 2 0 012 2v8c0 2.21-3.582 4-8 4z"/></svg>
+                                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-clock text-red-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Pelunasan Max H+5</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Pelunasan</div>
+                                    <div class="text-gray-600 text-sm">Pelunasan maksimal H+5</div>
                                 </div>
                             </div>
                         </div>
+
                         <!-- Right column: Steps 2, 4, 6, 8 -->
-                        <div class="space-y-8">
+                        <div class="space-y-6">
                             <!-- Step 2 -->
-                            <div class="flex items-center space-x-4">
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><text x="12" y="16" text-anchor="middle" font-size="8" fill="currentColor">Activation</text></svg>
+                                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-key text-purple-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Peserta Mendapatkan kode aktivasi</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Kode Aktivasi</div>
+                                    <div class="text-gray-600 text-sm">Peserta mendapatkan kode aktivasi</div>
                                 </div>
                             </div>
+
                             <!-- Step 4 -->
-                            <div class="flex items-center space-x-4">
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 8h8v8H8z"/></svg>
+                                    <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-mouse-pointer text-indigo-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Peserta Memilih Objek Agunan Lelang</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Pilih Objek</div>
+                                    <div class="text-gray-600 text-sm">Peserta memilih objek agunan lelang</div>
                                 </div>
                             </div>
-                            <!-- Step 6 (conditional) -->
-                            <div class="flex items-center space-x-4">
+
+                            <!-- Step 6 -->
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c-4.418 0-8-1.79-8-4V6a2 2 0 012-2h12a2 2 0 012 2v8c0 2.21-3.582 4-8 4z"/></svg>
+                                    <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-hand-holding-usd text-gray-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Peserta datang ke KPKNL untuk mengambil uang setoran jaminan tanpa dikenakan potongan (jika tidak menang)</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Ambil Jaminan</div>
+                                    <div class="text-gray-600 text-sm">Peserta datang ke KPKNL untuk mengambil uang jaminan (jika tidak menang)</div>
                                 </div>
                             </div>
-                            <!-- Step 8 (if win) -->
-                            <div class="flex items-center space-x-4">
+
+                            <!-- Step 8 -->
+                            <div class="step-item flex items-start space-x-4">
                                 <div class="flex-shrink-0">
-                                    <svg class="w-10 h-10 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0a2 2 0 002 2h2a2 2 0 002-2m-6 0V7a2 2 0 012-2h2a2 2 0 012 2v10"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-certificate text-green-600"></i>
+                                    </div>
                                 </div>
                                 <div>
-                                    <div class="font-semibold text-gray-900">Terbit Risalah Lelang & Pemenang datang ke Bank untuk mengambil Sertifikat</div>
+                                    <div class="font-semibold text-gray-900 mb-1">Terbit Risalah</div>
+                                    <div class="text-gray-600 text-sm">Terbit risalah lelang & pemenang datang ke Bank untuk mengambil sertifikat</div>
                                 </div>
                             </div>
                         </div>
@@ -303,37 +590,119 @@
             </section>
 
             <!-- Map Section -->
-            <section class="mb-24">
+            <section class="mb-24 animate-slide-up">
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
-                    <div class="h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl flex items-center justify-center">
-                        <p class="text-gray-600 font-medium">Map Location</p>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+                        <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>
+                        Lokasi Kantor
+                    </h2>
+                    <div class="h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-green-500/10"></div>
+                        <div class="relative text-center">
+                            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-map-marked-alt text-red-600 text-2xl icon-bounce"></i>
+                            </div>
+                            <p class="text-gray-600 font-medium text-lg">Peta Lokasi</p>
+                            <p class="text-gray-500 text-sm mt-2">Jambi, Indonesia</p>
+                        </div>
                     </div>
                 </div>
             </section>
         </div>
 
         <!-- Footer -->
-        <footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12">
-    <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
-            <!-- Nama Aplikasi -->
-            <div>
-                <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
-                <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
+        <footer class="bg-gray-900 text-gray-200 pt-10 pb-6 mt-20">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8">
+                    <div>
+                        <h2 class="text-xl font-bold mb-2">Katalog Lelang Properti</h2>
+                        <p class="text-sm">Platform pencarian dan informasi lelang properti terbaik untuk wilayah Indonesia.</p>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold mb-2">Kontak</h2>
+                        <p class="text-sm">Email: info@kataloglelang.id</p>
+                        <p class="text-sm">Telepon: (021) 9876-5432</p>
+                    </div>
+                </div>
+                <hr class="border-gray-700">
+                <p class="text-center text-xs text-gray-500 pt-4">© 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.</p>
             </div>
-            <!-- Kontak -->
-            <div>
-                <h2 class="text-xl font-bold mb-1">Kontak</h2>
-                <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
-                <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
-            </div>
-        </div>
-        <hr class="border-gray-700 my-2">
-        <div class="text-center text-xs text-gray-400 pt-2">
-            © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
-        </div>
+        </footer>
     </div>
-</footer>
-    </div>
+
+    <script>
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Add loading animation for images
+        document.querySelectorAll('img').forEach(img => {
+            img.addEventListener('load', function() {
+                this.style.opacity = '1';
+            });
+        });
+
+        // Add intersection observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Add click ripple effect for cards
+        document.querySelectorAll('.category-card, .property-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 255, 255, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = (e.clientX - e.target.offsetLeft) + 'px';
+                ripple.style.top = (e.clientY - e.target.offsetTop) + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
