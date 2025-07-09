@@ -33,35 +33,21 @@
         </header>
 
         <!-- Hero Section -->
-        <section class="relative bg-gray-900 text-white min-h-96">
-            <!-- Background overlay -->
-            <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-
-            <!-- Hero Content -->
-            <div class="relative container mx-auto px-4 py-20 text-center">
-                <h1 class="text-5xl md:text-6xl font-bold mb-8">
-                    <span class="text-yellow-400">PROPERTI AREA</span><br>
-                    <span class="text-yellow-400">JAMBI</span>
-                </h1>
-
-                <!-- Search Bar -->
-                <div class="max-w-md mx-auto">
-                    <form action="{{ route('search') }}" method="GET">
-                        <div class="relative">
-                            <input type="text"
-                                   name="q"
-                                   value="{{ request('q') }}"
-                                   placeholder="Search..."
-                                   class="w-full px-4 py-3 pl-10 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                            <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
-                            </div>
-                        </div>
-                    </form>
+        <section class="relative bg-cover bg-center h-[32rem] text-white" style="background-image: url('/img/jambi-banner.jpg')">
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+            <span class="text-yellow-400">PROPERTI AREA JAMBI</span>
+            </h2>
+            <form action="{{ route('search') }}" method="GET" class="w-full max-w-lg">
+            <div class="relative">
+                <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari properti..." class="w-full py-3 px-5 pl-12 rounded-full text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                <div class="absolute inset-y-0 left-4 flex items-center">
+                <i class="fa fa-search text-gray-400"></i>
                 </div>
             </div>
+            </form>
+        </div>
         </section>
 
         <!-- Main Content -->
