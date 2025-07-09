@@ -6,6 +6,7 @@
     <title>Properti Area Jambi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -45,16 +46,20 @@
 
                 <!-- Search Bar -->
                 <div class="max-w-md mx-auto">
-                    <div class="relative">
-                        <input type="text"
-                               placeholder="Search..."
-                               class="w-full px-4 py-3 pl-10 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
+                    <form action="{{ route('search') }}" method="GET">
+                        <div class="relative">
+                            <input type="text"
+                                   name="q"
+                                   value="{{ request('q') }}"
+                                   placeholder="Search..."
+                                   class="w-full px-4 py-3 pl-10 rounded-full text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                            <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m21 21-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
@@ -114,10 +119,13 @@
                     <div class="flex space-x-6 pb-4" style="width: max-content;">
                         @forelse($properties as $property)
                             <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-lg transition-shadow flex-shrink-0 w-80 cursor-pointer"
-                                 onclick="window.location.href='{{ route('properties.show', $property->id) }}'">
+                                 onclick="window.location.href='{{ route('properties.show', $property->id) }}'"
+                                 role="button" aria-label="Lihat detail properti">
                                 @php
                                     $mainImage = $property->images->where('is_main', true)->first() ?? $property->images->first();
                                     $lelang = $property->lelangSchedule;
+                                    $kategori = ucfirst($property->kategori_lot ?? 'Properti');
+                                    $status = $lelang && $lelang->is_selesai ? 'Lelang Selesai' : 'Tersedia';
                                 @endphp
                                 <div class="h-48 bg-gray-200 flex items-center justify-center">
                                     @if($mainImage)
@@ -127,6 +135,8 @@
                                     @endif
                                 </div>
                                 <div class="p-6">
+                                    <span class="inline-block {{ $status == 'Tersedia' ? 'bg-green-100 text-green-700' : 'bg-gray-200 text-gray-500' }} text-xs px-2 py-1 rounded-full mb-2">{{ $status }}</span>
+                                    <span class="inline-block bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full mb-2 ml-2">{{ $kategori }}</span>
                                     <div class="text-xs text-gray-500 mb-1">Kode Properti: <span class="font-semibold">{{ $property->kode_aset }}</span></div>
                                     <div class="text-gray-900 font-bold text-lg mb-2">
                                         @if($lelang)
@@ -307,7 +317,7 @@
             </section>
 
             <!-- Map Section -->
-            <section class="mb-16">
+            <section class="mb-24">
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
                     <div class="h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl flex items-center justify-center">
                         <p class="text-gray-600 font-medium">Map Location</p>

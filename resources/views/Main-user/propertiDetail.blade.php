@@ -45,9 +45,13 @@
         </div>
         <div class="flex items-center space-x-4">
             <div class="relative">
-                <input type="search" placeholder="Cari lelang..."
-                       class="bg-white text-gray-800 px-4 py-2 pr-10 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-red-300">
-                <i class="fas fa-search absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <form action="{{ route('search') }}" method="GET">
+                    <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari lelang..."
+                           class="bg-white text-gray-800 px-4 py-2 pr-10 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-red-300">
+                    <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
             </div>
             <button class="bg-white text-red-900 px-4 py-2 rounded-full font-medium hover:bg-gray-100 transition-colors">
                 Contact Us
@@ -177,15 +181,27 @@
                     <!-- Kondisi Row -->
                     <div class="bg-white rounded-xl p-4 shadow-md border-2 border-yellow-200 flex items-center min-h-[48px]">
                         <span class="text-base font-semibold text-gray-900 ml-2">Kondisi :</span>
-                        <span class="flex-1 mx-4 text-base font-normal text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">{{ $property->kondisi }}</span>
-                        <button type="button" class="w-7 h-7 flex items-center justify-center bg-red-800 text-white text-base font-bold rounded ml-2" title="Info tentang kondisi">?</button>
+                        <span class="flex-1 mx-4 text-base font-normal text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis" title="Klik tanda tanya untuk penjelasan">{{ $property->kondisi }}</span>
+                        <button type="button"
+        class="w-7 h-7 flex items-center justify-center bg-red-800 text-white text-base font-bold rounded ml-2"
+        title="Info tentang kondisi"
+        onclick="document.getElementById('conditionModal').classList.remove('hidden')"
+    >?</button>
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <div class="bg-white rounded-xl p-4 shadow-md border-2 border-yellow-200 flex items-center gap-2 min-w-[140px]">
-                        <span class="text-base font-semibold text-gray-900">Share</span>
-                        <i class="fas fa-share-alt text-lg text-gray-900"></i>
-                    </div>
+                    <button
+                        type="button"
+                        onclick="copyShareLink()"
+                        class="bg-yellow-100 hover:bg-yellow-200 border-2 border-yellow-300 text-gray-900 font-semibold flex items-center gap-2 px-4 py-3 rounded-xl shadow-md transition-all duration-150 relative group"
+                        title="Salin tautan properti"
+                    >
+                        <span>Share</span>
+                        <i class="fas fa-share-alt text-lg"></i>
+                        <span id="share-tooltip" class="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-gray-900 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                            Salin tautan ke clipboard
+                        </span>
+                    </button>
                 </div>
             </div>
 
@@ -266,6 +282,104 @@
     </div>
 </footer>
 
+<!-- Modal: Keterangan Kondisi -->
+<div id="conditionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+        <!-- Modal Header -->
+        <div class="bg-red-900 text-white p-4 rounded-t-lg">
+            <div class="flex justify-between items-center">
+                <div class="text-center flex-1">
+                    <h2 class="text-lg font-bold">Keterangan Kondisi Aset</h2>
+                    <p class="text-sm opacity-90">Penjelasan Kode Kondisi Properti</p>
+                </div>
+                <button id="closeModal" class="text-white hover:text-gray-300 ml-4">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Modal Content -->
+        <div class="p-6 space-y-6">
+            <!-- 1. Cara Penjualan -->
+            <div class="border-b border-gray-200 pb-4">
+                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">1</span>
+                    Cara Penjualan
+                </h3>
+                <div class="grid grid-cols-1 gap-2 text-sm">
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">L</span>
+                        <span class="text-gray-600">= Lelang</span>
+                    </div>
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">AJB</span>
+                        <span class="text-gray-600">= Sukarela</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 2. Ada tidaknya penghuni -->
+            <div class="border-b border-gray-200 pb-4">
+                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">2</span>
+                    Ada tidaknya penghuni
+                </h3>
+                <div class="grid grid-cols-1 gap-2 text-sm">
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">K</span>
+                        <span class="text-gray-600">= Aset Kosong</span>
+                    </div>
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">TK</span>
+                        <span class="text-gray-600">= Tidak Kosong</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 3. Ada tidaknya penguasaan -->
+            <div class="border-b border-gray-200 pb-4">
+                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">3</span>
+                    Ada tidaknya penguasaan
+                </h3>
+                <div class="text-sm text-gray-600 mb-2">(perlawanan/penghadangan)</div>
+                <div class="grid grid-cols-1 gap-2 text-sm">
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">AP</span>
+                        <span class="text-gray-600">= Ada Perlawanan</span>
+                    </div>
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">TP</span>
+                        <span class="text-gray-600">= Tanpa Perlawanan</span>
+                    </div>
+                </div>
+            </div>
+            <!-- 4. Kondisi Bangunan -->
+            <div>
+                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">4</span>
+                    Kondisi Bangunan
+                </h3>
+                <div class="grid grid-cols-1 gap-2 text-sm">
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">SH</span>
+                        <span class="text-gray-600">= Sangat Baik</span>
+                    </div>
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">BA</span>
+                        <span class="text-gray-600">= Baik</span>
+                    </div>
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">CU</span>
+                        <span class="text-gray-600">= Cukup</span>
+                    </div>
+                    <div class="flex">
+                        <span class="font-bold text-gray-700 w-12">RB</span>
+                        <span class="text-gray-600">= Rusak Berat</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
     // Initialize thumbnail swiper
@@ -315,6 +429,26 @@
             firstThumbnail.classList.add('!border-red-500');
             firstThumbnail.classList.remove('border-transparent');
         }
+    });
+
+    function copyShareLink() {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(function() {
+            const tooltip = document.getElementById('share-tooltip');
+            if (tooltip) {
+                tooltip.textContent = 'Tautan disalin!';
+                tooltip.classList.add('opacity-100');
+                setTimeout(() => {
+                    tooltip.textContent = 'Salin tautan ke clipboard';
+                    tooltip.classList.remove('opacity-100');
+                }, 1500);
+            }
+        });
+    }
+
+    // Close modal function
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('conditionModal').classList.add('hidden');
     });
 </script>
 
