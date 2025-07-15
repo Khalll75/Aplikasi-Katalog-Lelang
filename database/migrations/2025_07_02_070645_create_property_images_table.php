@@ -6,16 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up(): void {
-        Schema::create('property_images', function (Blueprint $table) {
+        Schema::create('property_media', function (Blueprint $table) {
             $table->id();
             $table->foreignId('property_id')->constrained()->onDelete('cascade');
-            $table->string('image_url');
+            $table->string('media_url');
+            $table->string('media_type')->default('image'); // 'image' or 'video'
+            $table->integer('duration')->nullable(); // For videos, in seconds
+            $table->string('format')->nullable(); // File format (jpg, png, mp4, etc.)
+            $table->string('resolution')->nullable(); // For videos: 1920x1080, etc.
             $table->boolean('is_main')->default(false);
             $table->timestamps();
         });
     }
 
     public function down(): void {
-        Schema::dropIfExists('property_images');
+        Schema::dropIfExists('property_media');
     }
 };

@@ -274,14 +274,14 @@
                 @csrf
                 <!-- Upload Gambar -->
                 <div class="form-section">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Gambar Properti</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Media Properti</h3>
 
                     <div id="image-list" class="space-y-3">
                         <div class="image-input-group">
-                            <input type="file" name="images[]" accept="image/*" class="flex-1">
+                            <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
                             <div class="radio-group">
                                 <input type="radio" name="main_image" value="0" id="main_0" checked>
-                                <label for="main_0">Gambar Utama</label>
+                                <label for="main_0">Media Utama</label>
                             </div>
                         </div>
                     </div>
@@ -290,9 +290,9 @@
                         <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                         </svg>
-                        Tambah Gambar
+                        Tambah Media
                     </button>
-                    <p class="upload-hint">Pilih salah satu gambar sebagai gambar utama yang akan ditampilkan</p>
+                    <p class="upload-hint">Pilih salah satu media sebagai media utama yang akan ditampilkan (Gambar atau Video)</p>
                 </div>
 
                 <!-- Jadwal Lelang -->
@@ -395,10 +395,10 @@
             const div = document.createElement('div');
             div.className = 'image-input-group';
             div.innerHTML = `
-                <input type="file" name="images[]" accept="image/*" class="flex-1">
+                <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
                 <div class="radio-group">
                     <input type="radio" name="main_image" value="${imageIndex}" id="main_${imageIndex}">
-                    <label for="main_${imageIndex}">Gambar Utama</label>
+                    <label for="main_${imageIndex}">Media Utama</label>
                 </div>
                 <button type="button" onclick="removeImageInput(this)" class="btn-danger">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

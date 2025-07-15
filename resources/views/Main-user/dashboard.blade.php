@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -168,6 +169,14 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
+        .button-hover {
+            transition: all 0.3s ease;
+        }
+
+        .button-hover:hover {
+            transform: translateY(-2px);
+        }
+
         /* Parallax effect for hero */
         .hero-parallax {
             background-attachment: fixed;
@@ -230,11 +239,15 @@
 <body class="bg-gray-50">
     <div class="min-h-screen">
         <!-- Header -->
-        <header class="gradient-bg text-white py-4 sticky top-0 z-50 shadow-lg backdrop-blur-sm">
-            <div class="container mx-auto px-4 flex justify-end">
-                <button class="btn-primary bg-white text-red-800 px-6 py-2 rounded-lg text-base font-semibold hover:bg-gray-100 transition-colors shadow-md">
-                    <i class="fas fa-phone mr-2"></i>
-                    Contact Us
+        <header class="bg-gradient-to-r from-red-900 to-red-800 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-lg backdrop-blur-sm">
+            <div class="container mx-auto px-4 flex justify-between items-center">
+                <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
+                    <i class="fas fa-gavel mr-2"></i>
+                    Beranda
+                </a>
+                <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
+                    <i class="fas fa-user-plus mr-2"></i>
+                    Daftar
                 </button>
             </div>
         </header>
@@ -266,7 +279,7 @@
         </section>
 
         <!-- Main Content -->
-        <div class="container mx-auto px-4 py-12">
+        <div class="container mx-auto px-4 pt-28 pb-12">
 
             <!-- Kategori Lot Lelang Section -->
             <section class="mb-16 animate-slide-up">
@@ -342,7 +355,7 @@
                                 @endphp
                                 <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
                                     @if($mainImage)
-                                        <img src="{{ asset('storage/'.$mainImage->image_url) }}"
+                                        <img src="{{ asset('storage/'.$mainImage->media_url) }}"
                                              alt="{{ $property->nama }}"
                                              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                                     @else
@@ -630,6 +643,30 @@
         </footer>
     </div>
 
+    <!-- Modal: Daftar -->
+    <div id="daftarModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div class="bg-red-900 text-white p-4 rounded-t-lg flex justify-between items-center">
+                <h2 class="text-lg font-bold flex-1 text-center">Daftar</h2>
+                <button onclick="document.getElementById('daftarModal').classList.add('hidden')" class="text-white hover:text-gray-300 ml-4">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="daftarForm" class="p-6 space-y-4">
+                <div>
+                    <label for="daftarName" class="block text-gray-700 font-semibold mb-1">Nama</label>
+                    <input type="text" id="daftarName" name="name" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-300">
+                </div>
+                <div>
+                    <label for="daftarPhone" class="block text-gray-700 font-semibold mb-1">No. HP</label>
+                    <input type="tel" id="daftarPhone" name="phone" required pattern="[0-9]{10,15}" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-300">
+                </div>
+                <div id="daftarSuccess" class="hidden text-green-600 font-semibold text-center py-2">Pendaftaran berhasil!</div>
+                <button type="submit" class="w-full bg-red-800 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition-all">Kirim</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         // Add smooth scrolling for better UX
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -703,6 +740,51 @@
             }
         `;
         document.head.appendChild(style);
+
+        // Daftar Modal Form Submission
+        document.getElementById('daftarForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('daftarName').value;
+            const phone = document.getElementById('daftarPhone').value;
+            const successDiv = document.getElementById('daftarSuccess');
+            let errorDiv = document.getElementById('daftarError');
+            if (!errorDiv) {
+                errorDiv = document.createElement('div');
+                errorDiv.id = 'daftarError';
+                errorDiv.className = 'text-red-600 font-semibold text-center py-2';
+                this.insertBefore(errorDiv, this.querySelector('button[type="submit"]'));
+            }
+            errorDiv.classList.add('hidden');
+            successDiv.classList.add('hidden');
+            try {
+                const res = await fetch('/daftar-user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({ name, phone })
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    successDiv.textContent = data.message || 'Pendaftaran berhasil!';
+                    successDiv.classList.remove('hidden');
+                    setTimeout(() => {
+                        document.getElementById('daftarModal').classList.add('hidden');
+                        successDiv.classList.add('hidden');
+                        document.getElementById('daftarForm').reset();
+                    }, 1500);
+                } else {
+                    errorDiv.textContent = data.message || 'Terjadi kesalahan.';
+                    errorDiv.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorDiv.textContent = 'Gagal mengirim data. Coba lagi.';
+                errorDiv.classList.remove('hidden');
+            }
+        });
     </script>
 </body>
 </html>

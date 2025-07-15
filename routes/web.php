@@ -13,6 +13,7 @@ Route::get('/admin', function () {
 Route::get('/', [PropertyController::class, 'index'])->name('home');
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
 Route::get('/search', [PropertyController::class, 'search'])->name('search');
+Route::post('/daftar-user', [\App\Http\Controllers\DaftarUserController::class, 'store'])->name('daftar-user.store');
 
 // Admin routes
 Route::get('/dashboard', function () {

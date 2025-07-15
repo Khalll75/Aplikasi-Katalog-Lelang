@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
-use App\Models\PropertyImage;
+use App\Models\PropertyMedia;
 use App\Models\LelangSchedule;
 use App\Models\PointOfInterest;
 use App\Models\ContactPerson;
@@ -203,15 +203,22 @@ class PropertyController extends Controller
 
     public function storeStep2(Request $request, Property $property)
     {
-        // Images
+        // Media
         if ($request->hasFile('images')) {
             $mainImageIndex = $request->input('main_image', 0);
-            foreach ($request->file('images') as $index => $image) {
-                $imageName = time() . '_' . $index . '.' . $image->getClientOriginalExtension();
-                $imagePath = $image->storeAs('property_images', $imageName, 'public');
-                PropertyImage::create([
+            foreach ($request->file('images') as $index => $file) {
+                $fileName = time() . '_' . $index . '.' . $file->getClientOriginalExtension();
+                $filePath = $file->storeAs('property_media', $fileName, 'public');
+
+                // Determine media type based on file extension
+                $extension = strtolower($file->getClientOriginalExtension());
+                $mediaType = in_array($extension, ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
+
+                PropertyMedia::create([
                     'property_id' => $property->id,
-                    'image_url' => $imagePath,
+                    'media_url' => $filePath,
+                    'media_type' => $mediaType,
+                    'format' => $file->getClientOriginalExtension(),
                     'is_main' => $index == $mainImageIndex
                 ]);
             }
@@ -271,11 +278,11 @@ class PropertyController extends Controller
             'kondisi' => 'required',
             'kategori_lot' => 'required|in:rumah,ruko,tanah',
 
-            // Images validation
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            // Media validation
+            'images.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:10240',
             'main_image' => 'nullable|integer',
             'delete_images' => 'nullable|array',
-            'delete_images.*' => 'integer|exists:property_images,id',
+            'delete_images.*' => 'integer|exists:property_media,id',
 
             // Lelang Schedule validation
             'tanggal_lelang' => 'nullable|date',
@@ -315,28 +322,34 @@ class PropertyController extends Controller
 
             // Handle image deletions
             if ($request->filled('delete_images')) {
-                $imagesToDelete = PropertyImage::whereIn('id', $request->input('delete_images'))->get();
+                $imagesToDelete = PropertyMedia::whereIn('id', $request->input('delete_images'))->get();
                 foreach ($imagesToDelete as $image) {
-                    Storage::disk('public')->delete($image->image_url);
+                    Storage::disk('public')->delete($image->media_url);
                     $image->delete();
                 }
             }
 
-            // Handle new image uploads
+            // Handle new media uploads
             if ($request->hasFile('images')) {
                 $mainImageIndex = $request->input('main_image', 0);
 
-                foreach ($request->file('images') as $index => $image) {
-                    $imageName = time() . '_' . $index . '.' . $image->getClientOriginalExtension();
-                    $imagePath = $image->storeAs('property_images', $imageName, 'public');
+                foreach ($request->file('images') as $index => $file) {
+                    $fileName = time() . '_' . $index . '.' . $file->getClientOriginalExtension();
+                    $filePath = $file->storeAs('property_media', $fileName, 'public');
 
-                    PropertyImage::create([
+                    // Determine media type based on file extension
+                    $extension = strtolower($file->getClientOriginalExtension());
+                    $mediaType = in_array($extension, ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
+
+                    PropertyMedia::create([
                         'property_id' => $property->id,
-                        'image_url' => $imagePath,
+                        'media_url' => $filePath,
+                        'media_type' => $mediaType,
+                        'format' => $file->getClientOriginalExtension(),
                         'is_main' => $index == $mainImageIndex
                     ]);
 
-                    Log::info('Upload gambar', ['image' => $imagePath]);
+                    Log::info('Upload media', ['media' => $filePath, 'type' => $mediaType]);
                 }
             }
 
@@ -412,9 +425,9 @@ class PropertyController extends Controller
         try {
             DB::beginTransaction();
 
-            // Delete associated images from storage
-            foreach ($property->images as $image) {
-                Storage::disk('public')->delete($image->image_url);
+            // Delete associated media from storage
+            foreach ($property->media as $media) {
+                Storage::disk('public')->delete($media->media_url);
             }
 
             // Delete the property (cascade will handle related records)

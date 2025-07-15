@@ -6,48 +6,141 @@
     <title>Property Listing - Beranda</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <style>
+        .filter-card {
+            transition: all 0.3s ease;
+        }
+        .filter-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .property-card {
+            transition: all 0.3s ease;
+        }
+        .property-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+        .property-card:hover .property-image {
+            transform: scale(1.05);
+        }
+        .property-image {
+            transition: transform 0.3s ease;
+        }
+        .input-focus {
+            transition: all 0.3s ease;
+        }
+        .input-focus:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
+        }
+        .button-hover {
+            transition: all 0.3s ease;
+        }
+        .button-hover:hover {
+            transform: translateY(-2px);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .gradient-border {
+            background: linear-gradient(45deg, #ef4444, #dc2626, #b91c1c);
+            padding: 2px;
+            border-radius: 8px;
+        }
+        .gradient-border-inner {
+            background: white;
+            border-radius: 6px;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
 <!-- Header -->
-<header class="bg-red-900 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-md">
+<header class="bg-gradient-to-r from-red-900 to-red-800 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-lg backdrop-blur-sm">
     <div class="container mx-auto px-4 flex justify-between items-center">
-        <a href="/" class="text-2xl font-bold hover:underline tracking-wide">Beranda</a>
-        <button class="bg-white text-red-900 px-5 py-2 rounded-full font-medium hover:bg-red-100 transition duration-300">
-            Contact Us
+        <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
+            <i class="fas fa-gavel mr-2"></i>
+            Beranda
+        </a>
+        <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
+            <i class="fas fa-user-plus mr-2"></i>
+            Daftar
         </button>
     </div>
 </header>
 
 <!-- Main Container -->
 <div class="container mx-auto px-4 pt-28 pb-12">
+    <!-- Page Title -->
+    <div class="text-center mb-8 fade-in">
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">Pencarian Lelang Properti</h1>
+        <p class="text-gray-600">Temukan properti lelang terbaik sesuai kebutuhan Anda</p>
+        <div class="flex justify-center mt-4 space-x-2">
+            <div class="w-2 h-2 bg-red-500 rounded-full pulse-dot"></div>
+            <div class="w-2 h-2 bg-red-400 rounded-full pulse-dot" style="animation-delay: 0.2s;"></div>
+            <div class="w-2 h-2 bg-red-300 rounded-full pulse-dot" style="animation-delay: 0.4s;"></div>
+        </div>
+    </div>
 
     <!-- Search and Filter Section -->
     <form method="GET" action="{{ route('search') }}">
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
 
             <!-- Sidebar Filters -->
-            <div class="lg:col-span-1">
+            <div class="lg:col-span-1 space-y-6">
                 <!-- Kategori Lot Lelang -->
-                <div class="bg-white border-2 border-red-200 rounded-lg p-4 mb-6">
-                    <h3 class="font-semibold mb-4 text-gray-800">Kategori Lot Lelang</h3>
-                    <div class="space-y-2">
-                        @foreach(['rumah' => 'Rumah', 'ruko' => 'Ruko', 'tanah' => 'Tanah'] as $key => $label)
-                            <label class="flex items-center">
-                                <input type="radio" name="kategori_lot" value="{{ $key }}" class="mr-2"
-                                    {{ request('kategori_lot') === $key ? 'checked' : '' }}>
-                                <span class="text-sm">{{ $label }}</span>
-                            </label>
-                        @endforeach
+                <div class="gradient-border filter-card">
+                    <div class="gradient-border-inner p-5">
+                        <h3 class="font-semibold mb-4 text-gray-800 flex items-center">
+                            <i class="fas fa-building mr-2 text-red-600"></i>
+                            Kategori Lot Lelang
+                        </h3>
+                        <div class="space-y-3">
+                            @foreach(['rumah' => 'Rumah', 'ruko' => 'Ruko', 'tanah' => 'Tanah'] as $key => $label)
+                                <label class="flex items-center p-2 rounded-lg hover:bg-red-50 transition-colors cursor-pointer">
+                                    <input type="radio" name="kategori_lot" value="{{ $key }}" class="mr-3 w-4 h-4 text-red-600 focus:ring-red-500"
+                                        {{ request('kategori_lot') === $key ? 'checked' : '' }}>
+                                    <span class="text-sm font-medium">{{ $label }}</span>
+                                </label>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
 
                 <!-- Harga -->
-                <div class="bg-white border-2 border-red-200 rounded-lg p-4">
-                    <h3 class="font-semibold mb-4 text-gray-800">Harga</h3>
-                    <div class="grid grid-cols-[1fr_auto_1fr] gap-2 items-center">
-                        <input type="text" name="harga_min" value="{{ request('harga_min') }}" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
-                        <span class="text-gray-500 text-lg">—</span>
-                        <input type="text" name="harga_max" value="{{ request('harga_max') }}" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
+                <div class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm filter-card">
+                    <h3 class="font-semibold mb-4 text-gray-800 flex items-center">
+                        <i class="fas fa-money-bill-wave mr-2 text-green-600"></i>
+                        Rentang Harga
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-[1fr_auto_1fr] gap-3 items-center">
+                            <input type="text" name="harga_min" value="{{ request('harga_min') }}" placeholder="Minimum"
+                                   class="border border-gray-300 rounded-lg px-4 py-3 text-sm w-full input-focus focus:border-red-500 focus:outline-none">
+                            <span class="text-gray-400 text-lg font-bold">—</span>
+                            <input type="text" name="harga_max" value="{{ request('harga_max') }}" placeholder="Maximum"
+                                   class="border border-gray-300 rounded-lg px-4 py-3 text-sm w-full input-focus focus:border-red-500 focus:outline-none">
+                        </div>
+                        <div class="text-xs text-gray-500 text-center">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Masukkan nilai dalam Rupiah
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,46 +148,67 @@
             <!-- Main Content -->
             <div class="lg:col-span-3">
                 <!-- Search Bar and Buttons -->
-                <div class="flex flex-wrap items-center gap-4 mb-6">
-                    <div class="flex-1 min-w-0">
-                        <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari lelang..."
-                               class="w-full border-2 border-gray-300 rounded-lg px-4 py-2 focus:border-red-500 focus:outline-none">
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6 filter-card">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <div class="flex-1 min-w-0 relative">
+                            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari berdasarkan nama, alamat, atau lokasi..."
+                                   class="w-full border-2 border-gray-300 rounded-lg pl-12 pr-4 py-3 input-focus focus:border-red-500 focus:outline-none">
+                        </div>
+                        <button type="submit" class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-800 px-6 py-3 rounded-lg font-medium hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 button-hover shadow-md">
+                            <i class="fas fa-search mr-2"></i>
+                            Cari Lelang
+                        </button>
+                        <a href="{{ route('search') }}" id="resetFilterBtn" class="bg-gradient-to-r from-gray-500 to-gray-600 text-white px-6 py-3 rounded-lg font-medium hover:from-gray-600 hover:to-gray-700 transition-all duration-300 button-hover shadow-md">
+                            <i class="fas fa-redo mr-2"></i>
+                            Reset Filter
+                        </a>
                     </div>
-                    <button type="submit" class="bg-yellow-400 text-gray-800 px-6 py-2 rounded-lg font-medium hover:bg-yellow-500 transition-colors">
-                        Cari Lelang
-                    </button>
-                    <a href="{{ route('search') }}" id="resetFilterBtn" class="bg-gray-400 text-white px-6 py-2 rounded-lg font-medium hover:bg-gray-500 transition-colors">
-                        Reset Filter
-                    </a>
                 </div>
 
                 <!-- Filter Sections -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <!-- Spesifikasi Properti -->
-                    <div class="bg-white border border-gray-200 rounded-lg p-4">
-                        <h3 class="font-semibold mb-4 text-gray-800">Spesifikasi Properti</h3>
-                        <div class="space-y-4">
+                    <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm filter-card">
+                        <h3 class="font-semibold mb-5 text-gray-800 flex items-center">
+                            <i class="fas fa-home mr-2 text-blue-600"></i>
+                            Spesifikasi Properti
+                        </h3>
+                        <div class="space-y-5">
                             <!-- Luas Tanah -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Luas Tanah (M²)</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <input type="text" name="luas_tanah_min" value="{{ request('luas_tanah_min') }}" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm">
-                                    <input type="text" name="luas_tanah_max" value="{{ request('luas_tanah_max') }}" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm">
+                                <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                    <i class="fas fa-ruler-combined mr-2 text-green-500"></i>
+                                    Luas Tanah (M²)
+                                </label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input type="text" name="luas_tanah_min" value="{{ request('luas_tanah_min') }}" placeholder="Min"
+                                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm input-focus focus:border-red-500 focus:outline-none">
+                                    <input type="text" name="luas_tanah_max" value="{{ request('luas_tanah_max') }}" placeholder="Max"
+                                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm input-focus focus:border-red-500 focus:outline-none">
                                 </div>
                             </div>
                             <!-- Luas Bangunan -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Luas Bangunan (M²)</label>
-                                <div class="grid grid-cols-2 gap-2">
-                                    <input type="text" name="luas_bangunan_min" value="{{ request('luas_bangunan_min') }}" placeholder="Minimum" class="border border-gray-300 rounded px-3 py-2 text-sm">
-                                    <input type="text" name="luas_bangunan_max" value="{{ request('luas_bangunan_max') }}" placeholder="Maximum" class="border border-gray-300 rounded px-3 py-2 text-sm">
+                                <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                    <i class="fas fa-building mr-2 text-purple-500"></i>
+                                    Luas Bangunan (M²)
+                                </label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <input type="text" name="luas_bangunan_min" value="{{ request('luas_bangunan_min') }}" placeholder="Min"
+                                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm input-focus focus:border-red-500 focus:outline-none">
+                                    <input type="text" name="luas_bangunan_max" value="{{ request('luas_bangunan_max') }}" placeholder="Max"
+                                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm input-focus focus:border-red-500 focus:outline-none">
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- Jumlah Kamar Tidur -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Tidur</label>
-                                    <select name="kamar_tidur" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-bed mr-2 text-indigo-500"></i>
+                                        Kamar Tidur
+                                    </label>
+                                    <select name="kamar_tidur" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white input-focus focus:border-red-500 focus:outline-none">
                                         <option value="">Pilih...</option>
                                         <option value="1" {{ request('kamar_tidur') == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ request('kamar_tidur') == '2' ? 'selected' : '' }}>2</option>
@@ -105,8 +219,11 @@
                                 </div>
                                 <!-- Daya Listrik -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Daya Listrik</label>
-                                    <select name="listrik" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-bolt mr-2 text-yellow-500"></i>
+                                        Daya Listrik
+                                    </label>
+                                    <select name="listrik" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white input-focus focus:border-red-500 focus:outline-none">
                                         <option value="">Pilih...</option>
                                         <option value="450 VA" {{ request('listrik') == '450 VA' ? 'selected' : '' }}>450 VA</option>
                                         <option value="900 VA" {{ request('listrik') == '900 VA' ? 'selected' : '' }}>900 VA</option>
@@ -121,8 +238,11 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- Jumlah Kamar Mandi -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Jumlah Kamar Mandi</label>
-                                    <select name="kamar_mandi" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-bath mr-2 text-blue-500"></i>
+                                        Kamar Mandi
+                                    </label>
+                                    <select name="kamar_mandi" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white input-focus focus:border-red-500 focus:outline-none">
                                         <option value="">Pilih...</option>
                                         <option value="1" {{ request('kamar_mandi') == '1' ? 'selected' : '' }}>1</option>
                                         <option value="2" {{ request('kamar_mandi') == '2' ? 'selected' : '' }}>2</option>
@@ -133,8 +253,11 @@
                                 </div>
                                 <!-- Sumber Air -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Sumber Air</label>
-                                    <select name="air" class="w-full border border-gray-300 rounded px-3 py-2 text-sm bg-gray-100">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2 flex items-center">
+                                        <i class="fas fa-tint mr-2 text-cyan-500"></i>
+                                        Sumber Air
+                                    </label>
+                                    <select name="air" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white input-focus focus:border-red-500 focus:outline-none">
                                         <option value="">Pilih...</option>
                                         <option value="PDAM" {{ request('air') == 'PDAM' ? 'selected' : '' }}>PDAM</option>
                                         <option value="Sumur Bor" {{ request('air') == 'Sumur Bor' ? 'selected' : '' }}>Sumur Bor</option>
@@ -149,37 +272,45 @@
                     <!-- Lokasi and Kondisi -->
                     <div class="space-y-6">
                         <!-- Lokasi -->
-                        <div class="bg-white border border-gray-200 rounded-lg p-4">
-                            <h3 class="font-semibold mb-4 text-gray-800">Lokasi</h3>
+                        <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm filter-card">
+                            <h3 class="font-semibold mb-5 text-gray-800 flex items-center">
+                                <i class="fas fa-map-marker-alt mr-2 text-red-600"></i>
+                                Lokasi
+                            </h3>
                             <div class="grid grid-cols-2 gap-4">
                                 <!-- Kota/Kabupaten -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Kota/Kabupaten</label>
-                                    <input type="text" name="kota" value="{{ request('kota') }}" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten</label>
+                                    <input type="text" name="kota" value="{{ request('kota') }}" placeholder="Masukkan kota"
+                                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full input-focus focus:border-red-500 focus:outline-none">
                                 </div>
                                 <!-- Kecamatan -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Kecamatan</label>
-                                    <input type="text" name="kecamatan" value="{{ request('kecamatan') }}" class="border border-gray-300 rounded px-3 py-2 text-sm w-full">
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan</label>
+                                    <input type="text" name="kecamatan" value="{{ request('kecamatan') }}" placeholder="Masukkan kecamatan"
+                                           class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full input-focus focus:border-red-500 focus:outline-none">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Kondisi -->
-                        <div class="bg-white border border-gray-200 rounded-lg p-4">
-                            <h3 class="font-semibold mb-4 text-gray-800 flex items-center">
+                        <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm filter-card">
+                            <h3 class="font-semibold mb-5 text-gray-800 flex items-center">
+                                <i class="fas fa-clipboard-check mr-2 text-orange-600"></i>
                                 Kondisi
                                 <button type="button" id="conditionInfoBtn"
-                                    class="ml-2 w-6 h-6 flex items-center justify-center bg-red-500 text-white text-xs font-bold rounded hover:bg-red-600 focus:outline-none transition-colors"
+                                    class="ml-3 w-7 h-7 flex items-center justify-center bg-gradient-to-r from-red-500 to-red-600 text-white text-xs font-bold rounded-full hover:from-red-600 hover:to-red-700 focus:outline-none transition-all duration-300 shadow-md button-hover"
                                     title="Info tentang kondisi">
-                                    ?
+                                    <i class="fas fa-question"></i>
                                 </button>
                             </h3>
-                            <div class="grid grid-cols-4 gap-y-2 gap-x-8 text-lg">
+                            <div class="grid grid-cols-4 gap-y-3 gap-x-4 text-sm">
                                 @foreach(['L','K','AP','SH','AJB','TK','TP','BR'] as $kondisi)
-                                    <label class="flex items-center">
-                                        <input type="checkbox" name="kondisi[]" value="{{ $kondisi }}" {{ is_array(request('kondisi')) && in_array($kondisi, request('kondisi')) ? 'checked' : '' }} class="mr-2">
-                                        <span>{{ $kondisi }}</span>
+                                    <label class="flex items-center p-2 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                                        <input type="checkbox" name="kondisi[]" value="{{ $kondisi }}"
+                                               {{ is_array(request('kondisi')) && in_array($kondisi, request('kondisi')) ? 'checked' : '' }}
+                                               class="mr-2 w-4 h-4 text-red-600 focus:ring-red-500 rounded">
+                                        <span class="font-medium">{{ $kondisi }}</span>
                                     </label>
                                 @endforeach
                             </div>
@@ -190,43 +321,85 @@
         </div>
     </form>
 
+    <!-- Results Section -->
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-800 flex items-center">
+                <i class="fas fa-list mr-2 text-blue-600"></i>
+                Hasil Pencarian
+            </h2>
+            <div class="text-sm text-gray-500">
+                <i class="fas fa-info-circle mr-1"></i>
+                Menampilkan properti yang tersedia
+            </div>
+        </div>
+    </div>
+
     <!-- Property Grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         @forelse($query as $property)
-            <a href="{{ route('properties.show', $property->id) }}" class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow block">
-                <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+            <a href="{{ route('properties.show', $property->id) }}" class="bg-white rounded-xl shadow-sm overflow-hidden property-card">
+                <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden">
                     @php
                         $mainImage = $property->images->where('is_main', true)->first() ?? $property->images->first();
                     @endphp
                     @if($mainImage)
-                        <img src="{{ asset('storage/'.$mainImage->image_url) }}" alt="{{ $property->nama }}" class="object-cover w-full h-full">
+                        <img src="{{ asset('storage/'.$mainImage->media_url) }}" alt="{{ $property->nama }}" class="object-cover w-full h-full property-image">
                     @else
-                        <span class="text-gray-400">No Image</span>
+                        <div class="text-gray-400 text-center">
+                            <i class="fas fa-image text-4xl mb-2"></i>
+                            <p class="text-sm">No Image</p>
+                        </div>
                     @endif
                 </div>
-                <div class="p-4">
-                    <h4 class="font-semibold text-gray-800 mb-2">{{ $property->nama }}</h4>
-                    <p class="text-gray-600 text-sm mb-2">{{ $property->alamat }}</p>
-                    <p class="text-red-600 font-bold">
-                        @if($property->lelangSchedule)
-                            Rp {{ number_format($property->lelangSchedule->harga_limit_awal, 0, ',', '.') }} - Rp {{ number_format($property->lelangSchedule->harga_limit_akhir, 0, ',', '.') }}
-                        @else
-                            <span class="text-gray-400">Harga belum tersedia</span>
-                        @endif
+                <div class="p-5">
+                    <h4 class="font-semibold text-gray-800 mb-2 line-clamp-2">{{ $property->nama }}</h4>
+                    <p class="text-gray-600 text-sm mb-3 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                        {{ $property->alamat }}
                     </p>
-                    <div class="mt-3 flex justify-between text-xs text-gray-500">
-                        <span>{{ $property->kamar_tidur ?? '-' }} bed</span>
-                        <span>{{ $property->kamar_mandi ?? '-' }} bath</span>
-                        <span>{{ $property->luas_tanah ?? '-' }} m²</span>
+                    <div class="bg-gradient-to-r from-red-50 to-red-100 p-3 rounded-lg mb-3">
+                        <p class="text-red-600 font-bold text-sm">
+                            @if($property->lelangSchedule)
+                                <i class="fas fa-tag mr-1"></i>
+                                Rp {{ number_format($property->lelangSchedule->harga_limit_awal, 0, ',', '.') }} - Rp {{ number_format($property->lelangSchedule->harga_limit_akhir, 0, ',', '.') }}
+                            @else
+                                <span class="text-gray-400">
+                                    <i class="fas fa-clock mr-1"></i>
+                                    Harga belum tersedia
+                                </span>
+                            @endif
+                        </p>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500 border-t pt-3">
+                        <span class="flex items-center">
+                            <i class="fas fa-bed mr-1"></i>
+                            {{ $property->kamar_tidur ?? '-' }} bed
+                        </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-bath mr-1"></i>
+                            {{ $property->kamar_mandi ?? '-' }} bath
+                        </span>
+                        <span class="flex items-center">
+                            <i class="fas fa-ruler-combined mr-1"></i>
+                            {{ $property->luas_tanah ?? '-' }} m²
+                        </span>
                     </div>
                 </div>
             </a>
         @empty
-            <div class="col-span-4 text-center text-gray-500 py-12">Tidak ada properti ditemukan.</div>
+            <div class="col-span-4 text-center py-16">
+                <div class="text-gray-400 mb-4">
+                    <i class="fas fa-search text-6xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">Tidak ada properti ditemukan</h3>
+                <p class="text-gray-500">Coba ubah kriteria pencarian atau filter yang digunakan</p>
+            </div>
         @endforelse
     </div>
+
     <!-- Pagination -->
-    <div>
+    <div class="flex justify-center">
         {{ $query->withQueryString()->links() }}
     </div>
 </div>
@@ -340,45 +513,227 @@
     </div>
 </footer>
 
+<!-- Modal: Daftar -->
+<div id="daftarModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div class="bg-red-900 text-white p-4 rounded-t-lg flex justify-between items-center">
+            <h2 class="text-lg font-bold flex-1 text-center">Daftar</h2>
+            <button onclick="document.getElementById('daftarModal').classList.add('hidden')" class="text-white hover:text-gray-300 ml-4">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <form id="daftarForm" class="p-6 space-y-4">
+            <div>
+                <label for="daftarName" class="block text-gray-700 font-semibold mb-1">Nama</label>
+                <input type="text" id="daftarName" name="name" required class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-300">
+            </div>
+            <div>
+                <label for="daftarPhone" class="block text-gray-700 font-semibold mb-1">No. HP</label>
+                <input type="tel" id="daftarPhone" name="phone" required pattern="[0-9]{10,15}" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-300">
+            </div>
+            <div id="daftarSuccess" class="hidden text-green-600 font-semibold text-center py-2">Pendaftaran berhasil!</div>
+            <button type="submit" class="w-full bg-red-800 text-white font-bold py-2 rounded-lg hover:bg-red-700 transition-all">Kirim</button>
+        </form>
+    </div>
+</div>
+
 <script>
-    // Reset Filter functionality
-    document.getElementById('resetFilterBtn').addEventListener('click', function() {
-        document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-        document.querySelectorAll('input[type="text"]').forEach(input => input.value = '');
-        document.querySelectorAll('select').forEach(select => select.selectedIndex = 0);
-        document.querySelectorAll('input[type="search"]').forEach(input => input.value = '');
+    // Initialize page animations
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add fade-in animation to cards
+        const cards = document.querySelectorAll('.filter-card, .property-card');
+        cards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+            card.classList.add('fade-in');
+        });
     });
 
-    // Modal functionality
+    // Reset Filter functionality with smooth animation
+    document.getElementById('resetFilterBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Add loading state
+        this.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Resetting...';
+
+        setTimeout(() => {
+            // Reset all form elements
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+                cb.closest('label').style.animation = 'fadeInUp 0.3s ease';
+            });
+
+            document.querySelectorAll('input[type="text"], input[type="search"]').forEach(input => {
+                input.value = '';
+                input.style.animation = 'fadeInUp 0.3s ease';
+            });
+
+            document.querySelectorAll('select').forEach(select => {
+                select.selectedIndex = 0;
+                select.style.animation = 'fadeInUp 0.3s ease';
+            });
+
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+                radio.closest('label').style.animation = 'fadeInUp 0.3s ease';
+            });
+
+            // Restore button text
+            this.innerHTML = '<i class="fas fa-redo mr-2"></i>Reset Filter';
+
+            // Navigate to clean search page
+            window.location.href = "{{ route('search') }}";
+        }, 500);
+    });
+
+    // Enhanced Modal functionality
     const modal = document.getElementById('conditionModal');
     const openBtn = document.getElementById('conditionInfoBtn');
     const closeBtn = document.getElementById('closeModal');
 
-    // Open modal
-    openBtn.addEventListener('click', function() {
+    function openModal() {
         modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        document.body.style.overflow = 'hidden';
+        modal.style.animation = 'fadeInUp 0.3s ease';
+    }
+
+    function closeModal() {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+
+    // Open modal
+    openBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        openModal();
     });
 
     // Close modal
-    closeBtn.addEventListener('click', function() {
-        modal.classList.add('hidden');
-        document.body.style.overflow = 'auto'; // Restore scrolling
-    });
+    closeBtn.addEventListener('click', closeModal);
 
     // Close modal when clicking outside
     modal.addEventListener('click', function(e) {
         if (e.target === modal) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
+            closeModal();
         }
     });
 
     // Close modal with Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-            modal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
+            closeModal();
+        }
+    });
+
+    // Enhanced form interactions
+    document.querySelectorAll('input, select').forEach(element => {
+        element.addEventListener('focus', function() {
+            this.closest('.filter-card')?.classList.add('ring-2', 'ring-red-200');
+        });
+
+        element.addEventListener('blur', function() {
+            this.closest('.filter-card')?.classList.remove('ring-2', 'ring-red-200');
+        });
+    });
+
+    // Add smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add search input enhancement
+    const searchInput = document.querySelector('input[name="q"]');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                this.style.paddingRight = '40px';
+            } else {
+                this.style.paddingRight = '16px';
+            }
+        });
+    }
+
+    // Add CSS animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-20px); }
+        }
+
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .property-card:hover .property-image {
+            transform: scale(1.05);
+        }
+
+        .filter-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .filter-card:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Daftar Modal Form Submission
+    document.getElementById('daftarForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const name = document.getElementById('daftarName').value;
+        const phone = document.getElementById('daftarPhone').value;
+        const successDiv = document.getElementById('daftarSuccess');
+        let errorDiv = document.getElementById('daftarError');
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = 'daftarError';
+            errorDiv.className = 'text-red-600 font-semibold text-center py-2';
+            this.insertBefore(errorDiv, this.querySelector('button[type="submit"]'));
+        }
+        errorDiv.classList.add('hidden');
+        successDiv.classList.add('hidden');
+        try {
+            const res = await fetch('/daftar-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ name, phone })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                successDiv.textContent = data.message || 'Pendaftaran berhasil!';
+                successDiv.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById('daftarModal').classList.add('hidden');
+                    successDiv.classList.add('hidden');
+                    document.getElementById('daftarForm').reset();
+                }, 1500);
+            } else {
+                errorDiv.textContent = data.message || 'Terjadi kesalahan.';
+                errorDiv.classList.remove('hidden');
+            }
+        } catch (err) {
+            errorDiv.textContent = 'Gagal mengirim data. Coba lagi.';
+            errorDiv.classList.remove('hidden');
         }
     });
 </script>

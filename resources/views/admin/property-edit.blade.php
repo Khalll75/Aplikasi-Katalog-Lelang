@@ -279,7 +279,7 @@
                 <div id="image-list" class="space-y-3">
                     @foreach($property->images as $i => $img)
                         <div class="image-input-group">
-                            <img src="{{ asset('storage/'.$img->image_url) }}" width="120" class="rounded shadow">
+                            <img src="{{ asset('storage/'.$img->media_url) }}" width="120" class="rounded shadow">
                             <label class="radio-group ml-4">
                                 <input type="radio" name="main_image" value="{{ $i }}" {{ $img->is_main ? 'checked' : '' }}>
                                 <span>Gambar Utama</span>

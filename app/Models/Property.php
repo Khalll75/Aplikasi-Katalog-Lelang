@@ -11,9 +11,19 @@ class Property extends Model
         'kamar_tidur', 'kamar_mandi', 'listrik', 'air', 'kondisi', 'kategori_lot'
     ];
 
+    public function media()
+    {
+        return $this->hasMany(PropertyMedia::class);
+    }
+
     public function images()
     {
-        return $this->hasMany(PropertyImage::class);
+        return $this->hasMany(PropertyMedia::class)->where('media_type', 'image');
+    }
+
+    public function videos()
+    {
+        return $this->hasMany(PropertyMedia::class)->where('media_type', 'video');
     }
 
     public function lelangSchedule()
