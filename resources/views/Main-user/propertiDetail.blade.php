@@ -45,10 +45,13 @@
 <!-- Header -->
 <header class="bg-gradient-to-r from-red-900 to-red-800 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-lg backdrop-blur-sm">
     <div class="container mx-auto px-4 flex justify-between items-center">
-        <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
-            <i class="fas fa-gavel mr-2"></i>
-            Beranda
-        </a>
+        <div class="flex items-center">
+            <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
+            <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
+                <i class="fas fa-gavel mr-2"></i>
+                Beranda
+            </a>
+        </div>
         <div class="flex items-center space-x-4">
             <div class="relative">
                 <form action="{{ route('search') }}" method="GET">
@@ -63,6 +66,7 @@
                 <i class="fas fa-user-plus mr-2"></i>
                 Daftar
             </button>
+            <!-- Logo removed from right side -->
         </div>
     </div>
 </header>
@@ -206,6 +210,22 @@
                         <span class="text-base font-semibold text-gray-900 ml-2">Kode Aset :</span>
                         <span class="flex-1 mx-4 text-base font-normal text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">{{ $property->kode_aset }}</span>
                     </div>
+                    <!-- Kategori Lot Row -->
+                    <div class="bg-white rounded-xl p-4 shadow-md border-2 border-yellow-200 flex items-center min-h-[48px]">
+                        <span class="text-base font-semibold text-gray-900 ml-2">Kategori Lot :</span>
+                        <span class="flex-1 mx-4 text-base font-normal text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">
+                            @php
+                                $kategoriLabels = [
+                                    'gudang' => 'Gudang',
+                                    'ruko' => 'Ruko',
+                                    'rumah_tinggal' => 'Rumah Tinggal',
+                                    'tanah_kebun' => 'Tanah Kebun',
+                                    'tanah_kosong' => 'Tanah Kosong',
+                                ];
+                            @endphp
+                            {{ $kategoriLabels[$property->kategori_lot] ?? $property->kategori_lot }}
+                        </span>
+                    </div>
                     <!-- Kondisi Row -->
                     <div class="bg-white rounded-xl p-4 shadow-md border-2 border-yellow-200 flex items-center min-h-[48px]">
                         <span class="text-base font-semibold text-gray-900 ml-2">Kondisi :</span>
@@ -237,11 +257,8 @@
             <div class="bg-white rounded-xl p-6 shadow-md border-2 border-yellow-200 flex flex-col items-center text-center">
                 <div class="text-yellow-700 text-lg font-semibold mb-1">Limit Lelang</div>
                 @if($property->lelangSchedule)
-                    <div class="text-gray-500 text-xl mb-1 line-through font-semibold">
-                        Rp. {{ number_format($property->lelangSchedule->harga_limit_awal, 0, ',', '.') }}
-                    </div>
                     <div class="text-orange-700 text-4xl md:text-5xl font-extrabold mt-1 mb-1">
-                        Rp. {{ number_format($property->lelangSchedule->harga_limit_akhir, 0, ',', '.') }}
+                        Rp. {{ number_format($property->lelangSchedule->limit_lelang, 0, ',', '.') }}
                     </div>
                 @else
                     <div class="text-gray-400">Belum ada data lelang</div>

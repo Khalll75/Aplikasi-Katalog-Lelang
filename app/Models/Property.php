@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Property extends Model
 {
     protected $fillable = [
-        'kode_aset', 'nama', 'alamat', 'luas_tanah', 'luas_bangunan',
+        'kode_aset', 'alamat', 'luas_tanah', 'luas_bangunan',
         'kamar_tidur', 'kamar_mandi', 'listrik', 'air', 'kondisi', 'kategori_lot'
     ];
 

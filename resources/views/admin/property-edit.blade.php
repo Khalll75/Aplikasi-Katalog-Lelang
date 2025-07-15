@@ -117,25 +117,20 @@
 </head>
 <body class="bg-gray-50">
     <div style="position:fixed;z-index:0;top:0;left:0;width:100vw;height:100vh;background:url('/images/jalan%20setapak%20gang%20rumah%20yang%20syahdu.jpg') center center/cover no-repeat;filter:blur(8px);opacity:0.5;pointer-events:none;"></div>
-    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+    <nav class="border-b border-gray-100 sticky top-0 z-10" style="background: linear-gradient(to right, #3BA798, #ffffff);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="shrink-0 flex items-center">
-                        <a href="{{ route('dashboard') }}">
-                            <svg class="block h-9 w-auto text-green-700" fill="none" viewBox="0 0 24 24">
-                                <path d="M3 12L12 3L21 12" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M5 10V21H19V10" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-700 hover:border-green-600 hover:text-green-700 focus:outline-none transition duration-150 ease-in-out">
-                            Admin Dashboard
-                        </a>
-                        <a href="{{ route('admin.lelang.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-700 hover:border-green-600 hover:text-green-700 focus:outline-none transition duration-150 ease-in-out">
-                            Kelola Lelang
-                        </a>
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center">
+                    <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
+                    <div class="flex">
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-green-600 text-green-700 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
+                                Admin Dashboard
+                            </a>
+                            <a href="{{ route('admin.lelang.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-700 hover:border-green-600 hover:text-green-700 focus:outline-none transition duration-150 ease-in-out">
+                                Kelola Lelang
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -159,15 +154,9 @@
             <!-- Informasi Dasar -->
             <div class="form-section">
                 <h2 class="text-lg font-semibold text-gray-900 mb-6">Informasi Dasar</h2>
-                <div class="grid-2">
-                    <div class="mb-4">
-                        <label for="kode_aset" class="form-label required">Kode Aset</label>
-                        <input type="text" name="kode_aset" id="kode_aset" class="form-input" value="{{ old('kode_aset', $property->kode_aset) }}" required>
-                    </div>
-                    <div class="mb-4">
-                        <label for="nama" class="form-label required">Nama Properti</label>
-                        <input type="text" name="nama" id="nama" class="form-input" value="{{ old('nama', $property->nama) }}" required>
-                    </div>
+                <div class="mb-4">
+                    <label for="kode_aset" class="form-label required">Kode Aset</label>
+                    <input type="text" name="kode_aset" id="kode_aset" class="form-input" value="{{ old('kode_aset', $property->kode_aset) }}" required>
                 </div>
                 <div class="mb-4">
                     <label for="alamat" class="form-label required">Alamat</label>
@@ -264,9 +253,11 @@
                     <label for="kategori_lot" class="form-label required">Kategori Lot</label>
                     <select name="kategori_lot" id="kategori_lot" class="form-input" required>
                         <option value="">Pilih Kategori</option>
-                        <option value="rumah" {{ old('kategori_lot', $property->kategori_lot) == 'rumah' ? 'selected' : '' }}>Rumah</option>
+                        <option value="gudang" {{ old('kategori_lot', $property->kategori_lot) == 'gudang' ? 'selected' : '' }}>Gudang</option>
                         <option value="ruko" {{ old('kategori_lot', $property->kategori_lot) == 'ruko' ? 'selected' : '' }}>Ruko</option>
-                        <option value="tanah" {{ old('kategori_lot', $property->kategori_lot) == 'tanah' ? 'selected' : '' }}>Tanah</option>
+                        <option value="rumah_tinggal" {{ old('kategori_lot', $property->kategori_lot) == 'rumah_tinggal' ? 'selected' : '' }}>Rumah Tinggal</option>
+                        <option value="tanah_kebun" {{ old('kategori_lot', $property->kategori_lot) == 'tanah_kebun' ? 'selected' : '' }}>Tanah Kebun</option>
+                        <option value="tanah_kosong" {{ old('kategori_lot', $property->kategori_lot) == 'tanah_kosong' ? 'selected' : '' }}>Tanah Kosong</option>
                     </select>
                     @error('kategori_lot')
                         <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -318,19 +309,11 @@
                         <input type="text" name="lokasi_lelang" id="lokasi_lelang" class="form-input" value="{{ old('lokasi_lelang', optional($property->lelangSchedule)->lokasi) }}" placeholder="Contoh: Kantor Lelang Jakarta">
                     </div>
                 </div>
-                <div class="grid-2 mb-4">
-                    <div>
-                        <label for="harga_limit_awal" class="form-label">Harga Limit Sebelum</label>
-                        <input type="number" name="harga_limit_awal" id="harga_limit_awal" class="form-input" min="0" step="1" value="{{ old('harga_limit_awal', optional($property->lelangSchedule)->harga_limit_awal) }}" oninput="formatRupiahPreview2()">
-                        <p class="upload-hint">Masukkan harga limit sebelum (akan dicoret)</p>
-                        <div id="harga_limit_awal_preview" class="text-gray-500 font-semibold mt-1 line-through"></div>
-                    </div>
-                    <div>
-                        <label for="harga_limit_akhir" class="form-label">Harga Limit Setelah</label>
-                        <input type="number" name="harga_limit_akhir" id="harga_limit_akhir" class="form-input" min="0" step="1" value="{{ old('harga_limit_akhir', optional($property->lelangSchedule)->harga_limit_akhir) }}" oninput="formatRupiahPreview2()">
-                        <p class="upload-hint">Masukkan harga limit setelah (harga final lelang)</p>
-                        <div id="harga_limit_akhir_preview" class="text-yellow-600 font-bold mt-1" style="font-size:1.3em;"></div>
-                    </div>
+                <div class="mb-4">
+                    <label for="limit_lelang" class="form-label">Limit Lelang</label>
+                    <input type="number" name="limit_lelang" id="limit_lelang" class="form-input" min="0" step="1" value="{{ old('limit_lelang', optional($property->lelangSchedule)->limit_lelang) }}" oninput="formatRupiahPreview2()">
+                    <p class="upload-hint">Masukkan limit lelang (harga final lelang)</p>
+                    <div id="limit_lelang_preview" class="text-yellow-600 font-bold mt-1" style="font-size:1.3em;"></div>
                 </div>
             </div>
             <!-- Point of Interest -->
@@ -469,14 +452,10 @@
         }
         // Format currency input (preview only)
         function formatRupiahPreview2() {
-            const awal = document.getElementById('harga_limit_awal');
-            const akhir = document.getElementById('harga_limit_akhir');
-            const awalPreview = document.getElementById('harga_limit_awal_preview');
-            const akhirPreview = document.getElementById('harga_limit_akhir_preview');
-            let vAwal = awal.value;
-            let vAkhir = akhir.value;
-            awalPreview.textContent = vAwal ? 'Rp ' + Number(vAwal.replace(/[^\d]/g, '')).toLocaleString('id-ID') : '';
-            akhirPreview.textContent = vAkhir ? 'Rp ' + Number(vAkhir.replace(/[^\d]/g, '')).toLocaleString('id-ID')+',-' : '';
+            const limit = document.getElementById('limit_lelang');
+            const limitPreview = document.getElementById('limit_lelang_preview');
+            let vLimit = limit.value;
+            limitPreview.textContent = vLimit ? 'Rp ' + Number(vLimit.replace(/[^\d]/g, '')).toLocaleString('id-ID')+',-' : '';
         }
         window.addEventListener('DOMContentLoaded', formatRupiahPreview2);
     </script>

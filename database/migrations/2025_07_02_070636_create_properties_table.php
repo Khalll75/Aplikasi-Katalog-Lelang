@@ -9,7 +9,6 @@ return new class extends Migration {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('kode_aset')->unique();
-            $table->string('nama')->nullable();
             $table->text('alamat');
             $table->integer('luas_tanah');
             $table->integer('luas_bangunan');

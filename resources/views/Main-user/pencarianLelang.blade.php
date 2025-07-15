@@ -74,14 +74,20 @@
 <!-- Header -->
 <header class="bg-gradient-to-r from-red-900 to-red-800 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-lg backdrop-blur-sm">
     <div class="container mx-auto px-4 flex justify-between items-center">
-        <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
-            <i class="fas fa-gavel mr-2"></i>
-            Beranda
-        </a>
-        <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
-            <i class="fas fa-user-plus mr-2"></i>
-            Daftar
-        </button>
+        <div class="flex items-center">
+            <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
+            <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
+                <i class="fas fa-gavel mr-2"></i>
+                Beranda
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
+                <i class="fas fa-user-plus mr-2"></i>
+                Daftar
+            </button>
+            <!-- Logo removed from right side -->
+        </div>
     </div>
 </header>
 
@@ -112,7 +118,7 @@
                             Kategori Lot Lelang
                         </h3>
                         <div class="space-y-3">
-                            @foreach(['rumah' => 'Rumah', 'ruko' => 'Ruko', 'tanah' => 'Tanah'] as $key => $label)
+                            @foreach(['gudang' => 'Gudang', 'ruko' => 'Ruko', 'rumah_tinggal' => 'Rumah Tinggal', 'tanah_kebun' => 'Tanah Kebun', 'tanah_kosong' => 'Tanah Kosong'] as $key => $label)
                                 <label class="flex items-center p-2 rounded-lg hover:bg-red-50 transition-colors cursor-pointer">
                                     <input type="radio" name="kategori_lot" value="{{ $key }}" class="mr-3 w-4 h-4 text-red-600 focus:ring-red-500"
                                         {{ request('kategori_lot') === $key ? 'checked' : '' }}>
@@ -152,7 +158,7 @@
                     <div class="flex flex-wrap items-center gap-4">
                         <div class="flex-1 min-w-0 relative">
                             <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                            <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari berdasarkan nama, alamat, atau lokasi..."
+                            <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari berdasarkan kode aset, alamat, atau lokasi..."
                                    class="w-full border-2 border-gray-300 rounded-lg pl-12 pr-4 py-3 input-focus focus:border-red-500 focus:outline-none">
                         </div>
                         <button type="submit" class="bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-800 px-6 py-3 rounded-lg font-medium hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 button-hover shadow-md">
@@ -353,7 +359,7 @@
                     @endif
                 </div>
                 <div class="p-5">
-                    <h4 class="font-semibold text-gray-800 mb-2 line-clamp-2">{{ $property->nama }}</h4>
+                    <h4 class="font-semibold text-gray-800 mb-2 line-clamp-2">{{ $property->kode_aset }}</h4>
                     <p class="text-gray-600 text-sm mb-3 flex items-center">
                         <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
                         {{ $property->alamat }}
@@ -362,7 +368,7 @@
                         <p class="text-red-600 font-bold text-sm">
                             @if($property->lelangSchedule)
                                 <i class="fas fa-tag mr-1"></i>
-                                Rp {{ number_format($property->lelangSchedule->harga_limit_awal, 0, ',', '.') }} - Rp {{ number_format($property->lelangSchedule->harga_limit_akhir, 0, ',', '.') }}
+                                Rp {{ number_format($property->lelangSchedule->limit_lelang, 0, ',', '.') }}
                             @else
                                 <span class="text-gray-400">
                                     <i class="fas fa-clock mr-1"></i>

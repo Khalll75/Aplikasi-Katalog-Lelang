@@ -60,8 +60,7 @@ class PropertyController extends Controller
         if ($request->filled('search')) {
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
-                $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('alamat', 'like', "%{$search}%")
+                $q->where('alamat', 'like', "%{$search}%")
                   ->orWhere('kode_aset', 'like', "%{$search}%");
             });
         }
@@ -88,8 +87,7 @@ class PropertyController extends Controller
         if ($request->filled('q')) {
             $q = $request->q;
             $query->where(function ($sub) use ($q) {
-                $sub->where('nama', 'like', "%{$q}%")
-                    ->orWhere('alamat', 'like', "%{$q}%")
+                $sub->where('alamat', 'like', "%{$q}%")
                     ->orWhere('kode_aset', 'like', "%{$q}%");
             });
         }
@@ -97,12 +95,12 @@ class PropertyController extends Controller
         // Harga
         if ($request->filled('harga_min')) {
             $query->whereHas('lelangSchedule', function ($q) use ($request) {
-                $q->where('harga_limit_akhir', '>=', $request->harga_min);
+                $q->where('limit_lelang', '>=', $request->harga_min);
             });
         }
         if ($request->filled('harga_max')) {
             $query->whereHas('lelangSchedule', function ($q) use ($request) {
-                $q->where('harga_limit_akhir', '<=', $request->harga_max);
+                $q->where('limit_lelang', '<=', $request->harga_max);
             });
         }
 
@@ -179,7 +177,6 @@ class PropertyController extends Controller
     {
         $validated = $request->validate([
             'kode_aset' => 'required|string|max:255|unique:properties',
-            'nama' => 'required|string|max:255',
             'alamat' => 'required|string',
             'luas_tanah' => 'required|numeric|min:0',
             'luas_bangunan' => 'nullable|numeric|min:0',
@@ -224,13 +221,12 @@ class PropertyController extends Controller
             }
         }
         // Lelang Schedule
-        if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('harga_limit_awal') || $request->filled('harga_limit_akhir')) {
+        if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('limit_lelang')) {
             LelangSchedule::create([
                 'property_id' => $property->id,
                 'tanggal' => $request->input('tanggal_lelang'),
                 'lokasi' => $request->input('lokasi_lelang'),
-                'harga_limit_awal' => $request->input('harga_limit_awal'),
-                'harga_limit_akhir' => $request->input('harga_limit_akhir'),
+                'limit_lelang' => $request->input('limit_lelang'),
             ]);
         }
         // Points of Interest
@@ -267,7 +263,6 @@ class PropertyController extends Controller
         // Validate the request
         $validatedData = $request->validate([
             'kode_aset' => 'required|string|max:255|unique:properties,kode_aset,' . $property->id,
-            'nama' => 'required|string|max:255',
             'alamat' => 'required|string',
             'luas_tanah' => 'required|numeric|min:0',
             'luas_bangunan' => 'nullable|numeric|min:0',
@@ -287,8 +282,7 @@ class PropertyController extends Controller
             // Lelang Schedule validation
             'tanggal_lelang' => 'nullable|date',
             'lokasi_lelang' => 'nullable|string|max:255',
-            'harga_limit_awal' => 'nullable|numeric|min:0',
-            'harga_limit_akhir' => 'nullable|numeric|min:0',
+            'limit_lelang' => 'nullable|numeric|min:0',
 
             // Points of Interest validation
             'points_of_interest.*' => 'nullable|string|max:500',
@@ -308,7 +302,6 @@ class PropertyController extends Controller
             // Update the property
             $property->update([
                 'kode_aset' => $validatedData['kode_aset'],
-                'nama' => $validatedData['nama'],
                 'alamat' => $validatedData['alamat'],
                 'luas_tanah' => $validatedData['luas_tanah'],
                 'luas_bangunan' => $validatedData['luas_bangunan'] ?? null,
@@ -354,14 +347,13 @@ class PropertyController extends Controller
             }
 
             // Update lelang schedule
-            if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('harga_limit_awal') || $request->filled('harga_limit_akhir')) {
+            if ($request->filled('tanggal_lelang') || $request->filled('lokasi_lelang') || $request->filled('limit_lelang')) {
                 $property->lelangSchedule()->updateOrCreate(
                     ['property_id' => $property->id],
                     [
                         'tanggal' => $request->input('tanggal_lelang'),
                         'lokasi' => $request->input('lokasi_lelang'),
-                        'harga_limit_awal' => $request->input('harga_limit_awal'),
-                        'harga_limit_akhir' => $request->input('harga_limit_akhir'),
+                        'limit_lelang' => $request->input('limit_lelang'),
                     ]
                 );
             } else {

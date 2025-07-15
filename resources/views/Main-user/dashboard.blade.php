@@ -241,14 +241,20 @@
         <!-- Header -->
         <header class="bg-gradient-to-r from-red-900 to-red-800 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-lg backdrop-blur-sm">
             <div class="container mx-auto px-4 flex justify-between items-center">
-                <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
-                    <i class="fas fa-gavel mr-2"></i>
-                    Beranda
-                </a>
-                <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
-                    <i class="fas fa-user-plus mr-2"></i>
-                    Daftar
-                </button>
+                <div class="flex items-center">
+                    <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
+                    <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
+                        <i class="fas fa-gavel mr-2"></i>
+                        Beranda
+                    </a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Daftar
+                    </button>
+                    <!-- Logo removed from right side -->
+                </div>
             </div>
         </header>
 
@@ -296,33 +302,49 @@
                     </a>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Rumah -->
-                    <a href="{{ route('search', ['kategori_lot' => 'rumah']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group">
-                        <div class="w-16 h-16 mx-auto mb-4 bg-red-50 rounded-xl flex items-center justify-center group-hover:bg-red-100 transition-colors">
-                            <i class="fa-solid fa-house text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
-                        </div>
-                        <div class="font-semibold text-gray-800 text-lg mb-1">Rumah</div>
-                        <div class="text-gray-500 text-sm">Hunian untuk keluarga</div>
-                    </a>
-
-                    <!-- Ruko -->
-                    <a href="{{ route('search', ['kategori_lot' => 'ruko']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group">
-                        <div class="w-16 h-16 mx-auto mb-4 bg-yellow-50 rounded-xl flex items-center justify-center group-hover:bg-yellow-100 transition-colors">
-                            <i class="fa-solid fa-store text-2xl text-yellow-600 group-hover:scale-110 transition-transform"></i>
-                        </div>
-                        <div class="font-semibold text-gray-800 text-lg mb-1">Ruko</div>
-                        <div class="text-gray-500 text-sm">Properti komersial</div>
-                    </a>
-
-                    <!-- Tanah -->
-                    <a href="{{ route('search', ['kategori_lot' => 'tanah']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group">
-                        <div class="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-100 transition-colors">
-                            <i class="fa-solid fa-mountain text-2xl text-green-600 group-hover:scale-110 transition-transform"></i>
-                        </div>
-                        <div class="font-semibold text-gray-800 text-lg mb-1">Tanah</div>
-                        <div class="text-gray-500 text-sm">Investasi masa depan</div>
-                    </a>
+                <div class="overflow-x-auto scrollbar-hide">
+                    <div class="flex space-x-6 pb-4 justify-center" style="width: max-content; margin-left: auto; margin-right: auto;">
+                        <!-- Gudang -->
+                        <a href="{{ route('search', ['kategori_lot' => 'gudang']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-gray-50 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-colors">
+                                <i class="fa-solid fa-warehouse text-2xl text-gray-600 group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <div class="font-semibold text-gray-800 text-lg mb-1">Gudang</div>
+                            <div class="text-gray-500 text-sm">Penyimpanan & logistik</div>
+                        </a>
+                        <!-- Ruko -->
+                        <a href="{{ route('search', ['kategori_lot' => 'ruko']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-yellow-50 rounded-xl flex items-center justify-center group-hover:bg-yellow-100 transition-colors">
+                                <i class="fa-solid fa-store text-2xl text-yellow-600 group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <div class="font-semibold text-gray-800 text-lg mb-1">Ruko</div>
+                            <div class="text-gray-500 text-sm">Properti komersial</div>
+                        </a>
+                        <!-- Rumah Tinggal -->
+                        <a href="{{ route('search', ['kategori_lot' => 'rumah_tinggal']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-red-50 rounded-xl flex items-center justify-center group-hover:bg-red-100 transition-colors">
+                                <i class="fa-solid fa-house text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <div class="font-semibold text-gray-800 text-lg mb-1">Rumah Tinggal</div>
+                            <div class="text-gray-500 text-sm">Hunian keluarga</div>
+                        </a>
+                        <!-- Tanah Kebun -->
+                        <a href="{{ route('search', ['kategori_lot' => 'tanah_kebun']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                                <i class="fa-solid fa-seedling text-2xl text-green-600 group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <div class="font-semibold text-gray-800 text-lg mb-1">Tanah Kebun</div>
+                            <div class="text-gray-500 text-sm">Lahan perkebunan</div>
+                        </a>
+                        <!-- Tanah Kosong -->
+                        <a href="{{ route('search', ['kategori_lot' => 'tanah_kosong']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                            <div class="w-16 h-16 mx-auto mb-4 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                                <i class="fa-solid fa-mountain text-2xl text-blue-600 group-hover:scale-110 transition-transform"></i>
+                            </div>
+                            <div class="font-semibold text-gray-800 text-lg mb-1">Tanah Kosong</div>
+                            <div class="text-gray-500 text-sm">Lahan kosong siap bangun</div>
+                        </a>
+                    </div>
                 </div>
             </section>
 

@@ -11,8 +11,7 @@ return new class extends Migration {
             $table->foreignId('property_id')->constrained()->onDelete('cascade');
             $table->date('tanggal')->nullable();
             $table->string('lokasi')->nullable();
-            $table->bigInteger('harga_limit_awal')->nullable();
-            $table->bigInteger('harga_limit_akhir')->nullable();
+            $table->bigInteger('limit_lelang')->nullable();
             $table->timestamps();
         });
     }
