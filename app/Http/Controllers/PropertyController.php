@@ -160,7 +160,7 @@ class PropertyController extends Controller
             });
         }
 
-        $query = $query->latest()->paginate(12)->withQueryString();
+        $query = $query->orderByDesc('id')->paginate(12)->withQueryString();
 
         $kategori_lot = $request->kategori_lot;
         $search = $request->q;
@@ -443,8 +443,8 @@ class PropertyController extends Controller
      */
     public function adminLelangIndex()
     {
-        $lelangs = \App\Models\LelangSchedule::with('property')->orderByDesc('tanggal')->paginate(15);
-        return view('admin.lelang-index', compact('lelangs'));
+        $properties = \App\Models\Property::orderByDesc('id')->paginate(15);
+        return view('admin.lelang-index', compact('properties'));
     }
 
     public function edit(Property $property)

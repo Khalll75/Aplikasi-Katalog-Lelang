@@ -48,7 +48,7 @@
         }
     </style>
 </head>
-<body x-data="{ mobileMenuOpen: false }">
+<body x-data="{ mobileMenuOpen: false }" style="min-height: 100vh; display: flex; flex-direction: column;">
     <div style="position:fixed;z-index:0;top:0;left:0;width:100vw;height:100vh;background:url('/images/pic1.jpg') center center/cover no-repeat;filter:blur(8px);opacity:0.5;pointer-events:none;"></div>
 
     <nav class="border-b border-gray-100 sticky top-0 z-10" style="background: linear-gradient(to right, #3BA798, #ffffff);">
@@ -109,7 +109,7 @@
         </div>
     </nav>
 
-    <div class="container">
+    <div class="container" style="flex: 1 0 auto;">
         <div class="welcome">
             <h2>Selamat Datang, Admin!</h2>
             <p>Kelola properti Anda dengan mudah dan efisien</p>
@@ -148,24 +148,10 @@
             </div>
         </div>
 
-        <div class="activity">
-            <h3>Aktivitas Terbaru</h3>
-            @forelse($recentActivities as $activity)
-                <div class="activity-item">
-                    <div class="activity-content">
-                        <div class="activity-dot {{ $activity['type'] === 'created' ? 'green' : ($activity['type'] === 'updated' ? 'blue' : 'yellow') }}"></div>
-                        <span class="activity-text">{{ $activity['text'] }}</span>
-                    </div>
-                    <span class="activity-time">{{ $activity['time'] }}</span>
-                </div>
-            @empty
-                <div class="text-gray-400 text-center py-8">Belum ada aktivitas properti terbaru.</div>
-            @endforelse
-        </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12">
+    <footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12" style="flex-shrink: 0;">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
                 <!-- Nama Aplikasi -->

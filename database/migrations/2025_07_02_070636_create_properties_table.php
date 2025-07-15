@@ -8,17 +8,16 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_aset')->unique();
+            $table->string('kode_aset');
             $table->text('alamat');
-            $table->integer('luas_tanah');
-            $table->integer('luas_bangunan');
-            $table->integer('kamar_tidur');
-            $table->integer('kamar_mandi');
-            $table->string('listrik');
-            $table->string('air');
-            $table->string('kondisi');
-            $table->string('kategori_lot');
-            $table->timestamps();
+            $table->integer('luas_tanah')->nullable();
+            $table->integer('luas_bangunan')->nullable();
+            $table->integer('kamar_tidur')->nullable();
+            $table->integer('kamar_mandi')->nullable();
+            $table->string('listrik')->nullable();
+            $table->string('air')->nullable();
+            $table->string('kondisi')->nullable();
+            $table->string('kategori_lot')->nullable();
         });
     }
 

@@ -406,7 +406,23 @@
 
     <!-- Pagination -->
     <div class="flex justify-center">
-        {{ $query->withQueryString()->links() }}
+        <div class="mt-6">
+            <style>
+                .pagination-theme {
+                    @apply flex items-center space-x-1;
+                }
+                .pagination-theme .active {
+                    @apply bg-red-600 text-white font-bold;
+                }
+                .pagination-theme a, .pagination-theme span {
+                    @apply bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition;
+                }
+                .pagination-theme .disabled {
+                    @apply opacity-50 cursor-not-allowed;
+                }
+            </style>
+            {{ $query->withQueryString()->links('vendor.pagination.tailwind-custom') }}
+        </div>
     </div>
 </div>
 

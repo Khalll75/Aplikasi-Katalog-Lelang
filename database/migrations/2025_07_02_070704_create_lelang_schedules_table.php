@@ -12,7 +12,6 @@ return new class extends Migration {
             $table->date('tanggal')->nullable();
             $table->string('lokasi')->nullable();
             $table->bigInteger('limit_lelang')->nullable();
-            $table->timestamps();
         });
     }
 

@@ -57,21 +57,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                @forelse($lelangs as $lelang)
+                @forelse($properties as $property)
                     <tr class="hover:bg-gray-50 transition">
                         <td class="text-lg font-medium text-gray-800 text-center">
-                            {{ $lelang->property->kode_aset ?? '-' }}
+                            {{ $property->kode_aset }}
                         </td>
                         <td>
-                            @if($lelang->property)
                             <div class="flex justify-center gap-2">
-                                <a href="{{ route('admin.properties.edit', $lelang->property->id) }}" class="action-btn bg-yellow-500 hover:bg-yellow-600 inline-flex items-center">
+                                <a href="{{ route('admin.properties.edit', $property->id) }}" class="action-btn bg-yellow-500 hover:bg-yellow-600 inline-flex items-center">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5h2m-1 0v14m-7-7h14"/>
                                     </svg>
                                     Edit
                                 </a>
-                                <form action="{{ route('admin.properties.destroy', $lelang->property->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus properti ini?')" class="inline">
+                                <form action="{{ route('admin.properties.destroy', $property->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus properti ini?')" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="action-btn bg-red-500 hover:bg-red-600 inline-flex items-center">
@@ -82,20 +81,17 @@
                                     </button>
                                 </form>
                             </div>
-                            @else
-                            <div class="text-center text-gray-400">-</div>
-                            @endif
                         </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="2" class="text-center text-gray-500 py-8">Belum ada data lelang.</td>
+                        <td colspan="2" class="text-center text-gray-500 py-8">Belum ada data properti.</td>
                     </tr>
                 @endforelse
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $lelangs->links() }}
+                {{ $properties->links() }}
             </div>
         </div>
     </div>

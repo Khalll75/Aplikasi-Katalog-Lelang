@@ -89,6 +89,36 @@
             transform: translateY(-1px);
             box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+        }
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            border-color: #9ca3af;
+        }
+        .btn-danger {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            border: 1px solid #fecaca;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+        }
+        .btn-danger:hover {
+            background: #fee2e2;
+            border-color: #f87171;
+        }
         .help-icon {
             display: inline-flex;
             align-items: center;
@@ -117,7 +147,7 @@
 </head>
 <body class="bg-gray-50">
     <div style="position:fixed;z-index:0;top:0;left:0;width:100vw;height:100vh;background:url('/images/jalan%20setapak%20gang%20rumah%20yang%20syahdu.jpg') center center/cover no-repeat;filter:blur(8px);opacity:0.5;pointer-events:none;"></div>
-    <nav class="border-b border-gray-100 sticky top-0 z-10" style="background: linear-gradient(to right, #3BA798, #ffffff);">
+    <nav class="border-b border-gray-100 sticky top-0 z-50" style="background: linear-gradient(to right, #3BA798, #ffffff);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
@@ -136,7 +166,7 @@
             </div>
         </div>
     </nav>
-    <div class="max-w-2xl mx-auto mt-20 relative z-10">
+    <div class="max-w-2xl mx-auto mt-28 relative z-10">
         <h1 class="text-2xl font-bold mb-4">Edit Properti</h1>
         <a href="{{ url()->previous() }}" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded mb-6">Kembali</a>
         @if ($errors->any())

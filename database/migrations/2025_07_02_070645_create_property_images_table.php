@@ -9,13 +9,12 @@ return new class extends Migration {
         Schema::create('property_media', function (Blueprint $table) {
             $table->id();
             $table->foreignId('property_id')->constrained()->onDelete('cascade');
-            $table->string('media_url');
-            $table->string('media_type')->default('image'); // 'image' or 'video'
+            $table->string('media_url')->nullable();
+            $table->string('media_type')->default('image')->nullable(); // 'image' or 'video'
             $table->integer('duration')->nullable(); // For videos, in seconds
             $table->string('format')->nullable(); // File format (jpg, png, mp4, etc.)
             $table->string('resolution')->nullable(); // For videos: 1920x1080, etc.
-            $table->boolean('is_main')->default(false);
-            $table->timestamps();
+            $table->boolean('is_main')->default(false)->nullable();
         });
     }
 

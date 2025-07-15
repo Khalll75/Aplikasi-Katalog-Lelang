@@ -18,22 +18,22 @@ Route::post('/daftar-user', [\App\Http\Controllers\DaftarUserController::class, 
 // Admin routes
 Route::get('/dashboard', function () {
     $totalProperties = \App\Models\Property::count();
-    $recentProperties = \App\Models\Property::with(['images'])
-        ->orderByDesc('updated_at')
-        ->take(5)
-        ->get();
-    $recentActivities = $recentProperties->map(function($property) {
-        $activityType = $property->created_at->eq($property->updated_at) ? 'created' : 'updated';
-        $activityText = $activityType === 'created'
-            ? 'Properti "' . $property->kode_aset . '" berhasil ditambahkan'
-            : 'Status properti "' . $property->kode_aset . '" diperbarui';
-        return [
-            'text' => $activityText,
-            'time' => $property->updated_at->diffForHumans(),
-            'type' => $activityType
-        ];
-    });
-    return view('AdminDashboard', compact('totalProperties', 'recentActivities'));
+    // $recentProperties = \App\Models\Property::with(['images'])
+    //     ->orderByDesc('updated_at')
+    //     ->take(5)
+    //     ->get();
+    // $recentActivities = $recentProperties->map(function($property) {
+    //     $activityType = $property->created_at->eq($property->updated_at) ? 'created' : 'updated';
+    //     $activityText = $activityType === 'created'
+    //         ? 'Properti "' . $property->kode_aset . '" berhasil ditambahkan'
+    //         : 'Status properti "' . $property->kode_aset . '" diperbarui';
+    //     return [
+    //         'text' => $activityText,
+    //         'time' => $property->updated_at->diffForHumans(),
+    //         'type' => $activityType
+    //     ];
+    // });
+    return view('AdminDashboard', compact('totalProperties'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
