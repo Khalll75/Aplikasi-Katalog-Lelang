@@ -118,10 +118,10 @@
                             Kategori Lot Lelang
                         </h3>
                         <div class="space-y-3">
-                            @foreach(['gudang' => 'Gudang', 'ruko' => 'Ruko', 'rumah_tinggal' => 'Rumah Tinggal', 'tanah_kebun' => 'Tanah Kebun', 'tanah_kosong' => 'Tanah Kosong'] as $key => $label)
+                            @foreach(['Gudang', 'Ruko', 'Rumah Tinggal', 'Tanah Kebun', 'Tanah Kosong'] as $label)
                                 <label class="flex items-center p-2 rounded-lg hover:bg-red-50 transition-colors cursor-pointer">
-                                    <input type="radio" name="kategori_lot" value="{{ $key }}" class="mr-3 w-4 h-4 text-red-600 focus:ring-red-500"
-                                        {{ request('kategori_lot') === $key ? 'checked' : '' }}>
+                                    <input type="radio" name="kategori_lot" value="{{ $label }}" class="mr-3 w-4 h-4 text-red-600 focus:ring-red-500"
+                                        {{ request('kategori_lot') === $label ? 'checked' : '' }}>
                                     <span class="text-sm font-medium">{{ $label }}</span>
                                 </label>
                             @endforeach
