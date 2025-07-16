@@ -53,6 +53,7 @@
                 <thead>
                     <tr>
                         <th class="text-center">Kode Aset</th>
+                        <th class="text-center">Kategori Lot</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -61,6 +62,9 @@
                     <tr class="hover:bg-gray-50 transition">
                         <td class="text-lg font-medium text-gray-800 text-center">
                             {{ $property->kode_aset }}
+                        </td>
+                        <td class="text-lg font-medium text-gray-800 text-center">
+                            {{ ucwords(str_replace('_', ' ', $property->kategori_lot)) }}
                         </td>
                         <td>
                             <div class="flex justify-center gap-2">
@@ -95,5 +99,11 @@
             </div>
         </div>
     </div>
+    @if(session('success'))
+        <script>
+            alert("{{ session('success') }}");
+            // Optionally, you can force reload or redirect, but since this is already the target page, just alert is enough
+        </script>
+    @endif
 </body>
 </html>

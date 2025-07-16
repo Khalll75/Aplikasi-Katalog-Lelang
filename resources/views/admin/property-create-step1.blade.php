@@ -170,7 +170,7 @@
                     <div class="grid-2">
                         <div class="mb-4">
                             <label for="luas_tanah" class="form-label required">Luas Tanah (M²)</label>
-                            <input type="number" name="luas_tanah" id="luas_tanah" class="form-input" placeholder="0" required min="0" step="0.01">
+                            <input type="number" name="luas_tanah" id="luas_tanah" class="form-input" placeholder="0" min="0" step="0.01">
                         </div>
                         <div class="mb-4">
                             <label for="luas_bangunan" class="form-label">Luas Bangunan (M²)</label>
@@ -279,13 +279,13 @@
                     <h2 class="text-lg font-semibold text-gray-900 mb-6">Kategori Lot</h2>
                     <div class="mb-4">
                         <label for="kategori_lot" class="form-label required">Kategori Lot</label>
-                        <select name="kategori_lot" id="kategori_lot" class="form-input" required>
+                        <select name="kategori_lot" id="kategori_lot" class="form-input">
                             <option value="">Pilih Kategori</option>
-                            <option value="gudang">Gudang</option>
-                            <option value="ruko">Ruko</option>
-                            <option value="rumah_tinggal">Rumah Tinggal</option>
-                            <option value="tanah_kebun">Tanah Kebun</option>
-                            <option value="tanah_kosong">Tanah Kosong</option>
+                            <option value="Gudang">Gudang</option>
+                            <option value="Ruko">Ruko</option>
+                            <option value="Rumah Tinggal">Rumah Tinggal</option>
+                            <option value="Tanah Kebun">Tanah Kebun</option>
+                            <option value="Tanah Kosong">Tanah Kosong</option>
                         </select>
                         @error('kategori_lot')
                             <div class="text-red-600 text-sm mt-1">{{ $message }}</div>

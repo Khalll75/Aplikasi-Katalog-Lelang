@@ -178,14 +178,14 @@ class PropertyController extends Controller
         $validated = $request->validate([
             'kode_aset' => 'required|string|max:255|unique:properties',
             'alamat' => 'required|string',
-            'luas_tanah' => 'required|numeric|min:0',
+            'luas_tanah' => 'nullable|numeric|min:0',
             'luas_bangunan' => 'nullable|numeric|min:0',
             'kamar_tidur' => 'nullable|integer|min:0',
             'kamar_mandi' => 'nullable|integer|min:0',
             'listrik' => 'nullable|string|max:255',
             'air' => 'nullable|string|max:255',
-            'kondisi' => 'required|array',
-            'kategori_lot' => 'required|string',
+            'kondisi' => 'nullable',
+            'kategori_lot' => 'nullable',
         ]);
         $validated['kondisi'] = implode('/', $validated['kondisi']);
         $property = Property::create($validated);
@@ -260,22 +260,23 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
+        Log::info('Request data', $request->all());
         // Validate the request
         $validatedData = $request->validate([
             'kode_aset' => 'required|string|max:255|unique:properties,kode_aset,' . $property->id,
             'alamat' => 'required|string',
-            'luas_tanah' => 'required|numeric|min:0',
+            'luas_tanah' => 'nullable|numeric|min:0',
             'luas_bangunan' => 'nullable|numeric|min:0',
             'kamar_tidur' => 'nullable|integer|min:0',
             'kamar_mandi' => 'nullable|integer|min:0',
             'listrik' => 'nullable|string|max:255',
             'air' => 'nullable|string|max:255',
-            'kondisi' => 'required',
-            'kategori_lot' => 'required|in:rumah,ruko,tanah',
+            'kondisi' => 'nullable',
+            'kategori_lot' => 'nullable',
 
             // Media validation
             'images.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:10240',
-            'main_image' => 'nullable|integer',
+            'main_image' => 'nullable',
             'delete_images' => 'nullable|array',
             'delete_images.*' => 'integer|exists:property_media,id',
 
@@ -288,12 +289,16 @@ class PropertyController extends Controller
             'points_of_interest.*' => 'nullable|string|max:500',
             'delete_points' => 'nullable|array',
             'delete_points.*' => 'integer|exists:point_of_interests,id',
+            'points_of_interest_ids' => 'nullable|array',
+            'points_of_interest_ids.*' => 'integer|exists:point_of_interests,id',
 
             // Contact Persons validation
             'contact_persons.*.nama' => 'nullable|string|max:255',
             'contact_persons.*.no_hp' => 'nullable|string|max:20',
             'delete_contacts' => 'nullable|array',
             'delete_contacts.*' => 'integer|exists:contact_people,id',
+            'contact_persons_ids' => 'nullable|array',
+            'contact_persons_ids.*' => 'integer|exists:contact_people,id',
         ]);
 
         try {
@@ -303,13 +308,15 @@ class PropertyController extends Controller
             $property->update([
                 'kode_aset' => $validatedData['kode_aset'],
                 'alamat' => $validatedData['alamat'],
-                'luas_tanah' => $validatedData['luas_tanah'],
+                'luas_tanah' => $validatedData['luas_tanah'] ?? null,
                 'luas_bangunan' => $validatedData['luas_bangunan'] ?? null,
                 'kamar_tidur' => $validatedData['kamar_tidur'] ?? null,
                 'kamar_mandi' => $validatedData['kamar_mandi'] ?? null,
                 'listrik' => $validatedData['listrik'] ?? null,
                 'air' => $validatedData['air'] ?? null,
-                'kondisi' => is_array($validatedData['kondisi']) ? implode('/', $validatedData['kondisi']) : $validatedData['kondisi'],
+                'kondisi' => array_key_exists('kondisi', $validatedData)
+                    ? (is_array($validatedData['kondisi']) ? implode('/', $validatedData['kondisi']) : $validatedData['kondisi'])
+                    : null,
                 'kategori_lot' => $validatedData['kategori_lot'],
             ]);
 
@@ -365,13 +372,22 @@ class PropertyController extends Controller
                 PointOfInterest::whereIn('id', $request->input('delete_points'))->delete();
             }
 
-            // Update points of interest
-            if ($request->filled('points_of_interest')) {
-                foreach ($request->input('points_of_interest') as $point) {
-                    if (!empty($point)) {
+            // Update or create points of interest
+            $poiIds = $request->input('points_of_interest_ids', []);
+            $poiValues = $request->input('points_of_interest', []);
+            foreach ($poiIds as $index => $id) {
+                $poi = PointOfInterest::find($id);
+                if ($poi && !empty($poiValues[$index])) {
+                    $poi->update(['poin' => $poiValues[$index]]);
+                }
+            }
+            // Handle new points (if any extra values without ID)
+            if (count($poiValues) > count($poiIds)) {
+                for ($i = count($poiIds); $i < count($poiValues); $i++) {
+                    if (!empty($poiValues[$i])) {
                         PointOfInterest::create([
                             'property_id' => $property->id,
-                            'poin' => $point,
+                            'poin' => $poiValues[$i],
                         ]);
                     }
                 }
@@ -382,26 +398,39 @@ class PropertyController extends Controller
                 ContactPerson::whereIn('id', $request->input('delete_contacts'))->delete();
             }
 
-            // Update contact persons
-            if ($request->filled('contact_persons')) {
-                foreach ($request->input('contact_persons') as $contact) {
-                    if (!empty($contact['nama']) || !empty($contact['no_hp'])) {
-                        ContactPerson::create([
-                            'property_id' => $property->id,
-                            'nama' => $contact['nama'] ?? null,
-                            'no_hp' => $contact['no_hp'] ?? null,
+            // Update or create contact persons
+            $cpIds = $request->input('contact_persons_ids', []);
+            $contactPersons = $request->input('contact_persons', []);
+            foreach ($cpIds as $id) {
+                if (isset($contactPersons[$id])) {
+                    $cp = ContactPerson::find($id);
+                    if ($cp) {
+                        $cp->update([
+                            'nama' => $contactPersons[$id]['nama'] ?? null,
+                            'no_hp' => $contactPersons[$id]['no_hp'] ?? null,
                         ]);
                     }
+                }
+            }
+            // Handle new contact persons (with key 'new' or 'newX')
+            foreach ($contactPersons as $key => $contact) {
+                if (strpos($key, 'new') === 0 && (!empty($contact['nama']) || !empty($contact['no_hp']))) {
+                    ContactPerson::create([
+                        'property_id' => $property->id,
+                        'nama' => $contact['nama'] ?? null,
+                        'no_hp' => $contact['no_hp'] ?? null,
+                    ]);
                 }
             }
 
             DB::commit();
 
-        return redirect()->route('properties.index')
+        return redirect()->route('admin.lelang.index')
             ->with('success', 'Property updated successfully.');
 
         } catch (\Exception $e) {
             DB::rollback();
+            Log::error('Update failed', ['exception' => $e]);
 
             return redirect()->back()
                 ->withInput()

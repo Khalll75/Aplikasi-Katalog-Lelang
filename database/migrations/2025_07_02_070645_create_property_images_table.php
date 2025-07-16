@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('format')->nullable(); // File format (jpg, png, mp4, etc.)
             $table->string('resolution')->nullable(); // For videos: 1920x1080, etc.
             $table->boolean('is_main')->default(false)->nullable();
+            $table->timestamps();
         });
     }
 

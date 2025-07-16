@@ -10,6 +10,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('property_id')->constrained()->onDelete('cascade');
             $table->string('poin')->nullable();
+            $table->timestamps();
         });
     }
 

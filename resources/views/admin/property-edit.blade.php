@@ -199,7 +199,7 @@
                 <div class="grid-2">
                     <div class="mb-4">
                         <label for="luas_tanah" class="form-label required">Luas Tanah (M²)</label>
-                        <input type="number" name="luas_tanah" id="luas_tanah" class="form-input" value="{{ old('luas_tanah', $property->luas_tanah) }}" min="0" step="0.01" required>
+                        <input type="number" name="luas_tanah" id="luas_tanah" class="form-input" value="{{ old('luas_tanah', $property->luas_tanah) }}" min="0" step="0.01">
                     </div>
                     <div class="mb-4">
                         <label for="luas_bangunan" class="form-label">Luas Bangunan (M²)</label>
@@ -281,13 +281,13 @@
                 <h2 class="text-lg font-semibold text-gray-900 mb-6">Kategori Lot</h2>
                 <div class="mb-4">
                     <label for="kategori_lot" class="form-label required">Kategori Lot</label>
-                    <select name="kategori_lot" id="kategori_lot" class="form-input" required>
+                    <select name="kategori_lot" id="kategori_lot" class="form-input">
                         <option value="">Pilih Kategori</option>
-                        <option value="gudang" {{ old('kategori_lot', $property->kategori_lot) == 'gudang' ? 'selected' : '' }}>Gudang</option>
-                        <option value="ruko" {{ old('kategori_lot', $property->kategori_lot) == 'ruko' ? 'selected' : '' }}>Ruko</option>
-                        <option value="rumah_tinggal" {{ old('kategori_lot', $property->kategori_lot) == 'rumah_tinggal' ? 'selected' : '' }}>Rumah Tinggal</option>
-                        <option value="tanah_kebun" {{ old('kategori_lot', $property->kategori_lot) == 'tanah_kebun' ? 'selected' : '' }}>Tanah Kebun</option>
-                        <option value="tanah_kosong" {{ old('kategori_lot', $property->kategori_lot) == 'tanah_kosong' ? 'selected' : '' }}>Tanah Kosong</option>
+                        <option value="Gudang" {{ old('kategori_lot', $property->kategori_lot) == 'Gudang' ? 'selected' : '' }}>Gudang</option>
+                        <option value="Ruko" {{ old('kategori_lot', $property->kategori_lot) == 'Ruko' ? 'selected' : '' }}>Ruko</option>
+                        <option value="Rumah Tinggal" {{ old('kategori_lot', $property->kategori_lot) == 'Rumah Tinggal' ? 'selected' : '' }}>Rumah Tinggal</option>
+                        <option value="Tanah Kebun" {{ old('kategori_lot', $property->kategori_lot) == 'Tanah Kebun' ? 'selected' : '' }}>Tanah Kebun</option>
+                        <option value="Tanah Kosong" {{ old('kategori_lot', $property->kategori_lot) == 'Tanah Kosong' ? 'selected' : '' }}>Tanah Kosong</option>
                     </select>
                     @error('kategori_lot')
                         <div class="text-red-600 text-sm mt-1">{{ $message }}</div>
@@ -352,6 +352,7 @@
                 <div id="poi-list" class="space-y-3">
                     @foreach($property->pointsOfInterest as $poi)
                         <div class="dynamic-item flex items-center gap-3">
+                            <input type="hidden" name="points_of_interest_ids[]" value="{{ $poi->id }}">
                             <input type="text" name="points_of_interest[]" class="form-input flex-1" value="{{ $poi->poin }}">
                             <input type="checkbox" name="delete_points[]" value="{{ $poi->id }}"> Hapus
                         </div>
@@ -373,6 +374,7 @@
                 <div id="cp-list" class="space-y-3">
                     @foreach($property->contactPersons as $i => $cp)
                         <div class="dynamic-item contact-grid">
+                            <input type="hidden" name="contact_persons_ids[]" value="{{ $cp->id }}">
                             <div>
                                 <label class="form-label">Nama</label>
                                 <input type="text" name="contact_persons[{{ $cp->id }}][nama]" class="form-input" value="{{ $cp->nama }}">

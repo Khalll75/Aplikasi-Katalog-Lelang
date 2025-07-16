@@ -40,4 +40,6 @@ class Property extends Model
     {
         return $this->hasMany(ContactPerson::class);
     }
+
+    public $timestamps = false;
 }
