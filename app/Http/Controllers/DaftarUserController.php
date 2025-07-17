@@ -20,4 +20,10 @@ class DaftarUserController extends Controller
         DaftarUser::create($validated);
         return response()->json(['success' => true, 'message' => 'Pendaftaran berhasil!']);
     }
+
+    public function index()
+    {
+        $users = DaftarUser::all();
+        return view('admin.daftar-users', compact('users'));
+    }
 }

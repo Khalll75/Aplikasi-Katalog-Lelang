@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit');
     Route::put('properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
     Route::delete('properties/{property}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+    Route::get('/daftar-users', [\App\Http\Controllers\DaftarUserController::class, 'index'])->name('daftar-users');
 });
 
 Route::middleware('auth')->group(function () {

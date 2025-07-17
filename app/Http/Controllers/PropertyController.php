@@ -296,9 +296,9 @@ class PropertyController extends Controller
             'contact_persons.*.nama' => 'nullable|string|max:255',
             'contact_persons.*.no_hp' => 'nullable|string|max:20',
             'delete_contacts' => 'nullable|array',
-            'delete_contacts.*' => 'integer|exists:contact_people,id',
+            'delete_contacts.*' => 'integer|exists:contact_persons,id',
             'contact_persons_ids' => 'nullable|array',
-            'contact_persons_ids.*' => 'integer|exists:contact_people,id',
+            'contact_persons_ids.*' => 'integer|exists:contact_persons,id',
         ]);
 
         try {
@@ -402,14 +402,13 @@ class PropertyController extends Controller
             $cpIds = $request->input('contact_persons_ids', []);
             $contactPersons = $request->input('contact_persons', []);
             foreach ($cpIds as $id) {
-                if (isset($contactPersons[$id])) {
-                    $cp = ContactPerson::find($id);
-                    if ($cp) {
-                        $cp->update([
-                            'nama' => $contactPersons[$id]['nama'] ?? null,
-                            'no_hp' => $contactPersons[$id]['no_hp'] ?? null,
-                        ]);
-                    }
+                if (empty($id) || !isset($contactPersons[$id])) continue; // <-- skip empty IDs
+                $cp = ContactPerson::find($id);
+                if ($cp) {
+                    $cp->update([
+                        'nama' => $contactPersons[$id]['nama'] ?? null,
+                        'no_hp' => $contactPersons[$id]['no_hp'] ?? null,
+                    ]);
                 }
             }
             // Handle new contact persons (with key 'new' or 'newX')
@@ -470,16 +469,37 @@ class PropertyController extends Controller
     /**
      * Admin: Tampilkan daftar lelang beserta properti terkait
      */
-    public function adminLelangIndex()
+    public function adminLelangIndex(Request $request)
     {
-        $properties = \App\Models\Property::orderByDesc('id')->paginate(15);
+        $query = \App\Models\Property::query();
+
+        if ($request->filled('q')) {
+            $search = $request->q;
+            $query->where(function($q2) use ($search) {
+                $q2->where('kode_aset', 'like', "%{$search}%")
+                    ->orWhere('kategori_lot', 'like', "%{$search}%")
+                    ->orWhereHas('lelangSchedule', function($q3) use ($search) {
+                        $q3->where('lokasi', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        $properties = $query->orderByDesc('id')->paginate(15)->appends($request->all());
         return view('admin.lelang-index', compact('properties'));
     }
 
     public function edit(Property $property)
     {
+        // Fetch unique contact person names
+        $contactPersonNames = \App\Models\ContactPerson::query()->distinct()->pluck('nama');
+        // Fetch all contact persons (name + no_hp) for JS autocomplete
+        $contactPersonData = \App\Models\ContactPerson::query()->select('nama', 'no_hp')->distinct()->get();
+        // Fetch unique POIs
+        $poiList = \App\Models\PointOfInterest::query()->distinct()->pluck('poin');
+        // Fetch unique lokasi lelang
+        $lokasiLelangList = \App\Models\LelangSchedule::query()->distinct()->pluck('lokasi');
         // tampilkan form edit property
-        return view('admin.property-edit', compact('property'));
+        return view('admin.property-edit', compact('property', 'contactPersonNames', 'contactPersonData', 'poiList', 'lokasiLelangList'));
     }
 
 }

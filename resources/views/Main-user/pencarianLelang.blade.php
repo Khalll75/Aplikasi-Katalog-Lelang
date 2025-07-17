@@ -97,11 +97,6 @@
     <div class="text-center mb-8 fade-in">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">Pencarian Lelang Properti</h1>
         <p class="text-gray-600">Temukan properti lelang terbaik sesuai kebutuhan Anda</p>
-        <div class="flex justify-center mt-4 space-x-2">
-            <div class="w-2 h-2 bg-red-500 rounded-full pulse-dot"></div>
-            <div class="w-2 h-2 bg-red-400 rounded-full pulse-dot" style="animation-delay: 0.2s;"></div>
-            <div class="w-2 h-2 bg-red-300 rounded-full pulse-dot" style="animation-delay: 0.4s;"></div>
-        </div>
     </div>
 
     <!-- Search and Filter Section -->

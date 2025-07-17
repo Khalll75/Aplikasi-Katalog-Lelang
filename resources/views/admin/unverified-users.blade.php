@@ -406,5 +406,24 @@
             });
         });
     </script>
+    <footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12" style="flex-shrink: 0;">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
+                <div>
+                    <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
+                    <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold mb-1">Kontak</h2>
+                    <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
+                    <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
+                </div>
+            </div>
+            <hr class="border-gray-700 my-2">
+            <div class="text-center text-xs text-gray-400 pt-2">
+                © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

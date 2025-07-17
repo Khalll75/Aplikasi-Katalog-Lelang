@@ -312,7 +312,7 @@
                     @endforeach
                 </div>
                 <div class="image-input-group mt-3">
-                    <input type="file" name="images[]" accept="image/*" class="flex-1">
+                    <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
                     <div class="radio-group">
                         <input type="radio" name="main_image" value="new">
                         <label>Gambar Utama Baru</label>
@@ -324,7 +324,7 @@
                     </svg>
                     Tambah Gambar
                 </button>
-                <p class="upload-hint">Pilih salah satu gambar sebagai gambar utama yang akan ditampilkan</p>
+                <p class="upload-hint">Dapat mengupload gambar (.jpg, .jpeg, .png, .gif) atau video (.mp4, .mov, .avi). Pilih salah satu media sebagai media utama yang akan ditampilkan (Gambar atau Video)</p>
             </div>
             <!-- Jadwal Lelang -->
             <div class="form-section">
@@ -336,7 +336,7 @@
                     </div>
                     <div>
                         <label for="lokasi_lelang" class="form-label">Lokasi Lelang</label>
-                        <input type="text" name="lokasi_lelang" id="lokasi_lelang" class="form-input" value="{{ old('lokasi_lelang', optional($property->lelangSchedule)->lokasi) }}" placeholder="Contoh: Kantor Lelang Jakarta">
+                        <input type="text" name="lokasi_lelang" id="lokasi_lelang" class="form-input" value="{{ old('lokasi_lelang', optional($property->lelangSchedule)->lokasi) }}" list="lokasi-lelang-list" placeholder="Contoh: Kantor Lelang Jakarta">
                     </div>
                 </div>
                 <div class="mb-4">
@@ -353,7 +353,7 @@
                     @foreach($property->pointsOfInterest as $poi)
                         <div class="dynamic-item flex items-center gap-3">
                             <input type="hidden" name="points_of_interest_ids[]" value="{{ $poi->id }}">
-                            <input type="text" name="points_of_interest[]" class="form-input flex-1" value="{{ $poi->poin }}">
+                            <input type="text" name="points_of_interest[]" class="form-input flex-1" value="{{ $poi->poin }}" list="poi-list" placeholder="Tambah POI baru">
                             <input type="checkbox" name="delete_points[]" value="{{ $poi->id }}"> Hapus
                         </div>
                     @endforeach
@@ -377,25 +377,15 @@
                             <input type="hidden" name="contact_persons_ids[]" value="{{ $cp->id }}">
                             <div>
                                 <label class="form-label">Nama</label>
-                                <input type="text" name="contact_persons[{{ $cp->id }}][nama]" class="form-input" value="{{ $cp->nama }}">
+                                <input type="text" name="contact_persons[{{ isset($cp) ? $cp->id : 'new' }}][nama]" class="form-input contact-person-name" value="{{ isset($cp) ? $cp->nama : '' }}" list="contact-person-names" placeholder="Nama baru">
                             </div>
                             <div>
                                 <label class="form-label">No HP</label>
-                                <input type="text" name="contact_persons[{{ $cp->id }}][no_hp]" class="form-input" value="{{ $cp->no_hp }}">
+                                <input type="text" name="contact_persons[{{ isset($cp) ? $cp->id : 'new' }}][no_hp]" class="form-input contact-person-phone" value="{{ isset($cp) ? $cp->no_hp : '' }}" placeholder="08xxxxxxxxxx">
                             </div>
                             <input type="checkbox" name="delete_contacts[]" value="{{ $cp->id }}"> Hapus
                         </div>
                     @endforeach
-                    <div class="dynamic-item contact-grid">
-                        <div>
-                            <label class="form-label">Nama</label>
-                            <input type="text" name="contact_persons[new][nama]" class="form-input" placeholder="Nama baru">
-                        </div>
-                        <div>
-                            <label class="form-label">No HP</label>
-                            <input type="text" name="contact_persons[new][no_hp]" class="form-input" placeholder="08xxxxxxxxxx">
-                        </div>
-                    </div>
                 </div>
                 <button type="button" onclick="addCP()" class="btn-secondary mt-2">
                     <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -411,8 +401,53 @@
                 </button>
             </div>
         </form>
+        <datalist id="contact-person-names">
+            @foreach($contactPersonNames as $name)
+                <option value="{{ $name }}">
+            @endforeach
+        </datalist>
+        <datalist id="poi-list">
+            @foreach($poiList as $poi)
+                <option value="{{ $poi }}">
+            @endforeach
+        </datalist>
+        <datalist id="lokasi-lelang-list">
+            @foreach($lokasiLelangList as $lokasi)
+                <option value="{{ $lokasi }}">
+            @endforeach
+        </datalist>
     </div>
+    @push('after-styles')
+    @endpush
     <script>
+        // Build a map of name to phone from backend data
+        const contactPersonMap = {};
+        @foreach($contactPersonData as $cp)
+            contactPersonMap[@json($cp->nama)] = @json($cp->no_hp);
+        @endforeach
+
+        // Attach event listeners to all contact person name inputs
+        function attachContactPersonAutocomplete() {
+            document.querySelectorAll('.contact-person-name').forEach(function(input) {
+                input.addEventListener('change', function() {
+                    const name = this.value;
+                    const phoneInput = this.closest('.contact-grid').querySelector('.contact-person-phone');
+                    if (contactPersonMap[name]) {
+                        phoneInput.value = contactPersonMap[name];
+                    }
+                });
+            });
+        }
+        // Initial attach
+        attachContactPersonAutocomplete();
+        // Re-attach after adding new contact person fields
+        function observeCPList() {
+            const cpList = document.getElementById('cp-list');
+            if (!cpList) return;
+            const observer = new MutationObserver(attachContactPersonAutocomplete);
+            observer.observe(cpList, { childList: true, subtree: true });
+        }
+        observeCPList();
         // Dynamic add Image Input
         let imageIndex = {{ count($property->images) }};
         function addImageInput() {
@@ -420,7 +455,7 @@
             const div = document.createElement('div');
             div.className = 'image-input-group';
             div.innerHTML = `
-                <input type="file" name="images[]" accept="image/*" class="flex-1">
+                <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
                 <div class="radio-group">
                     <input type="radio" name="main_image" value="new${imageIndex}" id="main_new${imageIndex}">
                     <label for="main_new${imageIndex}">Gambar Utama Baru</label>
@@ -464,11 +499,11 @@
             div.innerHTML = `
                 <div>
                     <label class="form-label">Nama</label>
-                    <input type="text" name="contact_persons[new${cpIndex}][nama]" class="form-input" placeholder="Nama baru">
+                    <input type="text" name="contact_persons[new${cpIndex}][nama]" class="form-input contact-person-name" placeholder="Nama baru">
                 </div>
                 <div>
                     <label class="form-label">No HP</label>
-                    <input type="text" name="contact_persons[new${cpIndex}][no_hp]" class="form-input" placeholder="08xxxxxxxxxx">
+                    <input type="text" name="contact_persons[new${cpIndex}][no_hp]" class="form-input contact-person-phone" placeholder="08xxxxxxxxxx">
                 </div>
                 <button type="button" onclick="removeCP(this)" class="btn-danger">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -478,9 +513,10 @@
             `;
             container.appendChild(div);
             cpIndex++;
+            attachContactPersonAutocomplete(); // Attach event to the new input
         }
         function removeCP(btn) {
-            btn.parentElement.parentElement.remove();
+            btn.parentElement.remove();
         }
         // Format currency input (preview only)
         function formatRupiahPreview2() {
@@ -491,5 +527,24 @@
         }
         window.addEventListener('DOMContentLoaded', formatRupiahPreview2);
     </script>
+    <footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12" style="flex-shrink: 0;">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
+                <div>
+                    <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
+                    <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold mb-1">Kontak</h2>
+                    <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
+                    <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
+                </div>
+            </div>
+            <hr class="border-gray-700 my-2">
+            <div class="text-center text-xs text-gray-400 pt-2">
+                © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

@@ -9,39 +9,91 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        /* Add this in your <head> or a <style> block */
         .main-image-frame {
             width: 100%;
             max-width: 900px;
             margin: 0 auto;
-            background: #000;
+            background: #f8f9fa;
             border-radius: 0.75rem;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 1px solid #e9ecef;
         }
         .main-image-frame img {
             display: block;
             max-width: 100%;
             height: auto;
-            max-height: 70vh; /* Prevents image from being too tall */
+            max-height: 65vh;
             margin: 0 auto;
             object-fit: contain;
-            background: #000;
         }
-
         .button-hover {
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-
         .button-hover:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .card-shadow {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+        }
+        .card-shadow:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+        .section-spacing {
+            margin-bottom: 2rem;
+        }
+        .info-grid-item {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .info-grid-item:hover {
+            border-color: #dc2626;
+            transform: translateY(-1px);
+        }
+        .modal-backdrop {
+            backdrop-filter: blur(4px);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            border: none;
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
+            transform: translateY(-1px);
+        }
+        .text-readable {
+            line-height: 1.6;
+            color: #374151;
+        }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid;
+        }
+        @media (max-width: 768px) {
+            .main-image-frame {
+                max-height: 50vh;
+            }
+            .info-grid-item {
+                padding: 0.75rem;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50">
-
 <!-- Header -->
 <header class="bg-gradient-to-r from-red-900 to-red-800 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-lg backdrop-blur-sm">
     <div class="container mx-auto px-4 flex justify-between items-center">
@@ -66,20 +118,17 @@
                 <i class="fas fa-user-plus mr-2"></i>
                 Daftar
             </button>
-            <!-- Logo removed from right side -->
         </div>
     </div>
 </header>
-
 <div class="container mx-auto px-4 pt-28 pb-8">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
         <!-- Left Column - Property Images and Details -->
         <div class="lg:col-span-2">
             <!-- Main Property Card -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden mb-6">
+            <div class="bg-white rounded-xl card-shadow overflow-hidden section-spacing">
                 <!-- Image Gallery Section -->
-                <div class="relative p-6">
+                <div class="p-6">
                     <!-- Main Image Container -->
                     <div class="main-image-frame relative">
                         <div class="swiper mySwiperMain w-full">
@@ -87,133 +136,133 @@
                                 @forelse($property->images as $img)
                                     <div class="swiper-slide flex items-center justify-center">
                                         @if($img->media_type === 'video')
-                                            <video controls class="rounded-xl">
+                                            <video controls class="rounded-lg max-h-full">
                                                 <source src="{{ asset('storage/'.$img->media_url) }}" type="video/{{ $img->format }}">
                                                 Your browser does not support the video tag.
                                             </video>
                                         @else
                                             <img src="{{ asset('storage/'.$img->media_url) }}"
-                                                 alt="Property Image" class="rounded-xl" />
+                                                 alt="Property Image" class="rounded-lg" />
                                         @endif
                                     </div>
                                 @empty
                                     <div class="swiper-slide flex items-center justify-center">
-                                        <img src="https://placehold.co/800x400/e2e8f0/64748b?text=No+Image"
-                                             alt="No Image" class="rounded-xl" />
+                                        <img src="https://placehold.co/800x400/f8f9fa/6c757d?text=No+Image+Available"
+                                             alt="No Image Available" class="rounded-lg" />
                                     </div>
                                 @endforelse
                             </div>
-                            <div class="swiper-button-prev !text-white !bg-black !bg-opacity-50 hover:!bg-opacity-70 !rounded-full !w-10 !h-10 !left-4 transition-all duration-200 after:!text-base after:!font-bold"></div>
-                            <div class="swiper-button-next !text-white !bg-black !bg-opacity-50 hover:!bg-opacity-70 !rounded-full !w-10 !h-10 !right-4 transition-all duration-200 after:!text-base after:!font-bold"></div>
-                            <div class="absolute top-4 right-4 bg-black bg-opacity-50 text-white text-sm px-3 py-1 rounded-full">
+                            <div class="swiper-button-prev custom-swiper-nav z-50"></div>
+                            <div class="swiper-button-next custom-swiper-nav z-50"></div>
+                            <div class="absolute top-4 right-4 bg-black bg-opacity-60 text-white text-sm px-3 py-1 rounded-full z-50">
                                 <span class="swiper-counter">1 / {{ $property->images->count() ?: 1 }}</span>
                             </div>
                         </div>
                     </div>
-
                     <!-- Thumbnail Navigation -->
-                    <div class="mt-4">
+                    <div class="mt-6">
                         <div class="swiper mySwiperThumbs">
                             <div class="swiper-wrapper">
                                 @forelse($property->images as $img)
-                                    <div class="swiper-slide !w-20 !h-20 cursor-pointer flex items-center justify-center bg-black rounded-lg">
+                                    <div class="swiper-slide !w-20 !h-20 cursor-pointer rounded-lg overflow-hidden border-2 border-gray-200 hover:border-red-500 transition-all duration-200">
                                         <img src="{{ asset('storage/'.$img->media_url) }}"
                                              alt="Thumbnail"
-                                             class="object-cover border-2 border-transparent hover:border-red-500 transition-all duration-200 rounded-lg w-full h-full" />
+                                             class="w-full h-full object-cover" />
                                     </div>
                                 @empty
-                                    <div class="swiper-slide !w-20 !h-20 cursor-pointer flex items-center justify-center bg-black rounded-lg">
-                                        <img src="https://placehold.co/80x80/e2e8f0/64748b?text=No+Image"
+                                    <div class="swiper-slide !w-20 !h-20 cursor-pointer rounded-lg overflow-hidden border-2 border-gray-200 hover:border-red-500 transition-all duration-200">
+                                        <img src="https://placehold.co/80x80/f8f9fa/6c757d?text=No+Image"
                                              alt="No Image"
-                                             class="object-cover border-2 border-transparent hover:border-red-500 transition-all duration-200 rounded-lg w-full h-full" />
+                                             class="w-full h-full object-cover" />
                                     </div>
                                 @endforelse
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Property Details -->
-                <div class="p-6">
-                    <h2 class="text-xl font-bold text-gray-800 mb-4">{{ $property->nama }}</h2>
-                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
-                        {{ $property->alamat }}
-                    </p>
-
-                    <!-- QR Code Section (improved) -->
-                    <div class="mb-6 flex justify-center">
-                        <div class="w-32 h-32 bg-gradient-to-br from-red-700 to-red-400 rounded-2xl shadow-lg flex flex-col items-center justify-center relative border-4 border-white">
-                            <i class="fas fa-qrcode text-white text-5xl mb-2"></i>
-                            <span class="text-white font-bold text-lg tracking-wider">QR Code</span>
-                            <span class="text-xs text-red-100 mt-1">Scan to get info</span>
+                <div class="px-6 pb-6">
+                    <div class="border-t border-gray-200 pt-6">
+                        <h1 class="text-2xl font-bold text-gray-900 mb-3">{{ $property->nama }}</h1>
+                        <div class="flex items-start mb-6">
+                            <i class="fas fa-map-marker-alt text-red-600 mt-1 mr-3"></i>
+                            <p class="text-gray-700 text-readable">{{ $property->alamat }}</p>
                         </div>
-                    </div>
-
-                    <!-- Additional Info Grid (improved) -->
-                    <div class="grid grid-cols-3 gap-4 mb-6">
-                        <div class="bg-white border-2 border-red-200 rounded-xl shadow-sm flex flex-col items-center justify-center py-3 px-2 transition hover:shadow-md hover:border-red-400">
-                            <i class="fas fa-ruler-combined text-red-500 mb-1"></i>
-                            <span class="text-red-900 font-bold text-base">{{ $property->luas_tanah }} m²</span>
-                            <span class="text-xs text-gray-500">Luas Tanah</span>
-                        </div>
-                        <div class="bg-white border-2 border-red-200 rounded-xl shadow-sm flex flex-col items-center justify-center py-3 px-2 transition hover:shadow-md hover:border-red-400">
-                            <i class="fas fa-building text-red-500 mb-1"></i>
-                            <span class="text-red-900 font-bold text-base">{{ $property->luas_bangunan ?? '-' }} m²</span>
-                            <span class="text-xs text-gray-500">Luas Bangunan</span>
-                        </div>
-                        <div class="bg-white border-2 border-red-200 rounded-xl shadow-sm flex flex-col items-center justify-center py-3 px-2 transition hover:shadow-md hover:border-red-400">
-                            <i class="fas fa-bed text-red-500 mb-1"></i>
-                            <span class="text-red-900 font-bold text-base">{{ $property->kamar_tidur ?? '-' }}</span>
-                            <span class="text-xs text-gray-500">Kamar Tidur</span>
-                        </div>
-                        <div class="bg-white border-2 border-red-200 rounded-xl shadow-sm flex flex-col items-center justify-center py-3 px-2 transition hover:shadow-md hover:border-red-400">
-                            <i class="fas fa-bath text-red-500 mb-1"></i>
-                            <span class="text-red-900 font-bold text-base">{{ $property->kamar_mandi ?? '-' }}</span>
-                            <span class="text-xs text-gray-500">Kamar Mandi</span>
-                        </div>
-                        <div class="bg-white border-2 border-red-200 rounded-xl shadow-sm flex flex-col items-center justify-center py-3 px-2 transition hover:shadow-md hover:border-red-400">
-                            <i class="fas fa-bolt text-red-500 mb-1"></i>
-                            <span class="text-red-900 font-bold text-base">{{ $property->listrik ?? '-' }}</span>
-                            <span class="text-xs text-gray-500">Listrik</span>
-                        </div>
-                        <div class="bg-white border-2 border-red-200 rounded-xl shadow-sm flex flex-col items-center justify-center py-3 px-2 transition hover:shadow-md hover:border-red-400">
-                            <i class="fas fa-tint text-red-500 mb-1"></i>
-                            <span class="text-red-900 font-bold text-base">{{ $property->air ?? '-' }}</span>
-                            <span class="text-xs text-gray-500">Air</span>
-                        </div>
-                    </div>
-
-                    <!-- Point of Interest -->
-                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Point of Interest</h3>
-                    <div class="space-y-3">
-                        @forelse($property->pointsOfInterest as $poi)
-                            <div class="bg-gray-100 border border-gray-300 rounded-lg px-4 py-3">
-                                <span class="text-gray-600">{{ $poi->poin }}</span>
+                        <!-- Property Features Grid -->
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                            <div class="info-grid-item">
+                                <i class="fas fa-ruler-combined text-red-600 text-lg mb-2"></i>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->luas_tanah }} m²</div>
+                                <div class="text-sm text-gray-600">Luas Tanah</div>
                             </div>
-                        @empty
-                            <div class="bg-gray-100 border border-gray-300 rounded-lg px-4 py-3">
-                                <span class="text-gray-400">Tidak ada data</span>
+                            <div class="info-grid-item">
+                                <i class="fas fa-building text-red-600 text-lg mb-2"></i>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->luas_bangunan ?? '-' }} m²</div>
+                                <div class="text-sm text-gray-600">Luas Bangunan</div>
                             </div>
-                        @endforelse
+                            <div class="info-grid-item">
+                                <i class="fas fa-bed text-red-600 text-lg mb-2"></i>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->kamar_tidur ?? '-' }}</div>
+                                <div class="text-sm text-gray-600">Kamar Tidur</div>
+                            </div>
+                            <div class="info-grid-item">
+                                <i class="fas fa-bath text-red-600 text-lg mb-2"></i>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->kamar_mandi ?? '-' }}</div>
+                                <div class="text-sm text-gray-600">Kamar Mandi</div>
+                            </div>
+                            <div class="info-grid-item">
+                                <i class="fas fa-bolt text-red-600 text-lg mb-2"></i>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->listrik ?? '-' }}</div>
+                                <div class="text-sm text-gray-600">Listrik</div>
+                            </div>
+                            <div class="info-grid-item">
+                                <i class="fas fa-tint text-red-600 text-lg mb-2"></i>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->air ?? '-' }}</div>
+                                <div class="text-sm text-gray-600">Air</div>
+                            </div>
+                        </div>
+                        <!-- Point of Interest -->
+                        <div class="border-t border-gray-200 pt-6">
+                            <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+                                <i class="fas fa-map-marked-alt text-red-600 mr-2"></i>
+                                Point of Interest
+                            </h2>
+                            <div class="space-y-3">
+                                @forelse($property->pointsOfInterest as $poi)
+                                    <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-location-dot text-red-600 mr-3"></i>
+                                            <span class="text-gray-700 text-readable">{{ $poi->poin }}</span>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+                                        <div class="flex items-center">
+                                            <i class="fas fa-info-circle text-gray-400 mr-3"></i>
+                                            <span class="text-gray-500">Tidak ada data point of interest</span>
+                                        </div>
+                                    </div>
+                                @endforelse
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <!-- Right Column - Property Info and Contact -->
         <div class="lg:col-span-1 space-y-6">
             <!-- Property Code and Status -->
-            <div class="flex flex-row gap-8 mb-8">
-                <div class="flex flex-col gap-4 flex-1 max-w-md">
-                    <!-- Kode Aset Row -->
-                    <div class="bg-white rounded-xl p-4 shadow-md border-2 border-yellow-200 flex items-center min-h-[48px]">
-                        <span class="text-base font-semibold text-gray-900 ml-2">Kode Aset :</span>
-                        <span class="flex-1 mx-4 text-base font-normal text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">{{ $property->kode_aset }}</span>
+            <div class="space-y-4">
+                <div class="bg-white rounded-xl card-shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-600">Kode Aset</span>
+                        <span class="text-sm font-semibold text-gray-900">{{ $property->kode_aset }}</span>
                     </div>
-                    <!-- Kategori Lot Row -->
-                    <div class="bg-white rounded-xl p-4 shadow-md border-2 border-yellow-200 flex items-center min-h-[48px]">
-                        <span class="text-base font-semibold text-gray-900 ml-2">Kategori Lot :</span>
-                        <span class="flex-1 mx-4 text-base font-normal text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis">
+                </div>
+                <div class="bg-white rounded-xl card-shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-600">Kategori Lot</span>
+                        <span class="text-sm font-semibold text-gray-900">
                             @php
                                 $kategoriLabels = [
                                     'gudang' => 'Gudang',
@@ -226,76 +275,86 @@
                             {{ $kategoriLabels[$property->kategori_lot] ?? $property->kategori_lot }}
                         </span>
                     </div>
-                    <!-- Kondisi Row -->
-                    <div class="bg-white rounded-xl p-4 shadow-md border-2 border-yellow-200 flex items-center min-h-[48px]">
-                        <span class="text-base font-semibold text-gray-900 ml-2">Kondisi :</span>
-                        <span class="flex-1 mx-4 text-base font-normal text-gray-900 whitespace-nowrap overflow-hidden text-ellipsis" title="Klik tanda tanya untuk penjelasan">{{ $property->kondisi }}</span>
-                        <button type="button"
-        class="w-7 h-7 flex items-center justify-center bg-red-800 text-white text-base font-bold rounded ml-2"
-        title="Info tentang kondisi"
-        onclick="document.getElementById('conditionModal').classList.remove('hidden')"
-    >?</button>
+                </div>
+                <div class="bg-white rounded-xl card-shadow p-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm font-medium text-gray-600">Kondisi</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-semibold text-gray-900">{{ $property->kondisi }}</span>
+                            <button type="button"
+                                    class="w-6 h-6 flex items-center justify-center bg-red-600 text-white text-xs rounded-full hover:bg-red-700 transition-colors"
+                                    title="Info tentang kondisi"
+                                    onclick="document.getElementById('conditionModal').classList.remove('hidden')">
+                                <i class="fas fa-question"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
-                <div class="flex items-start">
-                    <button
-                        type="button"
-                        onclick="copyShareLink()"
-                        class="bg-yellow-100 hover:bg-yellow-200 border-2 border-yellow-300 text-gray-900 font-semibold flex items-center gap-2 px-4 py-3 rounded-xl shadow-md transition-all duration-150 relative group"
-                        title="Salin tautan properti"
-                    >
-                        <span>Share</span>
-                        <i class="fas fa-share-alt text-lg"></i>
-                        <span id="share-tooltip" class="absolute left-1/2 -translate-x-1/2 top-full mt-2 bg-gray-900 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                            Salin tautan ke clipboard
-                        </span>
+                <div class="flex justify-center">
+                    <button type="button"
+                            onclick="copyShareLink()"
+                            class="bg-white text-gray-700 border border-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 button-hover flex items-center gap-2">
+                        <i class="fas fa-share-alt"></i>
+                        <span>Bagikan</span>
                     </button>
                 </div>
             </div>
-
             <!-- Price Card -->
-            <div class="bg-white rounded-xl p-6 shadow-md border-2 border-yellow-200 flex flex-col items-center text-center">
-                <div class="text-yellow-700 text-lg font-semibold mb-1">Limit Lelang</div>
+            <div class="bg-white rounded-xl card-shadow p-6 text-center">
+                <div class="text-gray-600 text-sm font-medium mb-2">Limit Lelang</div>
                 @if($property->lelangSchedule)
-                    <div class="text-orange-700 text-4xl md:text-5xl font-extrabold mt-1 mb-1">
-                        Rp. {{ number_format($property->lelangSchedule->limit_lelang, 0, ',', '.') }}
+                    <div class="text-red-600 text-3xl font-bold mb-1">
+                        Rp {{ number_format($property->lelangSchedule->limit_lelang, 0, ',', '.') }}
                     </div>
                 @else
-                    <div class="text-gray-400">Belum ada data lelang</div>
+                    <div class="text-gray-400 text-lg">Belum ada data lelang</div>
                 @endif
             </div>
-
             <!-- Auction Schedule -->
-            <div class="bg-white rounded-xl p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Jadwal Lelang</h3>
+            <div class="bg-white rounded-xl card-shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-calendar-alt text-red-600 mr-2"></i>
+                    Jadwal Lelang
+                </h3>
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-sm text-gray-600 mb-2">Hari, Tanggal</label>
-                        <input type="text" value="{{ $property->lelangSchedule ? \Carbon\Carbon::parse($property->lelangSchedule->tanggal)->translatedFormat('l, d F Y') : '-' }}"
-                               class="w-full bg-yellow-100 border border-yellow-300 rounded-lg px-3 py-2 text-sm" readonly>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+                            <span class="text-gray-900">{{ $property->lelangSchedule ? \Carbon\Carbon::parse($property->lelangSchedule->tanggal)->translatedFormat('l, d F Y') : 'Belum ditentukan' }}</span>
+                        </div>
                     </div>
                     <div>
-                        <label class="block text-sm text-gray-600 mb-2">Lokasi Lelang</label>
-                        <input type="text" value="{{ $property->lelangSchedule->lokasi ?? '-' }}"
-                               class="w-full bg-yellow-100 border border-yellow-300 rounded-lg px-3 py-2 text-sm" readonly>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Lelang</label>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
+                            <span class="text-gray-900">{{ $property->lelangSchedule->lokasi ?? 'Belum ditentukan' }}</span>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <!-- Contact Person -->
-            <div class="bg-white rounded-xl p-6 shadow-md">
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Contact Person</h3>
-                <div class="space-y-4">
+            <div class="bg-white rounded-xl card-shadow p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-address-book text-red-600 mr-2"></i>
+                    Contact Person
+                </h3>
+                <div class="space-y-3">
                     @forelse($property->contactPersons as $cp)
-                        <div class="border border-yellow-300 rounded-lg p-4">
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
                             <div class="flex items-center mb-2">
-                                <span class="text-gray-900 font-semibold">{{ $cp->nama }}</span>
+                                <i class="fas fa-user text-red-600 mr-2"></i>
+                                <span class="text-gray-900 font-medium">{{ $cp->nama }}</span>
                             </div>
-                            <div class="text-gray-700 font-medium">{{ $cp->no_hp }}</div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-red-600 mr-2"></i>
+                                <span class="text-gray-700">{{ $cp->no_hp }}</span>
+                            </div>
                         </div>
                     @empty
-                        <div class="border border-yellow-300 rounded-lg p-4">
-                            <div class="text-gray-400">Tidak ada kontak</div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-info-circle text-gray-400 mr-2"></i>
+                                <span class="text-gray-500">Tidak ada kontak tersedia</span>
+                            </div>
                         </div>
                     @endforelse
                 </div>
@@ -303,128 +362,115 @@
         </div>
     </div>
 </div>
-
 <!-- Footer -->
-<footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12">
+<footer class="bg-gray-900 text-gray-200 pt-10 pb-6 mt-20">
     <div class="container mx-auto px-4">
-        <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
-            <!-- Nama Aplikasi -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8">
             <div>
-                <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
-                <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
+                <h2 class="text-xl font-bold mb-2">Katalog Lelang Properti</h2>
+                <p class="text-sm">Platform pencarian dan informasi lelang properti terbaik untuk wilayah Indonesia.</p>
             </div>
-            <!-- Kontak -->
             <div>
-                <h2 class="text-xl font-bold mb-1">Kontak</h2>
-                <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
-                <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
+                <h2 class="text-xl font-bold mb-2">Kontak</h2>
+                <p class="text-sm">Email: info@kataloglelang.id</p>
+                <p class="text-sm">Telepon: (021) 9876-5432</p>
             </div>
         </div>
-        <hr class="border-gray-700 my-2">
-        <div class="text-center text-xs text-gray-400 pt-2">
-            © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
-        </div>
+        <hr class="border-gray-700">
+        <p class="text-center text-xs text-gray-500 pt-4">© 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.</p>
     </div>
 </footer>
-
 <!-- Modal: Keterangan Kondisi -->
-<div id="conditionModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-        <!-- Modal Header -->
-        <div class="bg-red-900 text-white p-4 rounded-t-lg">
+<div id="conditionModal" class="fixed inset-0 bg-black bg-opacity-50 modal-backdrop hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="bg-red-600 text-white p-6 rounded-t-xl">
             <div class="flex justify-between items-center">
                 <div class="text-center flex-1">
-                    <h2 class="text-lg font-bold">Keterangan Kondisi Aset</h2>
-                    <p class="text-sm opacity-90">Penjelasan Kode Kondisi Properti</p>
+                    <h2 class="text-xl font-bold">Keterangan Kondisi Aset</h2>
+                    <p class="text-red-100 text-sm mt-1">Penjelasan Kode Kondisi Properti</p>
                 </div>
-                <button id="closeModal" class="text-white hover:text-gray-300 ml-4">
+                <button id="closeModal" class="text-white hover:text-red-200 ml-4 transition-colors">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
         </div>
-        <!-- Modal Content -->
         <div class="p-6 space-y-6">
-            <!-- 1. Cara Penjualan -->
-            <div class="border-b border-gray-200 pb-4">
-                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
-                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">1</span>
+            <div class="border-b border-gray-200 pb-6">
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium mr-3">1</span>
                     Cara Penjualan
                 </h3>
-                <div class="grid grid-cols-1 gap-2 text-sm">
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">L</span>
-                        <span class="text-gray-600">= Lelang</span>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">L</span>
+                        <span class="text-gray-700 ml-4">Lelang</span>
                     </div>
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">AJB</span>
-                        <span class="text-gray-600">= Sukarela</span>
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">AJB</span>
+                        <span class="text-gray-700 ml-4">Sukarela</span>
                     </div>
                 </div>
             </div>
-            <!-- 2. Ada tidaknya penghuni -->
-            <div class="border-b border-gray-200 pb-4">
-                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
-                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">2</span>
+            <div class="border-b border-gray-200 pb-6">
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium mr-3">2</span>
                     Ada tidaknya penghuni
                 </h3>
-                <div class="grid grid-cols-1 gap-2 text-sm">
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">K</span>
-                        <span class="text-gray-600">= Aset Kosong</span>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">K</span>
+                        <span class="text-gray-700 ml-4">Aset Kosong</span>
                     </div>
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">TK</span>
-                        <span class="text-gray-600">= Tidak Kosong</span>
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">TK</span>
+                        <span class="text-gray-700 ml-4">Tidak Kosong</span>
                     </div>
                 </div>
             </div>
-            <!-- 3. Ada tidaknya penguasaan -->
-            <div class="border-b border-gray-200 pb-4">
-                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
-                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">3</span>
+            <div class="border-b border-gray-200 pb-6">
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium mr-3">3</span>
                     Ada tidaknya penguasaan
                 </h3>
-                <div class="text-sm text-gray-600 mb-2">(perlawanan/penghadangan)</div>
-                <div class="grid grid-cols-1 gap-2 text-sm">
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">AP</span>
-                        <span class="text-gray-600">= Ada Perlawanan</span>
+                <p class="text-gray-600 text-sm mb-4">(perlawanan/penghadangan)</p>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">AP</span>
+                        <span class="text-gray-700 ml-4">Ada Perlawanan</span>
                     </div>
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">TP</span>
-                        <span class="text-gray-600">= Tanpa Perlawanan</span>
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">TP</span>
+                        <span class="text-gray-700 ml-4">Tanpa Perlawanan</span>
                     </div>
                 </div>
             </div>
-            <!-- 4. Kondisi Bangunan -->
             <div>
-                <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
-                    <span class="bg-yellow-400 text-gray-800 px-2 py-1 rounded text-sm mr-2">4</span>
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium mr-3">4</span>
                     Kondisi Bangunan
                 </h3>
-                <div class="grid grid-cols-1 gap-2 text-sm">
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">SH</span>
-                        <span class="text-gray-600">= Sangat Baik</span>
+                <div class="grid grid-cols-1 gap-3">
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">SH</span>
+                        <span class="text-gray-700 ml-4">Sangat Baik</span>
                     </div>
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">BA</span>
-                        <span class="text-gray-600">= Baik</span>
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">BA</span>
+                        <span class="text-gray-700 ml-4">Baik</span>
                     </div>
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">CU</span>
-                        <span class="text-gray-600">= Cukup</span>
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">CU</span>
+                        <span class="text-gray-700 ml-4">Cukup</span>
                     </div>
-                    <div class="flex">
-                        <span class="font-bold text-gray-700 w-12">RB</span>
-                        <span class="text-gray-600">= Rusak Berat</span>
+                    <div class="flex items-center bg-gray-50 rounded-lg p-3">
+                        <span class="font-bold text-red-600 w-12 text-center">RB</span>
+                        <span class="text-gray-700 ml-4">Rusak Berat</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <!-- Modal: Daftar -->
 <div id="daftarModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
@@ -448,10 +494,9 @@
         </form>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
-    // Initialize thumbnail swiper
+    // Swiper setup
     var thumbSwiper = new Swiper('.mySwiperThumbs', {
         spaceBetween: 10,
         slidesPerView: 4,
@@ -463,8 +508,6 @@
             1024: { slidesPerView: 4, spaceBetween: 15 }
         }
     });
-
-    // Initialize main swiper
     var mainSwiper = new Swiper('.mySwiperMain', {
         spaceBetween: 10,
         navigation: {
@@ -482,24 +525,22 @@
                 thumbnails.forEach((thumb, index) => {
                     if (index === this.activeIndex) {
                         thumb.classList.add('!border-red-500');
-                        thumb.classList.remove('border-transparent');
+                        thumb.classList.remove('border-gray-200');
                     } else {
                         thumb.classList.remove('!border-red-500');
-                        thumb.classList.add('border-transparent');
+                        thumb.classList.add('border-gray-200');
                     }
                 });
             }
         }
     });
-
     document.addEventListener('DOMContentLoaded', function() {
         const firstThumbnail = document.querySelector('.mySwiperThumbs .swiper-slide:first-child img');
         if (firstThumbnail) {
             firstThumbnail.classList.add('!border-red-500');
-            firstThumbnail.classList.remove('border-transparent');
+            firstThumbnail.classList.remove('border-gray-200');
         }
     });
-
     function copyShareLink() {
         const url = window.location.href;
         navigator.clipboard.writeText(url).then(function() {
@@ -514,12 +555,10 @@
             }
         });
     }
-
     // Close modal function
     document.getElementById('closeModal').addEventListener('click', function() {
         document.getElementById('conditionModal').classList.add('hidden');
     });
-
     // Daftar Modal Form Submission
     document.getElementById('daftarForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -564,6 +603,6 @@
         }
     });
 </script>
-
 </body>
 </html>
+

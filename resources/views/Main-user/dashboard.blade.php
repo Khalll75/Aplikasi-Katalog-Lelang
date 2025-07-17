@@ -366,26 +366,20 @@
                 <div class="overflow-x-auto scrollbar-hide">
                     <div class="flex space-x-6 pb-4" style="width: max-content;">
                         @forelse($properties as $property)
-                            <div class="property-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all flex-shrink-0 w-80 cursor-pointer group"
-                                 onclick="window.location.href='{{ route('properties.show', $property->id) }}'"
-                                 role="button" aria-label="Lihat detail properti">
                                 @php
                                     $mainImage = $property->images->where('is_main', true)->first() ?? $property->images->first();
                                     $lelang = $property->lelangSchedule;
                                     $kategori = ucfirst($property->kategori_lot ?? 'Properti');
                                     $status = $lelang && $lelang->is_selesai ? 'Lelang Selesai' : 'Tersedia';
                                 @endphp
+                            @if($mainImage)
+                                <div class="property-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-200 hover:shadow-xl transition-all flex-shrink-0 w-80 cursor-pointer group"
+                                     onclick="window.location.href='{{ route('properties.show', $property->id) }}'"
+                                     role="button" aria-label="Lihat detail properti">
                                 <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
-                                    @if($mainImage)
                                         <img src="{{ asset('storage/'.$mainImage->media_url) }}"
                                              alt="{{ $property->nama }}"
                                              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
-                                    @else
-                                        <div class="text-gray-400 flex flex-col items-center">
-                                            <i class="fas fa-image text-4xl mb-2"></i>
-                                            <span>No Image</span>
-                                        </div>
-                                    @endif
                                 </div>
                                 <div class="p-6">
                                     <div class="flex items-center gap-2 mb-3">
@@ -400,8 +394,8 @@
                                         Kode: <span class="font-semibold text-gray-700">{{ $property->kode_aset }}</span>
                                     </div>
                                     <div class="text-gray-900 font-bold text-xl mb-3">
-                                        @if($lelang)
-                                            <span class="text-green-600">Rp {{ number_format($lelang->harga_limit_akhir, 0, ',', '.') }}</span>
+                                            @if($lelang && $lelang->limit_lelang)
+                                                <span class="text-green-600">Rp {{ number_format($lelang->limit_lelang, 0, ',', '.') }}</span>
                                         @else
                                             <span class="text-gray-400">Harga belum tersedia</span>
                                         @endif
@@ -412,6 +406,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         @empty
                             <div class="text-center py-12 text-gray-500 w-full">
                                 <i class="fas fa-home text-4xl mb-4"></i>
