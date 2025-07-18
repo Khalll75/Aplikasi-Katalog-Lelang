@@ -320,13 +320,17 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
                         <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
-                            <span class="text-gray-900">{{ $property->lelangSchedule ? \Carbon\Carbon::parse($property->lelangSchedule->tanggal)->translatedFormat('l, d F Y') : 'Belum ditentukan' }}</span>
+                            @if($property->lelangSchedule && $property->lelangSchedule->tanggal)
+                                {{ \Carbon\Carbon::parse($property->lelangSchedule->tanggal)->translatedFormat('l, d F Y') }}
+                            @else
+                                Belum ditentukan
+                            @endif
                         </div>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Lokasi Lelang</label>
                         <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
-                            <span class="text-gray-900">{{ $property->lelangSchedule->lokasi ?? 'Belum ditentukan' }}</span>
+                            <span class="text-gray-900">{{ $property->lelangSchedule && $property->lelangSchedule->lokasi ? $property->lelangSchedule->lokasi : 'Belum ditentukan' }}</span>
                         </div>
                     </div>
                 </div>

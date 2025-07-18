@@ -19,13 +19,10 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::with([
-            'images',
-            'lelangSchedule',
-            'pointsOfInterest',
-            'contactPersons'
-        ])->paginate(10);
-
+        // Eager-load all relationships for dashboard
+        $properties = Property::with(['images', 'lelangSchedule', 'pointsOfInterest', 'contactPersons'])
+            ->orderByDesc('id')
+            ->paginate(10);
         return view('Main-user.dashboard', compact('properties'));
     }
 
@@ -34,13 +31,8 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        $property->load([
-            'images',
-            'lelangSchedule',
-            'pointsOfInterest',
-            'contactPersons'
-        ]);
-
+        // Eager-load all relationships for detail page
+        $property->load(['images', 'lelangSchedule', 'pointsOfInterest', 'contactPersons']);
         return view('Main-user.propertiDetail', compact('property'));
     }
 
@@ -76,7 +68,7 @@ class PropertyController extends Controller
 
     public function search(Request $request)
     {
-        $query = Property::with(['images', 'lelangSchedule']);
+        $query = Property::with(['images', 'lelangSchedule', 'pointsOfInterest', 'contactPersons']);
 
         // Kategori Lot
         if ($request->filled('kategori_lot')) {

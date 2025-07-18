@@ -11,7 +11,6 @@ return new class extends Migration {
             $table->foreignId('property_id')->constrained()->onDelete('cascade');
             $table->string('nama');
             $table->string('no_hp');
-            $table->timestamps();
         });
     }
 

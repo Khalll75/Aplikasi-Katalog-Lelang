@@ -228,6 +228,7 @@
                                         <option value="">Pilih...</option>
                                         <option value="450 VA" {{ request('listrik') == '450 VA' ? 'selected' : '' }}>450 VA</option>
                                         <option value="900 VA" {{ request('listrik') == '900 VA' ? 'selected' : '' }}>900 VA</option>
+                                        <option value="1200 VA" {{ request('listrik') == '1200 VA' ? 'selected' : '' }}>1200 VA</option>
                                         <option value="1300 VA" {{ request('listrik') == '1300 VA' ? 'selected' : '' }}>1300 VA</option>
                                         <option value="2200 VA" {{ request('listrik') == '2200 VA' ? 'selected' : '' }}>2200 VA</option>
                                         <option value="3500 VA" {{ request('listrik') == '3500 VA' ? 'selected' : '' }}>3500 VA</option>
@@ -261,9 +262,14 @@
                                     <select name="air" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white input-focus focus:border-red-500 focus:outline-none">
                                         <option value="">Pilih...</option>
                                         <option value="PDAM" {{ request('air') == 'PDAM' ? 'selected' : '' }}>PDAM</option>
+                                        <option value="Sumur" {{ request('air') == 'Sumur' ? 'selected' : '' }}>Sumur</option>
                                         <option value="Sumur Bor" {{ request('air') == 'Sumur Bor' ? 'selected' : '' }}>Sumur Bor</option>
                                         <option value="Sumur Gali" {{ request('air') == 'Sumur Gali' ? 'selected' : '' }}>Sumur Gali</option>
-                                        <option value="Air Tanah" {{ request('air') == 'Air Tanah' ? 'selected' : '' }}>Air Tanah</option>
+                                        <option value="PAM" {{ request('air') == 'PAM' ? 'selected' : '' }}>PAM</option>
+                                        <option value="Sumur & PAM" {{ request('air') == 'Sumur & PAM' ? 'selected' : '' }}>Sumur & PAM</option>
+                                        <option value="PDAM & Sumur Bor / Sumur Bor / PDAM" {{ request('air') == 'PDAM & Sumur Bor / Sumur Bor / PDAM' ? 'selected' : '' }}>PDAM & Sumur Bor / Sumur Bor / PDAM</option>
+                                        <option value="Sumur Bor & PAM" {{ request('air') == 'Sumur Bor & PAM' ? 'selected' : '' }}>Sumur Bor & PAM</option>
+                                        <option value="Sumur & PDAM" {{ request('air') == 'Sumur & PDAM' ? 'selected' : '' }}>Sumur & PDAM</option>
                                     </select>
                                 </div>
                             </div>

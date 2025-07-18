@@ -210,6 +210,7 @@
                                 <option value="">Pilih...</option>
                                 <option value="450 VA">450 VA</option>
                                 <option value="900 VA">900 VA</option>
+                                <option value="900 VA">1200 VA</option>
                                 <option value="1300 VA">1300 VA</option>
                                 <option value="2200 VA">2200 VA</option>
                                 <option value="3500 VA">3500 VA</option>
@@ -222,9 +223,14 @@
                             <select name="air" id="air" class="form-input">
                                 <option value="">Pilih...</option>
                                 <option value="PDAM">PDAM</option>
+                                <option value="Sumur">Sumur</option>
                                 <option value="Sumur Bor">Sumur Bor</option>
                                 <option value="Sumur Gali">Sumur Gali</option>
-                                <option value="Air Tanah">Air Tanah</option>
+                                <option value="PAM">PAM</option>
+                                <option value="Sumur & PAM">Sumur & PAM</option>
+                                <option value="PDAM & Sumur Bor / Sumur Bor / PDAM">PDAM & Sumur Bor / Sumur Bor / PDAM</option>
+                                <option value="Sumur Bor & PAM">Sumur Bor & PAM</option>
+                                <option value="Sumur & PDAM">Sumur & PDAM</option>
                             </select>
                         </div>
                     </div>

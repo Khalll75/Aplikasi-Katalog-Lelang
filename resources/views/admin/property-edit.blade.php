@@ -231,18 +231,29 @@
                         <label for="listrik" class="form-label">Daya Listrik</label>
                         <select name="listrik" id="listrik" class="form-input">
                             <option value="">Pilih...</option>
-                            @foreach (["450 VA","900 VA","1300 VA","2200 VA","3500 VA","4400 VA","5500 VA"] as $listrik)
-                                <option value="{{ $listrik }}" {{ old('listrik', $property->listrik) == $listrik ? 'selected' : '' }}>{{ $listrik }}</option>
-                            @endforeach
+                            <option value="450 VA" {{ old('listrik', $property->listrik) == '450 VA' ? 'selected' : '' }}>450 VA</option>
+                            <option value="900 VA" {{ old('listrik', $property->listrik) == '900 VA' ? 'selected' : '' }}>900 VA</option>
+                            <option value="1200 VA" {{ old('listrik', $property->listrik) == '1200 VA' ? 'selected' : '' }}>1200 VA</option>
+                            <option value="1300 VA" {{ old('listrik', $property->listrik) == '1300 VA' ? 'selected' : '' }}>1300 VA</option>
+                            <option value="2200 VA" {{ old('listrik', $property->listrik) == '2200 VA' ? 'selected' : '' }}>2200 VA</option>
+                            <option value="3500 VA" {{ old('listrik', $property->listrik) == '3500 VA' ? 'selected' : '' }}>3500 VA</option>
+                            <option value="4400 VA" {{ old('listrik', $property->listrik) == '4400 VA' ? 'selected' : '' }}>4400 VA</option>
+                            <option value="5500 VA" {{ old('listrik', $property->listrik) == '5500 VA' ? 'selected' : '' }}>5500 VA</option>
                         </select>
                     </div>
                     <div class="mb-4">
                         <label for="air" class="form-label">Sumber Air</label>
                         <select name="air" id="air" class="form-input">
                             <option value="">Pilih...</option>
-                            @foreach (["PDAM","Sumur Bor","Sumur Gali","Air Tanah"] as $air)
-                                <option value="{{ $air }}" {{ old('air', $property->air) == $air ? 'selected' : '' }}>{{ $air }}</option>
-                            @endforeach
+                            <option value="PDAM" {{ old('air', $property->air) == 'PDAM' ? 'selected' : '' }}>PDAM</option>
+                            <option value="Sumur" {{ old('air', $property->air) == 'Sumur' ? 'selected' : '' }}>Sumur</option>
+                            <option value="Sumur Bor" {{ old('air', $property->air) == 'Sumur Bor' ? 'selected' : '' }}>Sumur Bor</option>
+                            <option value="Sumur Gali" {{ old('air', $property->air) == 'Sumur Gali' ? 'selected' : '' }}>Sumur Gali</option>
+                            <option value="PAM" {{ old('air', $property->air) == 'PAM' ? 'selected' : '' }}>PAM</option>
+                            <option value="Sumur & PAM" {{ old('air', $property->air) == 'Sumur & PAM' ? 'selected' : '' }}>Sumur & PAM</option>
+                            <option value="PDAM & Sumur Bor / Sumur Bor / PDAM" {{ old('air', $property->air) == 'PDAM & Sumur Bor / Sumur Bor / PDAM' ? 'selected' : '' }}>PDAM & Sumur Bor / Sumur Bor / PDAM</option>
+                            <option value="Sumur Bor & PAM" {{ old('air', $property->air) == 'Sumur Bor & PAM' ? 'selected' : '' }}>Sumur Bor & PAM</option>
+                            <option value="Sumur & PDAM" {{ old('air', $property->air) == 'Sumur & PDAM' ? 'selected' : '' }}>Sumur & PDAM</option>
                         </select>
                     </div>
                 </div>

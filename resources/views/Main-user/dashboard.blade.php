@@ -259,7 +259,7 @@
         </header>
 
         <!-- Hero Section -->
-        <section class="relative bg-cover bg-center h-[32rem] text-white hero-parallax" style="background-image: url('/img/jambi-banner.jpg')">
+        <section class="relative bg-cover bg-center h-[32rem] text-white hero-parallax" style="background-image: url('/images/dashboard_bg.jpeg')">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50"></div>
             <div class="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center animate-fade-in">
                 <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
