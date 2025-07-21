@@ -10,6 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -632,16 +633,7 @@
                         <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>
                         Lokasi Kantor
                     </h2>
-                    <div class="h-96 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center relative overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-green-500/10"></div>
-                        <div class="relative text-center">
-                            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-map-marked-alt text-red-600 text-2xl icon-bounce"></i>
-                            </div>
-                            <p class="text-gray-600 font-medium text-lg">Peta Lokasi</p>
-                            <p class="text-gray-500 text-sm mt-2">Jambi, Indonesia</p>
-                        </div>
-                    </div>
+                    <div id="map" style="height: 400px; border-radius: 1rem; overflow: hidden;"></div>
                 </div>
             </section>
         </div>
@@ -690,6 +682,18 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const map = L.map('map').setView([-1.61443, 103.61584], 16); // Updated coordinates
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        L.marker([-1.61443, 103.61584]).addTo(map)
+          .bindPopup('Jl. Hayam Wuruk No.RT.35, Jelutung, Kec. Jelutung, Kota Jambi, Jambi 36124')
+          .openPopup();
+      });
+    </script>
     <script>
         // Add smooth scrolling for better UX
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
