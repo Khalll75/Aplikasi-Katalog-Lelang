@@ -8,7 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        body, p, span, label, td, th, input, button, a, div {
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, .adlam-heading {
+            font-family: 'ADLaM Display', cursive !important;
+        }
         .main-image-frame {
             width: 100%;
             max-width: 900px;
@@ -350,7 +357,11 @@
                             </div>
                             <div class="flex items-center">
                                 <i class="fas fa-phone text-red-600 mr-2"></i>
-                                <span class="text-gray-700">{{ $cp->no_hp }}</span>
+                                <span class="text-gray-700 mr-2">{{ $cp->no_hp }}</span>
+                                <a href="https://wa.me/62{{ ltrim($cp->no_hp, '0') }}" target="_blank" class="text-green-600 hover:underline flex items-center gap-1">
+                                    <i class="fab fa-whatsapp"></i>
+                                    Chat on WhatsApp
+                                </a>
                             </div>
                         </div>
                     @empty
@@ -546,18 +557,19 @@
         }
     });
     function copyShareLink() {
-        const url = window.location.href;
-        navigator.clipboard.writeText(url).then(function() {
-            const tooltip = document.getElementById('share-tooltip');
-            if (tooltip) {
-                tooltip.textContent = 'Tautan disalin!';
-                tooltip.classList.add('opacity-100');
-                setTimeout(() => {
-                    tooltip.textContent = 'Salin tautan ke clipboard';
-                    tooltip.classList.remove('opacity-100');
-                }, 1500);
-            }
-        });
+        const shareData = {
+            title: 'Bagikan',
+            text: 'Cek data ini!',
+            url: window.location.href
+        };
+
+        if (navigator.share) {
+            navigator.share(shareData)
+                .then(() => console.log('Link dibagikan!'))
+                .catch((err) => console.error('Gagal membagikan:', err));
+        } else {
+            alert("Browser tidak mendukung fitur bagikan.");
+        }
     }
     // Close modal function
     document.getElementById('closeModal').addEventListener('click', function() {

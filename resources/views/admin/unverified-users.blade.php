@@ -6,6 +6,7 @@
     <title>Verifikasi User</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         /* Reset dan base styling */
         * {
@@ -15,7 +16,7 @@
         body {
             background: #f9fafb !important;
             position: relative;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'Open Sans', sans-serif !important;
         }
 
         /* Background Image */

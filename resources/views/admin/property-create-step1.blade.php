@@ -6,7 +6,14 @@
     <title>Tambah Properti - Step 1</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        body, p, span, label, td, th, input, button, a, div {
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, .adlam-heading {
+            font-family: 'ADLaM Display', cursive !important;
+        }
         .form-section {
             background: white;
             border-radius: 12px;

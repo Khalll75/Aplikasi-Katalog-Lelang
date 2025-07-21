@@ -6,7 +6,14 @@
     <title>Kelola Lelang</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        body, p, span, label, td, th, input, button, a, div {
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, .adlam-heading {
+            font-family: 'ADLaM Display', cursive !important;
+        }
         body { background: #f8fafb !important; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         .main-container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; position: relative; z-index: 1; }
         .table-container { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; margin-top: 2rem; }

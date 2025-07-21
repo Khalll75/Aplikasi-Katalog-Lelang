@@ -7,7 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        body, p, span, label, td, th, input, button, a, div {
+            font-family: 'Open Sans', sans-serif !important;
+        }
+        h1, h2, h3, h4, h5, h6, .adlam-heading {
+            font-family: 'ADLaM Display', cursive !important;
+        }
         .filter-card {
             transition: all 0.3s ease;
         }
