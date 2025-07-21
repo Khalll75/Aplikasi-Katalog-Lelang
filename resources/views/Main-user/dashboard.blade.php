@@ -8,9 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Open Sans', sans-serif;
         }
 
         /* Hide scrollbar for horizontal scroll */
@@ -234,6 +236,10 @@
                 background-position: 200% 0;
             }
         }
+
+        .adlam-heading {
+            font-family: 'ADLaM Display', cursive !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -262,7 +268,7 @@
         <section class="relative bg-cover bg-center h-[32rem] text-white hero-parallax" style="background-image: url('/images/dashboard_bg.jpeg')">
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50"></div>
             <div class="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center animate-fade-in">
-                <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+                <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6 adlam-heading">
                     <span class="text-yellow-400 drop-shadow-lg">PROPERTI AREA JAMBI</span>
                 </h2>
                 <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
@@ -272,7 +278,7 @@
                     <div class="relative">
                         <input type="text" name="q" value="{{ request('q') }}"
                                placeholder="Cari properti berdasarkan lokasi, kode, atau jenis..."
-                               class="search-input w-full py-4 px-6 pl-14 rounded-full text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-lg">
+                               class="search-input w-full py-4 px-6 pr-32 pl-14 rounded-full text-gray-900 focus:ring-2 focus:ring-yellow-400 focus:outline-none shadow-lg text-base placeholder:text-sm placeholder-gray-500">
                         <div class="absolute inset-y-0 left-5 flex items-center">
                             <i class="fa fa-search text-gray-400 text-lg"></i>
                         </div>
@@ -291,7 +297,7 @@
             <section class="mb-16 animate-slide-up">
                 <div class="flex justify-between items-center mb-8">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Kategori Lot Lelang</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 adlam-heading">Kategori Lot Lelang</h2>
                         <p class="text-gray-600">Pilih kategori properti yang Anda minati</p>
                     </div>
                     <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center group">
@@ -352,7 +358,7 @@
             <section class="mb-16 animate-slide-up">
                 <div class="flex justify-between items-center mb-8">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Rekomendasi Properti Baru</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 adlam-heading">Rekomendasi Properti Baru</h2>
                         <p class="text-gray-600">Properti terbaru dengan harga terbaik</p>
                     </div>
                     <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center group">
@@ -420,7 +426,7 @@
             <!-- Call to Action Section -->
             <section class="mb-16 animate-slide-up">
                 <div class="bg-gradient-to-br from-white to-blue-50 rounded-3xl shadow-lg border border-blue-200 p-8 md:p-12 max-w-5xl mx-auto">
-                    <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-4 text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold text-blue-900 mb-4 text-center adlam-heading">
                         Keunggulan Membeli Asset Agunan Pembiayaan Bank
                     </h2>
                     <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -495,7 +501,7 @@
             <!-- Tata Cara Mengikuti Lelang E-Auction Section -->
             <section class="mb-16 animate-slide-up">
                 <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-3xl shadow-lg border border-orange-200 p-8 md:p-12 max-w-5xl mx-auto">
-                    <h2 class="text-2xl md:text-3xl font-bold text-orange-900 mb-4 text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold text-orange-900 mb-4 text-center adlam-heading">
                         TATA CARA MENGIKUTI LELANG E-AUCTION
                     </h2>
                     <div class="text-center mb-8">
@@ -622,7 +628,7 @@
             <!-- Map Section -->
             <section class="mb-24 animate-slide-up">
                 <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+                    <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center adlam-heading">
                         <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>
                         Lokasi Kantor
                     </h2>
@@ -664,7 +670,7 @@
     <div id="daftarModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
             <div class="bg-red-900 text-white p-4 rounded-t-lg flex justify-between items-center">
-                <h2 class="text-lg font-bold flex-1 text-center">Daftar</h2>
+                <h2 class="text-lg font-bold flex-1 text-center adlam-heading">Daftar</h2>
                 <button onclick="document.getElementById('daftarModal').classList.add('hidden')" class="text-white hover:text-gray-300 ml-4">
                     <i class="fas fa-times text-xl"></i>
                 </button>
