@@ -195,6 +195,20 @@
                             <i class="fas fa-map-marker-alt text-red-600 mt-1 mr-3"></i>
                             <p class="text-gray-700 text-readable">{{ $property->alamat }}</p>
                         </div>
+                        <!-- Address, Google Maps Link, and QR Code Section -->
+                        <div class="mt-2 mb-8 flex flex-col md:flex-row items-center gap-6 bg-gradient-to-br from-red-50 to-white border border-red-200 rounded-xl shadow p-6">
+                            <div class="flex-1">
+                                <a href="{{ $gmapLink }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition-colors font-medium">
+                                    <i class="fas fa-location-arrow mr-2"></i> Lihat di Google Maps
+                                </a>
+                            </div>
+                            <div class="flex-shrink-0 flex items-center justify-center">
+                                <div class="bg-white border border-red-100 rounded-lg p-3 shadow">
+                                    {!! QrCode::size(120)->generate($gmapLink) !!}
+                                    <div class="text-xs text-gray-500 mt-2 text-center">Scan untuk buka di HP</div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Property Features Grid -->
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
                             <div class="info-grid-item">

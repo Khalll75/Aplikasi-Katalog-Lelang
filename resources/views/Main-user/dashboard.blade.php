@@ -10,7 +10,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
@@ -633,7 +632,15 @@
                         <i class="fas fa-map-marker-alt text-red-600 mr-2"></i>
                         Lokasi Kantor
                     </h2>
-                    <div id="map" style="height: 400px; border-radius: 1rem; overflow: hidden;"></div>
+                    <iframe
+                      src="https://www.google.com/maps?q=-1.6146340931868217,103.61583471117679&z=17&output=embed"
+                      width="100%"
+                      height="450"
+                      style="border:0;"
+                      allowfullscreen=""
+                      loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </section>
         </div>
@@ -682,18 +689,6 @@
         </div>
     </div>
 
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const map = L.map('map').setView([-1.61443, 103.61584], 16); // Updated coordinates
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-        L.marker([-1.61443, 103.61584]).addTo(map)
-          .bindPopup('Jl. Hayam Wuruk No.RT.35, Jelutung, Kec. Jelutung, Kota Jambi, Jambi 36124')
-          .openPopup();
-      });
-    </script>
     <script>
         // Add smooth scrolling for better UX
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

@@ -18,6 +18,9 @@
             background: #f8fafb !important;
             font-family: 'Inter', -apple-system,
             BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 200px;
         }
         .main-container {
             max-width: 1200px;
@@ -76,6 +79,11 @@
             color: #6b7280;
             font-size: 1.125rem;
             margin: 0;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>

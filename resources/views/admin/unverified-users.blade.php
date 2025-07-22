@@ -17,6 +17,13 @@
             background: #f9fafb !important;
             position: relative;
             font-family: 'Open Sans', sans-serif !important;
+            min-height: 100vh;
+            padding-bottom: 200px;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
 
         /* Background Image */

@@ -120,6 +120,16 @@
                 grid-template-columns: 1fr;
             }
         }
+        body {
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 200px;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body class="bg-gray-50">

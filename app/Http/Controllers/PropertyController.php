@@ -33,7 +33,9 @@ class PropertyController extends Controller
     {
         // Eager-load all relationships for detail page
         $property->load(['images', 'lelangSchedule', 'pointsOfInterest', 'contactPersons']);
-        return view('Main-user.propertiDetail', compact('property'));
+        $address = $property->alamat;
+        $gmapLink = 'https://www.google.com/maps?q=' . urlencode($address);
+        return view('Main-user.propertiDetail', compact('property', 'address', 'gmapLink'));
     }
 
     /**

@@ -27,6 +27,16 @@
         .header-section { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); padding: 32px; margin-bottom: 32px; border: 1px solid rgba(255,255,255,0.2); }
         .header-section h1 { color: #1f2937; font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
         .header-section p { color: #6b7280; font-size: 1.125rem; margin: 0; }
+        body {
+            min-height: 100vh;
+            position: relative;
+            padding-bottom: 200px;
+        }
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body x-data="{ mobileMenuOpen: false }">
@@ -106,7 +116,21 @@
                 </tbody>
             </table>
             <div class="p-4">
-                {{ $properties->links() }}
+                <style>
+                    .pagination-theme {
+                        @apply flex items-center space-x-1;
+                    }
+                    .pagination-theme .active {
+                        @apply bg-red-600 text-white font-bold;
+                    }
+                    .pagination-theme a, .pagination-theme span {
+                        @apply bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-red-50 hover:text-red-600 transition;
+                    }
+                    .pagination-theme .disabled {
+                        @apply opacity-50 cursor-not-allowed;
+                    }
+                </style>
+                {{ $properties->links('vendor.pagination.tailwind-custom') }}
             </div>
         </div>
     </div>
