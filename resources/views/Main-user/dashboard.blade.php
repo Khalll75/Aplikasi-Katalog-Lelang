@@ -311,7 +311,7 @@
                 <div class="overflow-x-auto scrollbar-hide">
                     <div class="flex space-x-6 pb-4 justify-center" style="width: max-content; margin-left: auto; margin-right: auto;">
                         <!-- Gudang -->
-                        <a href="{{ route('search', ['kategori_lot' => 'gudang']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                        <a href="{{ route('search', ['kategori_lot' => 'Gudang']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
                             <div class="w-16 h-16 mx-auto mb-4 bg-gray-50 rounded-xl flex items-center justify-center group-hover:bg-gray-100 transition-colors">
                                 <i class="fa-solid fa-warehouse text-2xl text-gray-600 group-hover:scale-110 transition-transform"></i>
                             </div>
@@ -319,7 +319,7 @@
                             <div class="text-gray-500 text-sm">Penyimpanan & logistik</div>
                         </a>
                         <!-- Ruko -->
-                        <a href="{{ route('search', ['kategori_lot' => 'ruko']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                        <a href="{{ route('search', ['kategori_lot' => 'Ruko']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
                             <div class="w-16 h-16 mx-auto mb-4 bg-yellow-50 rounded-xl flex items-center justify-center group-hover:bg-yellow-100 transition-colors">
                                 <i class="fa-solid fa-store text-2xl text-yellow-600 group-hover:scale-110 transition-transform"></i>
                             </div>
@@ -327,7 +327,7 @@
                             <div class="text-gray-500 text-sm">Properti komersial</div>
                         </a>
                         <!-- Rumah Tinggal -->
-                        <a href="{{ route('search', ['kategori_lot' => 'rumah_tinggal']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                        <a href="{{ route('search', ['kategori_lot' => 'Rumah Tinggal']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
                             <div class="w-16 h-16 mx-auto mb-4 bg-red-50 rounded-xl flex items-center justify-center group-hover:bg-red-100 transition-colors">
                                 <i class="fa-solid fa-house text-2xl text-red-600 group-hover:scale-110 transition-transform"></i>
                             </div>
@@ -335,7 +335,7 @@
                             <div class="text-gray-500 text-sm">Hunian keluarga</div>
                         </a>
                         <!-- Tanah Kebun -->
-                        <a href="{{ route('search', ['kategori_lot' => 'tanah_kebun']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                        <a href="{{ route('search', ['kategori_lot' => 'Tanah Kebun']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
                             <div class="w-16 h-16 mx-auto mb-4 bg-green-50 rounded-xl flex items-center justify-center group-hover:bg-green-100 transition-colors">
                                 <i class="fa-solid fa-seedling text-2xl text-green-600 group-hover:scale-110 transition-transform"></i>
                             </div>
@@ -343,7 +343,7 @@
                             <div class="text-gray-500 text-sm">Lahan perkebunan</div>
                         </a>
                         <!-- Tanah Kosong -->
-                        <a href="{{ route('search', ['kategori_lot' => 'tanah_kosong']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
+                        <a href="{{ route('search', ['kategori_lot' => 'Tanah Kosong']) }}" class="category-card bg-white rounded-2xl p-8 shadow-sm border border-gray-200 hover:shadow-lg transition-shadow text-center block group flex-shrink-0 w-64">
                             <div class="w-16 h-16 mx-auto mb-4 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors">
                                 <i class="fa-solid fa-mountain text-2xl text-blue-600 group-hover:scale-110 transition-transform"></i>
                             </div>
@@ -688,6 +688,27 @@
             </form>
         </div>
     </div>
+
+    @guest
+    <!-- Floating Chat Bubble for Daftar Recommendation -->
+    <div id="daftarChatBubble" class="fixed z-50 top-24 right-8 max-w-xs bg-white shadow-xl rounded-2xl border border-red-200 p-4 flex items-start gap-3 animate-fade-in" style="box-shadow: 0 8px 32px rgba(0,0,0,0.12);">
+        <!-- Triangle pointer -->
+        <div class="absolute left-10 -top-4 w-0 h-0 border-l-8 border-r-8 border-b-8 border-l-transparent border-r-transparent border-b-white"></div>
+        <div class="flex-shrink-0">
+            <div class="bg-red-100 rounded-full p-2">
+                <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2m2-4h4m-4 0a2 2 0 1 0 4 0m-4 0V4a2 2 0 1 1 4 0v0"></path></svg>
+            </div>
+        </div>
+        <div class="flex-1">
+            <div class="font-semibold text-gray-900 mb-1">Daftar untuk info lebih lanjut!</div>
+            <div class="text-gray-600 text-sm mb-2">Dapatkan detail properti, jadwal lelang, dan penawaran eksklusif dengan mendaftar sekarang.</div>
+            <button onclick="document.getElementById('daftarModal').classList.remove('hidden');document.getElementById('daftarChatBubble').style.display='none';" class="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded-lg font-bold text-sm shadow button-hover w-full">Daftar Sekarang</button>
+        </div>
+        <button onclick="document.getElementById('daftarChatBubble').style.display='none';" class="ml-2 text-gray-400 hover:text-gray-600 focus:outline-none" aria-label="Tutup">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+    @endguest
 
     <script>
         // Add smooth scrolling for better UX
