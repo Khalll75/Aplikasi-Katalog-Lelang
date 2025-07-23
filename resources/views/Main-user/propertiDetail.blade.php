@@ -210,62 +210,74 @@
                             </div>
                         </div>
                         <!-- Property Features Grid -->
+                        @php
+                            $hasFeatures = $property->luas_tanah || $property->luas_bangunan || $property->kamar_tidur || $property->kamar_mandi || $property->listrik || $property->air;
+                        @endphp
+                        @if($hasFeatures)
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                            @if($property->luas_tanah)
                             <div class="info-grid-item">
                                 <i class="fas fa-ruler-combined text-red-600 text-lg mb-2"></i>
                                 <div class="text-red-900 font-semibold text-lg">{{ $property->luas_tanah }} m²</div>
                                 <div class="text-sm text-gray-600">Luas Tanah</div>
                             </div>
+                            @endif
+                            @if($property->luas_bangunan)
                             <div class="info-grid-item">
                                 <i class="fas fa-building text-red-600 text-lg mb-2"></i>
-                                <div class="text-red-900 font-semibold text-lg">{{ $property->luas_bangunan ?? '-' }} m²</div>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->luas_bangunan }} m²</div>
                                 <div class="text-sm text-gray-600">Luas Bangunan</div>
                             </div>
+                            @endif
+                            @if($property->kamar_tidur)
                             <div class="info-grid-item">
                                 <i class="fas fa-bed text-red-600 text-lg mb-2"></i>
-                                <div class="text-red-900 font-semibold text-lg">{{ $property->kamar_tidur ?? '-' }}</div>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->kamar_tidur }}</div>
                                 <div class="text-sm text-gray-600">Kamar Tidur</div>
                             </div>
+                            @endif
+                            @if($property->kamar_mandi)
                             <div class="info-grid-item">
                                 <i class="fas fa-bath text-red-600 text-lg mb-2"></i>
-                                <div class="text-red-900 font-semibold text-lg">{{ $property->kamar_mandi ?? '-' }}</div>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->kamar_mandi }}</div>
                                 <div class="text-sm text-gray-600">Kamar Mandi</div>
                             </div>
+                            @endif
+                            @if($property->listrik)
                             <div class="info-grid-item">
                                 <i class="fas fa-bolt text-red-600 text-lg mb-2"></i>
-                                <div class="text-red-900 font-semibold text-lg">{{ $property->listrik ?? '-' }}</div>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->listrik }}</div>
                                 <div class="text-sm text-gray-600">Listrik</div>
                             </div>
+                            @endif
+                            @if($property->air)
                             <div class="info-grid-item">
                                 <i class="fas fa-tint text-red-600 text-lg mb-2"></i>
-                                <div class="text-red-900 font-semibold text-lg">{{ $property->air ?? '-' }}</div>
+                                <div class="text-red-900 font-semibold text-lg">{{ $property->air }}</div>
                                 <div class="text-sm text-gray-600">Air</div>
                             </div>
+                            @endif
                         </div>
+                        @endif
                         <!-- Point of Interest -->
+                        @if($property->pointsOfInterest && $property->pointsOfInterest->count())
                         <div class="border-t border-gray-200 pt-6">
                             <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
                                 <i class="fas fa-map-marked-alt text-red-600 mr-2"></i>
                                 Point of Interest
                             </h2>
                             <div class="space-y-3">
-                                @forelse($property->pointsOfInterest as $poi)
+                                @foreach($property->pointsOfInterest as $poi)
                                     <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
                                         <div class="flex items-center">
                                             <i class="fas fa-location-dot text-red-600 mr-3"></i>
                                             <span class="text-gray-700 text-readable">{{ $poi->poin }}</span>
                                         </div>
                                     </div>
-                                @empty
-                                    <div class="bg-gray-50 border border-gray-200 rounded-lg px-4 py-3">
-                                        <div class="flex items-center">
-                                            <i class="fas fa-info-circle text-gray-400 mr-3"></i>
-                                            <span class="text-gray-500">Tidak ada data point of interest</span>
-                                        </div>
-                                    </div>
-                                @endforelse
+                                @endforeach
                             </div>
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
