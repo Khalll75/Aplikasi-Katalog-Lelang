@@ -164,17 +164,17 @@
 </head>
 <body class="bg-gray-50">
     <div style="position:fixed;z-index:0;top:0;left:0;width:100vw;height:100vh;background:url('/images/jalan%20setapak%20gang%20rumah%20yang%20syahdu.jpg') center center/cover no-repeat;filter:blur(8px);opacity:0.5;pointer-events:none;"></div>
-    <nav class="border-b border-gray-100 sticky top-0 z-50" style="background: linear-gradient(to right, #3BA798, #ffffff);">
+    <nav class="border-b border-gray-100 sticky top-0 z-50" style="background: linear-gradient(135deg, #0f766e 0%, #06b6d4 100%);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
                     <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
                     <div class="flex">
                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-green-600 text-green-700 text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
+                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-white text-white text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
                                 Admin Dashboard
                             </a>
-                            <a href="{{ route('admin.lelang.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-700 hover:border-green-600 hover:text-green-700 focus:outline-none transition duration-150 ease-in-out">
+                            <a href="{{ route('admin.lelang.index') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-white hover:border-white hover:text-white focus:outline-none transition duration-150 ease-in-out">
                                 Kelola Lelang
                             </a>
                         </div>
@@ -183,9 +183,10 @@
             </div>
         </div>
     </nav>
-    <div class="max-w-2xl mx-auto mt-28 relative z-10">
-        <h1 class="text-2xl font-bold mb-4">Edit Properti</h1>
-        <a href="{{ url()->previous() }}" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded mb-6">Kembali</a>
+    <div class="min-h-screen py-8" style="position:relative;z-index:1;">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-2xl font-bold mb-4">Edit Properti</h1>
+            <a href="{{ url()->previous() }}" class="inline-block bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded mb-6">Kembali</a>
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
                 <ul>
@@ -444,6 +445,7 @@
                 <option value="{{ $lokasi }}">
             @endforeach
         </datalist>
+        </div>
     </div>
     @push('after-styles')
     @endpush

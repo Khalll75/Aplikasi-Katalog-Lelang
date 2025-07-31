@@ -242,8 +242,10 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <div class="min-h-screen">
+<body class="bg-gray-50" style="background-image: url('/images/ds wallpaper.png'); background-repeat: repeat; background-size: 600px; background-attachment: fixed; position: relative;">
+    <!-- Semi-transparent overlay for better readability -->
+    <div class="absolute inset-0 bg-white bg-opacity-70" style="z-index: 0;"></div>
+    <div class="min-h-screen" style="position: relative; z-index: 1;">
         <!-- Header -->
         <header class="bg-gradient-to-r from-red-900 to-red-800 text-white py-4 fixed top-0 left-0 w-full z-50 shadow-lg backdrop-blur-sm">
             <div class="container mx-auto px-4 flex justify-between items-center">
@@ -269,10 +271,10 @@
             <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50"></div>
             <div class="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center animate-fade-in">
                 <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6 adlam-heading">
-                    <span class="text-yellow-400 drop-shadow-lg">PROPERTI AREA JAMBI</span>
+                    <span class="text-yellow-400 drop-shadow-lg">GUDANG PROPERTI JAMBI</span>
                 </h2>
                 <p class="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
-                    Temukan properti impian Anda melalui lelang dengan harga terbaik
+                    Temukan properti impian Anda dengan harga terbaik
                 </p>
                 <form action="{{ route('search') }}" method="GET" class="w-full max-w-lg">
                     <div class="relative">
@@ -291,13 +293,13 @@
         </section>
 
         <!-- Main Content -->
-        <div class="container mx-auto px-4 pt-28 pb-12">
+        <div class="container mx-auto px-4 pt-28 pb-12" style="position: relative; z-index: 1;">
 
             <!-- Kategori Lot Lelang Section -->
             <section class="mb-16 animate-slide-up">
                 <div class="flex justify-between items-center mb-8">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 adlam-heading">Kategori Lot Lelang</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 adlam-heading">Kategori Lot Properti</h2>
                         <p class="text-gray-600">Pilih kategori properti yang Anda minati</p>
                     </div>
                     <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center group">
@@ -650,13 +652,13 @@
             <div class="container mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8">
                     <div>
-                        <h2 class="text-xl font-bold mb-2">Katalog Lelang Properti</h2>
+                        <h2 class="text-xl font-bold mb-2">Gudang Properti Jambi</h2>
                         <p class="text-sm">Platform pencarian dan informasi lelang properti terbaik untuk wilayah Indonesia.</p>
                     </div>
                     <div>
                         <h2 class="text-xl font-bold mb-2">Kontak</h2>
-                        <p class="text-sm">Email: info@kataloglelang.id</p>
-                        <p class="text-sm">Telepon: (021) 9876-5432</p>
+                        <p class="text-sm">Email: jambijuaro2024@gmail.com</p>
+                        <p class="text-sm">No WA: 0818145686</p>
                     </div>
                 </div>
                 <hr class="border-gray-700">
