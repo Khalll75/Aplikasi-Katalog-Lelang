@@ -302,7 +302,7 @@
                         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 adlam-heading">Kategori Lot Properti</h2>
                         <p class="text-gray-600">Pilih kategori properti yang Anda minati</p>
                     </div>
-                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center group">
+                    <a href="/search" class="text-gray-900 hover:text-gray-900 font-medium flex items-center group">
                         Lihat Semua
                         <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"></path>
@@ -363,7 +363,7 @@
                         <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2 adlam-heading">Rekomendasi Properti Baru</h2>
                         <p class="text-gray-600">Properti terbaru dengan harga terbaik</p>
                     </div>
-                    <a href="/search" class="text-red-600 hover:text-red-700 font-medium flex items-center group">
+                    <a href="/search" class="text-gray-900 hover:text-gray-900 font-medium flex items-center group">
                         Lihat Semua
                         <svg class="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7"></path>

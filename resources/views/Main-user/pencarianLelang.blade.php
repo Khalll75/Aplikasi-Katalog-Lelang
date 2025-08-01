@@ -529,13 +529,13 @@
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8">
             <div>
-                <h2 class="text-xl font-bold mb-2">Katalog Lelang Properti</h2>
+                <h2 class="text-xl font-bold mb-2">Gudang Properti Jambi</h2>
                 <p class="text-sm">Platform pencarian dan informasi lelang properti terbaik untuk wilayah Indonesia.</p>
             </div>
             <div>
                 <h2 class="text-xl font-bold mb-2">Kontak</h2>
-                <p class="text-sm">Email: info@kataloglelang.id</p>
-                <p class="text-sm">Telepon: (021) 9876-5432</p>
+                <p class="text-sm">Email: jambijuaro2024@gmail.com</p>
+                <p class="text-sm">No WA: 0818145686</p>
             </div>
         </div>
         <hr class="border-gray-700">

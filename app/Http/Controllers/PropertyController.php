@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class PropertyController extends Controller
 {
@@ -318,32 +319,45 @@ class PropertyController extends Controller
             if ($request->filled('delete_images')) {
                 $imagesToDelete = PropertyMedia::whereIn('id', $request->input('delete_images'))->get();
                 foreach ($imagesToDelete as $image) {
-                    Storage::disk('public')->delete($image->media_url);
+                    // Hapus dari Cloudinary jika media_url adalah URL Cloudinary
+                    if (preg_match('/res\.cloudinary\.com/', $image->media_url)) {
+                        // Ambil public_id dari URL Cloudinary
+                        $publicId = basename(parse_url($image->media_url, PHP_URL_PATH));
+                        $publicId = preg_replace('/\.[^.]+$/', '', $publicId); // hapus ekstensi
+                        try {
+                            Cloudinary::destroy('properti/' . $publicId);
+                        } catch (\Exception $e) {
+                            Log::warning('Cloudinary delete failed', ['url' => $image->media_url, 'error' => $e->getMessage()]);
+                        }
+                    } else {
+                        Storage::disk('public')->delete($image->media_url);
+                    }
                     $image->delete();
                 }
             }
 
-            // Handle new media uploads
+            // Handle new media uploads (Cloudinary)
             if ($request->hasFile('images')) {
                 $mainImageIndex = $request->input('main_image', 0);
 
                 foreach ($request->file('images') as $index => $file) {
-                    $fileName = time() . '_' . $index . '.' . $file->getClientOriginalExtension();
-                    $filePath = $file->storeAs('property_media', $fileName, 'public');
-
-                    // Determine media type based on file extension
-                    $extension = strtolower($file->getClientOriginalExtension());
-                    $mediaType = in_array($extension, ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
+                    // Upload ke Cloudinary
+                    $upload = Cloudinary::upload($file->getRealPath(), [
+                        'folder' => 'properti'
+                    ]);
+                    $secureUrl = $upload->getSecurePath();
+                    $format = $upload->getExtension();
+                    $mediaType = in_array(strtolower($format), ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
 
                     PropertyMedia::create([
                         'property_id' => $property->id,
-                        'media_url' => $filePath,
+                        'media_url' => $secureUrl,
                         'media_type' => $mediaType,
-                        'format' => $file->getClientOriginalExtension(),
+                        'format' => $format,
                         'is_main' => $index == $mainImageIndex
                     ]);
 
-                    Log::info('Upload media', ['media' => $filePath, 'type' => $mediaType]);
+                    Log::info('Upload media Cloudinary', ['media' => $secureUrl, 'type' => $mediaType]);
                 }
             }
 

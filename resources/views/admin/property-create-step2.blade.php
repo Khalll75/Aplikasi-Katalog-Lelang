@@ -428,23 +428,21 @@
         }
         window.addEventListener('DOMContentLoaded', formatRupiahPreview2);
     </script>
-    <footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12" style="flex-shrink: 0;">
+    <footer class="bg-gray-900 text-gray-200 pt-10 pb-6 mt-20">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8">
                 <div>
-                    <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
-                    <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
+                    <h2 class="text-xl font-bold mb-2">Gudang Properti Jambi</h2>
+                    <p class="text-sm">Platform pencarian dan informasi lelang properti terbaik untuk wilayah Indonesia.</p>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold mb-1">Kontak</h2>
-                    <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
-                    <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
+                    <h2 class="text-xl font-bold mb-2">Kontak</h2>
+                    <p class="text-sm">Email: jambijuaro2024@gmail.com</p>
+                    <p class="text-sm">No WA: 0818145686</p>
                 </div>
             </div>
-            <hr class="border-gray-700 my-2">
-            <div class="text-center text-xs text-gray-400 pt-2">
-                © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
-            </div>
+            <hr class="border-gray-700">
+            <p class="text-center text-xs text-gray-500 pt-4">© 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.</p>
         </div>
     </footer>
 </body>
