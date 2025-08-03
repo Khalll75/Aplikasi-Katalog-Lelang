@@ -358,7 +358,7 @@
                         $mainImage = $property->images->where('is_main', true)->first() ?? $property->images->first();
                     @endphp
                     @if($mainImage)
-                        <img src="{{ asset('storage/'.$mainImage->media_url) }}" alt="{{ $property->nama }}" class="object-cover w-full h-full property-image">
+                        <img src="{{ $mainImage->getUrl() }}" alt="{{ $property->nama }}" class="object-cover w-full h-full property-image">
                     @else
                         <div class="text-gray-400 text-center">
                             <i class="fas fa-image text-4xl mb-2"></i>

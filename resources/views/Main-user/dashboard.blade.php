@@ -385,7 +385,7 @@
                                      onclick="window.location.href='{{ route('properties.show', $property->id) }}'"
                                      role="button" aria-label="Lihat detail properti">
                                 <div class="h-48 bg-gray-200 flex items-center justify-center overflow-hidden">
-                                        <img src="{{ asset('storage/'.$mainImage->media_url) }}"
+                                        <img src="{{ $mainImage->getUrl() }}"
                                              alt="{{ $property->nama }}"
                                              class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300">
                                 </div>

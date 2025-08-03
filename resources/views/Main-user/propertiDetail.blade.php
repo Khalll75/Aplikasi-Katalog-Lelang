@@ -144,11 +144,11 @@
                                     <div class="swiper-slide flex items-center justify-center">
                                         @if($img->media_type === 'video')
                                             <video controls class="rounded-lg max-h-full">
-                                                <source src="{{ asset('storage/'.$img->media_url) }}" type="video/{{ $img->format }}">
+                                                <source src="{{ $img->getUrl() }}" type="video/{{ $img->format }}">
                                                 Your browser does not support the video tag.
                                             </video>
                                         @else
-                                            <img src="{{ asset('storage/'.$img->media_url) }}"
+                                            <img src="{{ $img->getUrl() }}"
                                                  alt="Property Image" class="rounded-lg" />
                                         @endif
                                     </div>
@@ -172,7 +172,7 @@
                             <div class="swiper-wrapper">
                                 @forelse($property->images as $img)
                                     <div class="swiper-slide !w-20 !h-20 cursor-pointer rounded-lg overflow-hidden border-2 border-gray-200 hover:border-red-500 transition-all duration-200">
-                                        <img src="{{ asset('storage/'.$img->media_url) }}"
+                                        <img src="{{ $img->getUrl() }}"
                                              alt="Thumbnail"
                                              class="w-full h-full object-cover" />
                                     </div>

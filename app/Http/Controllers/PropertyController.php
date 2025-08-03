@@ -195,24 +195,27 @@ class PropertyController extends Controller
 
     public function storeStep2(Request $request, Property $property)
     {
-        // Media
+        // Media - Upload to Cloudinary for consistency
         if ($request->hasFile('images')) {
             $mainImageIndex = $request->input('main_image', 0);
             foreach ($request->file('images') as $index => $file) {
-                $fileName = time() . '_' . $index . '.' . $file->getClientOriginalExtension();
-                $filePath = $file->storeAs('property_media', $fileName, 'public');
-
-                // Determine media type based on file extension
-                $extension = strtolower($file->getClientOriginalExtension());
-                $mediaType = in_array($extension, ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
+                // Upload to Cloudinary
+                $upload = Cloudinary::upload($file->getRealPath(), [
+                    'folder' => 'properti'
+                ]);
+                $secureUrl = $upload->getSecurePath();
+                $format = $upload->getExtension();
+                $mediaType = in_array(strtolower($format), ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
 
                 PropertyMedia::create([
                     'property_id' => $property->id,
-                    'media_url' => $filePath,
+                    'media_url' => $secureUrl,
                     'media_type' => $mediaType,
-                    'format' => $file->getClientOriginalExtension(),
+                    'format' => $format,
                     'is_main' => $index == $mainImageIndex
                 ]);
+
+                Log::info('Upload media Cloudinary', ['media' => $secureUrl, 'type' => $mediaType]);
             }
         }
         // Lelang Schedule

@@ -57,4 +57,18 @@ class PropertyMedia extends Model
 
         return sprintf('%02d:%02d', $minutes, $seconds);
     }
+
+    /**
+     * Get the proper URL for the media (Cloudinary or local storage)
+     */
+    public function getUrl(): string
+    {
+        // If it's already a full URL (Cloudinary), return as is
+        if (str_starts_with($this->media_url, 'http')) {
+            return $this->media_url;
+        }
+
+        // Otherwise, it's a local storage path
+        return asset('storage/' . $this->media_url);
+    }
 }

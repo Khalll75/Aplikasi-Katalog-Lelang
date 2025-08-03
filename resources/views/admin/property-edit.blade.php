@@ -330,9 +330,9 @@
                     @foreach($property->images as $i => $img)
                         <div class="image-input-group">
                             @if($img->media_type === 'video')
-                                <video src="{{ $img->media_url }}" width="120" controls class="rounded shadow"></video>
+                                <video src="{{ $img->getUrl() }}" width="120" controls class="rounded shadow"></video>
                             @else
-                                <img src="{{ $img->media_url }}" width="120" class="rounded shadow">
+                                <img src="{{ $img->getUrl() }}" width="120" class="rounded shadow">
                             @endif
                             <label class="radio-group ml-4">
                                 <input type="radio" name="main_image" value="{{ $i }}" {{ $img->is_main ? 'checked' : '' }}>
