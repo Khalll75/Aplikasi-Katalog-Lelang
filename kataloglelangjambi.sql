@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `cache` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` int NOT NULL
+  `expiration` int NOT NULL,
+  PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -42,7 +43,8 @@ CREATE TABLE `cache` (
 CREATE TABLE `cache_locks` (
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `expiration` int NOT NULL
+  `expiration` int NOT NULL,
+  PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -55,7 +57,8 @@ CREATE TABLE `contact_persons` (
   `id` bigint NOT NULL,
   `property_id` bigint UNSIGNED DEFAULT NULL,
   `nama` tinytext COLLATE utf8mb4_unicode_ci,
-  `no_hp` double DEFAULT NULL
+  `no_hp` double DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -291,7 +294,8 @@ CREATE TABLE `daftar_users` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -307,7 +311,9 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -323,7 +329,9 @@ CREATE TABLE `jobs` (
   `attempts` tinyint UNSIGNED NOT NULL,
   `reserved_at` int UNSIGNED DEFAULT NULL,
   `available_at` int UNSIGNED NOT NULL,
-  `created_at` int UNSIGNED NOT NULL
+  `created_at` int UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jobs_queue_index` (`queue`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -342,7 +350,8 @@ CREATE TABLE `job_batches` (
   `options` mediumtext COLLATE utf8mb4_unicode_ci,
   `cancelled_at` int DEFAULT NULL,
   `created_at` int NOT NULL,
-  `finished_at` int DEFAULT NULL
+  `finished_at` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -356,7 +365,8 @@ CREATE TABLE `lelang_schedules` (
   `property_id` bigint UNSIGNED NOT NULL,
   `tanggal` date DEFAULT NULL,
   `lokasi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `limit_lelang` bigint DEFAULT NULL
+  `limit_lelang` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -446,7 +456,8 @@ INSERT INTO `lelang_schedules` (`id`, `property_id`, `tanggal`, `lokasi`, `limit
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int NOT NULL
+  `batch` int NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -474,7 +485,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -488,7 +500,8 @@ CREATE TABLE `points_of_interest` (
   `property_id` bigint UNSIGNED NOT NULL,
   `poin` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -508,7 +521,8 @@ CREATE TABLE `properties` (
   `listrik` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `air` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `kondisi` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `kategori_lot` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `kategori_lot` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -605,7 +619,8 @@ CREATE TABLE `property_media` (
   `resolution` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_main` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -682,7 +697,10 @@ CREATE TABLE `sessions` (
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_agent` text COLLATE utf8mb4_unicode_ci,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_activity` int NOT NULL
+  `last_activity` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `sessions_user_id_index` (`user_id`),
+  KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -709,7 +727,9 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user'
+  `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -727,101 +747,81 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `is
 --
 -- Indexes for table `cache`
 --
-ALTER TABLE `cache`
-  ADD PRIMARY KEY (`key`);
+-- PRIMARY KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `cache_locks`
 --
-ALTER TABLE `cache_locks`
-  ADD PRIMARY KEY (`key`);
+-- PRIMARY KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `contact_persons`
 --
 ALTER TABLE `contact_persons`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `contact_persons_property_id_foreign` (`property_id`);
 
 --
 -- Indexes for table `daftar_users`
 --
-ALTER TABLE `daftar_users`
-  ADD PRIMARY KEY (`id`);
+-- PRIMARY KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `failed_jobs`
 --
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+-- PRIMARY KEY and UNIQUE KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `jobs`
 --
-ALTER TABLE `jobs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `jobs_queue_index` (`queue`);
+-- PRIMARY KEY and KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `job_batches`
 --
-ALTER TABLE `job_batches`
-  ADD PRIMARY KEY (`id`);
+-- PRIMARY KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `lelang_schedules`
 --
 ALTER TABLE `lelang_schedules`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `lelang_schedules_property_id_foreign` (`property_id`);
 
 --
 -- Indexes for table `migrations`
 --
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
+-- PRIMARY KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `password_reset_tokens`
 --
-ALTER TABLE `password_reset_tokens`
-  ADD PRIMARY KEY (`email`);
+-- PRIMARY KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `points_of_interest`
 --
 ALTER TABLE `points_of_interest`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `points_of_interest_property_id_foreign` (`property_id`);
 
 --
 -- Indexes for table `properties`
 --
-ALTER TABLE `properties`
-  ADD PRIMARY KEY (`id`);
+-- PRIMARY KEY already defined in CREATE TABLE
 
 --
 -- Indexes for table `property_media`
 --
 ALTER TABLE `property_media`
-  ADD PRIMARY KEY (`id`),
   ADD KEY `property_media_property_id_foreign` (`property_id`);
 
 --
 -- Indexes for table `sessions`
 --
-ALTER TABLE `sessions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `sessions_user_id_index` (`user_id`),
-  ADD KEY `sessions_last_activity_index` (`last_activity`);
+-- PRIMARY KEY and KEYs already defined in CREATE TABLE
 
 --
 -- Indexes for table `users`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
+-- PRIMARY KEY and UNIQUE KEY already defined in CREATE TABLE
 
 --
 -- AUTO_INCREMENT for dumped tables
