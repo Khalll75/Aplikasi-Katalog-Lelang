@@ -38,6 +38,9 @@ RUN echo '<VirtualHost *:80>\n\
     </Directory>\n\
     ErrorLog ${APACHE_LOG_DIR}/error.log\n\
     CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
+    LogLevel info\n\
+    php_flag display_errors On\n\
+    php_flag log_errors On\n\
 </VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
 # Update Apache main configuration
@@ -58,6 +61,7 @@ RUN mkdir -p /var/www/laravel/storage/logs \
     && mkdir -p /var/www/laravel/storage/framework/cache \
     && mkdir -p /var/www/laravel/storage/framework/sessions \
     && mkdir -p /var/www/laravel/storage/framework/views \
+    && mkdir -p /var/www/laravel/storage/certificates \
     && chown -R www-data:www-data /var/www/laravel/storage
 
 # Install Composer dependencies (only if vendor directory doesn't exist)
