@@ -1,19 +1,19 @@
 services:
   - type: web
-    name: laravel-app
+    name: gudangproperti-jambi
     env: docker
-    region: singapore
     plan: free
-    branch: main
-    dockerfilePath: Dockerfile
+    dockerfilePath: ./Dockerfile
+    rootDir: .
+    # Health check endpoint (optional but recommended)
+    healthCheckPath: /debug.php
+    # Environment variables can be set here or in Render dashboard
     envVars:
       - key: APP_ENV
         value: production
-      - key: APP_KEY
-        generateValue: true
-      - key: APP_NAME
-        value: "Gudang Properti Jambi"
       - key: APP_DEBUG
-        value: "false"
-      - key: APP_URL
-        value: https://gudangproperti-jambi.onrender.com
+        value: true
+      # Add other non-sensitive environment variables here
+    # Auto-deploy settings
+    autoDeploy: true
+    branch: main
