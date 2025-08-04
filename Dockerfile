@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql
 
+
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
@@ -76,5 +77,7 @@ RUN cd /var/www/laravel && \
         cp .env.example .env && \
         php artisan key:generate; \
     fi
+
+
 
 CMD ["/usr/local/bin/start.sh"]

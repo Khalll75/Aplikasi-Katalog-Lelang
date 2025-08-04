@@ -26,7 +26,7 @@ php artisan storage:link
 
 # Test database connection before running migrations
 echo "Testing database connection..."
-if php artisan db:show --database=mysql 2>/dev/null; then
+if timeout 10 php artisan db:show --database=mysql 2>/dev/null; then
     echo "Database connection successful"
 
     # Run migrations if database is accessible
