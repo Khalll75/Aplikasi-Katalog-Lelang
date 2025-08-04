@@ -104,6 +104,26 @@
             background: white;
             border-radius: 6px;
         }
+        
+        /* Mobile-specific styles */
+        @media (max-width: 640px) {
+            .property-card:hover {
+                transform: none;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+            .filter-card:hover {
+                transform: none;
+            }
+        }
+        
+        /* Mobile filter transitions */
+        .transition-transform {
+            transition: transform 0.3s ease;
+        }
+        
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-800">
@@ -120,12 +140,12 @@
         </div>
         <div class="flex items-center space-x-2 md:space-x-4">
             <!-- Desktop Button -->
-            <button class="hidden sm:block bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
+            <button class="hidden sm:block bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').style.display='flex'">
                 <i class="fas fa-user-plus mr-2"></i>
                 Daftar
             </button>
             <!-- Mobile Button -->
-            <button class="sm:hidden bg-white text-red-900 px-4 py-2 rounded-full font-medium hover:bg-red-50 transition-all duration-300" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
+            <button class="sm:hidden bg-white text-red-900 px-4 py-2 rounded-full font-medium hover:bg-red-50 transition-all duration-300" onclick="document.getElementById('daftarModal').style.display='flex'">>
                 <i class="fas fa-user-plus"></i>
             </button>
             <!-- Mobile Menu Toggle -->
@@ -561,10 +581,10 @@
     </div>
 
     <!-- Property Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
         @forelse($query as $property)
             <a href="{{ route('properties.show', $property->id) }}" class="bg-white rounded-xl shadow-sm overflow-hidden property-card">
-                <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden">
+                <div class="w-full h-32 sm:h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden">
                     @php
                         $mainImage = $property->images->where('is_main', true)->first() ?? $property->images->first();
                     @endphp
@@ -577,14 +597,14 @@
                         </div>
                     @endif
                 </div>
-                <div class="p-5">
-                    <h4 class="font-semibold text-gray-800 mb-2 line-clamp-2">{{ $property->kode_aset }}</h4>
-                    <p class="text-gray-600 text-sm mb-3 flex items-center">
-                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
-                        {{ $property->alamat }}
+                <div class="p-3 sm:p-5">
+                    <h4 class="font-semibold text-gray-800 mb-2 line-clamp-2 text-sm sm:text-base">{{ $property->kode_aset }}</h4>
+                    <p class="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 flex items-center">
+                        <i class="fas fa-map-marker-alt mr-1 sm:mr-2 text-red-500"></i>
+                        <span class="truncate">{{ $property->alamat }}</span>
                     </p>
-                    <div class="bg-gradient-to-r from-red-50 to-red-100 p-3 rounded-lg mb-3">
-                        <p class="text-red-600 font-bold text-sm">
+                    <div class="bg-gradient-to-r from-red-50 to-red-100 p-2 sm:p-3 rounded-lg mb-2 sm:mb-3">
+                        <p class="text-red-600 font-bold text-xs sm:text-sm">
                             @if($property->lelangSchedule)
                                 <i class="fas fa-tag mr-1"></i>
                                 Rp {{ number_format($property->lelangSchedule->limit_lelang, 0, ',', '.') }}
@@ -596,18 +616,22 @@
                             @endif
                         </p>
                     </div>
-                    <div class="flex justify-between text-xs text-gray-500 border-t pt-3">
-                        <span class="flex items-center">
+                    <div class="flex justify-between text-xs text-gray-500 border-t pt-2 sm:pt-3">
+                        <span class="flex items-center text-xs">
                             <i class="fas fa-bed mr-1"></i>
-                            {{ $property->kamar_tidur ?? '-' }} bed
+                            <span class="hidden sm:inline">{{ $property->kamar_tidur ?? '-' }} bed</span>
+                            <span class="sm:hidden">{{ $property->kamar_tidur ?? '-' }}</span>
                         </span>
-                        <span class="flex items-center">
+                        <span class="flex items-center text-xs">
                             <i class="fas fa-bath mr-1"></i>
-                            {{ $property->kamar_mandi ?? '-' }} bath
+                            <span class="hidden sm:inline">{{ $property->kamar_mandi ?? '-' }} bath</span>
+                            <span class="sm:hidden">{{ $property->kamar_mandi ?? '-' }}</span>
                         </span>
-                        <span class="flex items-center">
+                        <span class="flex items-center text-xs">
                             <i class="fas fa-ruler-combined mr-1"></i>
-                            {{ $property->luas_tanah ?? '-' }} m²
+                            <span class="hidden sm:inline">{{ $property->luas_tanah ?? '-' }} m²</span>
+                            <span class="sm:hidden">{{ $property->luas_tanah ?? '-' }}</span>
+                        </span>
                         </span>
                     </div>
                 </div>
@@ -1014,7 +1038,7 @@
     function toggleFilter(filterId) {
         const content = document.getElementById(filterId + '-content');
         const icon = document.getElementById(filterId + '-icon');
-        
+
         if (content.classList.contains('hidden')) {
             content.classList.remove('hidden');
             icon.classList.add('rotate-180');
