@@ -49,6 +49,8 @@ else
 fi
 
 # Cache configuration for better performance (only if no errors)
+php artisan config:clear
+php artisan cache:clear
 if php artisan config:cache 2>/dev/null; then
     echo "Configuration cached successfully"
 else
