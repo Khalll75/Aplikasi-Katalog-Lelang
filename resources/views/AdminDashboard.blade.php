@@ -62,7 +62,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
+                    <a href="{{ route('home') }}">
+                        <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4 cursor-pointer hover:opacity-80 transition-opacity" style="max-height:48px;">
+                    </a>
                     <div class="flex">
                         <!-- Logo -->
                         <div class="shrink-0 flex items-center">
@@ -77,6 +79,17 @@
                             </a>
                         </div>
                     </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                            <span>Logout</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -187,25 +200,21 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-100 pt-8 pb-4 mt-12" style="flex-shrink: 0;">
+    <footer class="bg-gray-900 text-gray-200 pt-10 pb-6 mt-20" style="flex-shrink: 0;">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-8 pb-4">
-                <!-- Nama Aplikasi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pb-8">
                 <div>
-                    <h2 class="text-xl font-bold mb-1">Katalog Lelang Properti</h2>
-                    <p class="text-gray-300 text-sm">Platform pencarian dan informasi lelang properti terbaik.</p>
+                    <h2 class="text-xl font-bold mb-2">Gudang Properti Jambi</h2>
+                    <p class="text-sm">Platform pencarian dan informasi lelang properti terbaik untuk wilayah Indonesia.</p>
                 </div>
-                <!-- Kontak -->
                 <div>
-                    <h2 class="text-xl font-bold mb-1">Kontak</h2>
-                    <p class="text-gray-300 text-sm">Email: info@kataloglelang.id</p>
-                    <p class="text-gray-300 text-sm">Telepon: (021) 9876-5432</p>
+                    <h2 class="text-xl font-bold mb-2">Kontak</h2>
+                    <p class="text-sm">Email: jambijuaro2024@gmail.com</p>
+                    <p class="text-sm">No WA: 0818145686</p>
                 </div>
             </div>
-            <hr class="border-gray-700 my-2">
-            <div class="text-center text-xs text-gray-400 pt-2">
-                © 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.
-            </div>
+            <hr class="border-gray-700">
+            <p class="text-center text-xs text-gray-500 pt-4">© 2025 Katalog Lelang Properti. Hak Cipta Dilindungi.</p>
         </div>
     </footer>
 

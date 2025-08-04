@@ -193,18 +193,31 @@
 </head>
 <body class="bg-gray-50">
     <div style="position:fixed;z-index:0;top:0;left:0;width:100vw;height:100vh;background:url('/images/jalan%20setapak%20gang%20rumah%20yang%20syahdu.jpg') center center/cover no-repeat;filter:blur(8px);opacity:0.5;"></div>
-    <nav class="border-b border-gray-100 sticky top-0 z-10" style="background: linear-gradient(135deg, #0f766e 0%, #06b6d4 100%);">
+        <nav class="border-b border-gray-100 sticky top-0 z-10" style="background: linear-gradient(135deg, #0f766e 0%, #06b6d4 100%);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
+                    <a href="{{ route('home') }}">
+                        <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4 cursor-pointer hover:opacity-80 transition-opacity" style="max-height:48px;">
+                    </a>
                     <div class="flex">
                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-white text-white text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
+                            <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-white hover:border-white hover:text-white focus:outline-none transition duration-150 ease-in-out">
                                 Admin Dashboard
                             </a>
                         </div>
                     </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                            <span>Logout</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -238,7 +251,7 @@
 
                     <div id="image-list" class="space-y-3">
                         <div class="image-input-group">
-                            <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
+                            <input type="file" name="images[]" accept="image/*,video/*" class="flex-1" onchange="validateFileSize(this)">
                             <div class="radio-group">
                                 <input type="radio" name="main_image" value="0" id="main_0" checked>
                                 <label for="main_0">Media Utama</label>
@@ -252,7 +265,7 @@
                         </svg>
                         Tambah Media
                     </button>
-                    <p class="upload-hint">Dapat mengupload gambar (.jpg, .jpeg, .png, .gif) atau video (.mp4, .mov, .avi). Pilih salah satu media sebagai media utama yang akan ditampilkan (Gambar atau Video)</p>
+                    <p class="upload-hint">Dapat mengupload gambar (.jpg, .jpeg, .png, .gif) atau video (.mp4, .mov, .avi). Maksimal 10MB per file. Pilih salah satu media sebagai media utama yang akan ditampilkan (Gambar atau Video)</p>
                 </div>
 
                 <!-- Jadwal Lelang -->
@@ -340,6 +353,29 @@
     </div>
 
     <script>
+        // File size validation (10MB = 10 * 1024 * 1024 bytes)
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+
+        function validateFileSize(fileInput) {
+            const file = fileInput.files[0];
+            if (file && file.size > MAX_FILE_SIZE) {
+                alert('Ukuran file terlalu besar! Maksimal 10MB per file.');
+                fileInput.value = ''; // Clear the input
+                return false;
+            }
+            return true;
+        }
+
+        // Add event listeners to existing file inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const existingInputs = document.querySelectorAll('input[type="file"][name="images[]"]');
+            existingInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    validateFileSize(this);
+                });
+            });
+        });
+
         // Dynamic add Image Input
         let imageIndex = 1;
         function addImageInput() {
@@ -347,7 +383,7 @@
             const div = document.createElement('div');
             div.className = 'image-input-group';
             div.innerHTML = `
-                <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
+                <input type="file" name="images[]" accept="image/*,video/*" class="flex-1" onchange="validateFileSize(this)">
                 <div class="radio-group">
                     <input type="radio" name="main_image" value="${imageIndex}" id="main_${imageIndex}">
                     <label for="main_${imageIndex}">Media Utama</label>

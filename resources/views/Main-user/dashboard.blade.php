@@ -289,6 +289,22 @@
                         </button>
                     </div>
                 </form>
+
+                <!-- Enhanced Link Box -->
+                <div class="mt-6">
+                    <a href="https://bit.ly/BOOKLET_PROPERTY_AGUSTUS_2025" target="_blank" rel="noopener noreferrer" class="group">
+                        <div class="bg-gradient-to-r from-red-700 to-orange-600 hover:from-red-800 hover:to-orange-700 text-white px-8 py-4 rounded-full shadow-lg border-2 border-white border-opacity-30 inline-flex items-center gap-3 transition-all duration-300 hover:scale-105 hover:shadow-xl btn-primary">
+                            <div class="bg-white bg-opacity-90 rounded-full p-2">
+                                <i class="fas fa-download text-red-800 text-sm"></i>
+                            </div>
+                            <div class="text-left">
+                                <div class="text-sm font-bold">📚 Booklet Properti</div>
+                                <div class="text-xs opacity-90">Agustus 2025 - Klik untuk download</div>
+                            </div>
+                            <i class="fas fa-external-link-alt text-white text-xs opacity-70 group-hover:opacity-100 transition-opacity"></i>
+                        </div>
+                    </a>
+                </div>
             </div>
         </section>
 
@@ -507,10 +523,14 @@
                         TATA CARA MENGIKUTI LELANG E-AUCTION
                     </h2>
                     <div class="text-center mb-8">
-                        <span class="inline-block bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full font-semibold text-sm">
-                            LELANG.GO.ID
-                        </span>
-                        <p class="text-gray-600 mt-2">Ikuti langkah-langkah berikut untuk mengikuti lelang</p>
+                        <a href="https://lelang.go.id/" target="_blank" rel="noopener noreferrer" class="group">
+                            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-8 py-4 rounded-full shadow-lg border-2 border-white border-opacity-30 inline-flex items-center gap-3 transition-all duration-300 hover:scale-105 hover:shadow-xl btn-primary">
+                                <div class="text-left">
+                                    <div class="text-sm font-bold">LELANG.GO.ID</div>
+                                </div>
+                                <i class="fas fa-external-link-alt text-white text-xs opacity-70 group-hover:opacity-100 transition-opacity"></i>
+                            </div>
+                        </a>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

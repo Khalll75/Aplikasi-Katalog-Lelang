@@ -195,16 +195,28 @@ class PropertyController extends Controller
 
     public function storeStep2(Request $request, Property $property)
     {
+        // Validate images
+        $request->validate([
+            'images.*' => 'nullable|file|mimes:jpeg,png,jpg,gif,mp4,mov,avi|max:10240', // 10MB max
+            'main_image' => 'integer|min:0',
+            'tanggal_lelang' => 'nullable|date',
+            'lokasi_lelang' => 'nullable|string|max:255',
+            'limit_lelang' => 'nullable|numeric|min:0',
+        ], [
+            'images.*.max' => 'Setiap file tidak boleh lebih dari 10MB.',
+            'images.*.mimes' => 'Format file harus berupa: jpeg, png, jpg, gif, mp4, mov, atau avi.',
+        ]);
+
         // Media - Upload to Cloudinary for consistency
         if ($request->hasFile('images')) {
             $mainImageIndex = $request->input('main_image', 0);
             foreach ($request->file('images') as $index => $file) {
-                // Upload to Cloudinary
-                $upload = Cloudinary::upload($file->getRealPath(), [
+                // Upload to Cloudinary using the correct method for v3.x
+                $upload = Cloudinary::uploadApi()->upload($file->getRealPath(), [
                     'folder' => 'properti'
                 ]);
-                $secureUrl = $upload->getSecurePath();
-                $format = $upload->getExtension();
+                $secureUrl = $upload['secure_url'];
+                $format = $upload['format'];
                 $mediaType = in_array(strtolower($format), ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
 
                 PropertyMedia::create([
@@ -286,9 +298,9 @@ class PropertyController extends Controller
             // Points of Interest validation
             'points_of_interest.*' => 'nullable|string|max:500',
             'delete_points' => 'nullable|array',
-            'delete_points.*' => 'integer|exists:point_of_interests,id',
+            'delete_points.*' => 'integer|exists:points_of_interest,id',
             'points_of_interest_ids' => 'nullable|array',
-            'points_of_interest_ids.*' => 'integer|exists:point_of_interests,id',
+            'points_of_interest_ids.*' => 'integer|exists:points_of_interest,id',
 
             // Contact Persons validation
             'contact_persons.*.nama' => 'nullable|string|max:255',
@@ -328,7 +340,7 @@ class PropertyController extends Controller
                         $publicId = basename(parse_url($image->media_url, PHP_URL_PATH));
                         $publicId = preg_replace('/\.[^.]+$/', '', $publicId); // hapus ekstensi
                         try {
-                            Cloudinary::destroy('properti/' . $publicId);
+                            Cloudinary::uploadApi()->destroy('properti/' . $publicId);
                         } catch (\Exception $e) {
                             Log::warning('Cloudinary delete failed', ['url' => $image->media_url, 'error' => $e->getMessage()]);
                         }
@@ -344,12 +356,12 @@ class PropertyController extends Controller
                 $mainImageIndex = $request->input('main_image', 0);
 
                 foreach ($request->file('images') as $index => $file) {
-                    // Upload ke Cloudinary
-                    $upload = Cloudinary::upload($file->getRealPath(), [
+                    // Upload ke Cloudinary using the correct method for v3.x
+                    $upload = Cloudinary::uploadApi()->upload($file->getRealPath(), [
                         'folder' => 'properti'
                     ]);
-                    $secureUrl = $upload->getSecurePath();
-                    $format = $upload->getExtension();
+                    $secureUrl = $upload['secure_url'];
+                    $format = $upload['format'];
                     $mediaType = in_array(strtolower($format), ['jpg', 'jpeg', 'png', 'gif']) ? 'image' : 'video';
 
                     PropertyMedia::create([

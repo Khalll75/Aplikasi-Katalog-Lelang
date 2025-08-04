@@ -168,7 +168,9 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
-                    <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
+                    <a href="{{ route('home') }}">
+                        <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4 cursor-pointer hover:opacity-80 transition-opacity" style="max-height:48px;">
+                    </a>
                     <div class="flex">
                         <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                             <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-white text-white text-sm font-medium leading-5 focus:outline-none transition duration-150 ease-in-out">
@@ -179,6 +181,17 @@
                             </a>
                         </div>
                     </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                            </svg>
+                            <span>Logout</span>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -345,7 +358,7 @@
                     @endforeach
                 </div>
                 <div class="image-input-group mt-3">
-                    <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
+                    <input type="file" name="images[]" accept="image/*,video/*" class="flex-1" onchange="validateFileSize(this)">
                     <div class="radio-group">
                         <input type="radio" name="main_image" value="new">
                         <label>Gambar Utama Baru</label>
@@ -357,7 +370,7 @@
                     </svg>
                     Tambah Gambar
                 </button>
-                <p class="upload-hint">Dapat mengupload gambar (.jpg, .jpeg, .png, .gif) atau video (.mp4, .mov, .avi). Pilih salah satu media sebagai media utama yang akan ditampilkan (Gambar atau Video)</p>
+                <p class="upload-hint">Dapat mengupload gambar (.jpg, .jpeg, .png, .gif) atau video (.mp4, .mov, .avi). Maksimal 10MB per file. Pilih salah satu media sebagai media utama yang akan ditampilkan (Gambar atau Video)</p>
             </div>
             <!-- Jadwal Lelang -->
             <div class="form-section">
@@ -482,6 +495,19 @@
             observer.observe(cpList, { childList: true, subtree: true });
         }
         observeCPList();
+                // File size validation (10MB = 10 * 1024 * 1024 bytes)
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB in bytes
+
+        function validateFileSize(fileInput) {
+            const file = fileInput.files[0];
+            if (file && file.size > MAX_FILE_SIZE) {
+                alert('Ukuran file terlalu besar! Maksimal 10MB per file.');
+                fileInput.value = ''; // Clear the input
+                return false;
+            }
+            return true;
+        }
+
         // Dynamic add Image Input
         let imageIndex = {{ count($property->images) }};
         function addImageInput() {
@@ -489,7 +515,7 @@
             const div = document.createElement('div');
             div.className = 'image-input-group';
             div.innerHTML = `
-                <input type="file" name="images[]" accept="image/*,video/*" class="flex-1">
+                <input type="file" name="images[]" accept="image/*,video/*" class="flex-1" onchange="validateFileSize(this)">
                 <div class="radio-group">
                     <input type="radio" name="main_image" value="new${imageIndex}" id="main_new${imageIndex}">
                     <label for="main_new${imageIndex}">Gambar Utama Baru</label>
