@@ -4,10 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Property Detail - {{ $property->nama }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Consistent styling with app layouts -->
+    @if(file_exists(public_path('build/manifest.json')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script>
+            tailwind.config = {
+                content: ["./**/*.{html,js,php,blade.php}"],
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Open Sans', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        </script>
+        <style>
+            * { box-sizing: border-box; }
+            html { line-height: 1.5; font-size: 16px; }
+            body { margin: 0; font-size: 14px; }
+            @media (max-width: 640px) {
+                html { font-size: 14px; }
+                body { font-size: 13px; }
+            }
+        </style>
+    @endif
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body, p, span, label, td, th, input, button, a, div {
@@ -106,13 +135,14 @@
     <div class="container mx-auto px-4 flex justify-between items-center">
         <div class="flex items-center">
             <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4" style="max-height:48px;">
-            <a href="/" class="text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
+            <a href="/" class="text-xl md:text-2xl font-bold hover:text-red-200 transition-colors tracking-wide flex items-center">
                 <i class="fas fa-gavel mr-2"></i>
-                Beranda
+                <span class="hidden sm:inline">Beranda</span>
+                <span class="sm:hidden">Home</span>
             </a>
         </div>
-        <div class="flex items-center space-x-4">
-            <div class="relative">
+        <div class="flex items-center space-x-2 md:space-x-4">
+            <div class="relative hidden md:block">
                 <form action="{{ route('search') }}" method="GET">
                     <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari lelang..."
                            class="bg-white text-gray-800 px-4 py-2 pr-10 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-red-300">
@@ -121,6 +151,42 @@
                     </button>
                 </form>
             </div>
+            <!-- Mobile Search Button -->
+            <button class="md:hidden text-white hover:text-red-200 p-2" onclick="toggleMobileSearch()">
+                <i class="fas fa-search text-lg"></i>
+            </button>
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-white hover:text-red-200 p-2" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile Search -->
+    <div id="mobileSearch" class="hidden md:hidden bg-red-800 border-t border-red-700 px-4 py-3">
+        <form action="{{ route('search') }}" method="GET">
+            <div class="relative">
+                <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari lelang..."
+                       class="w-full bg-white text-gray-800 px-4 py-2 pr-10 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-red-300">
+                <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-red-800 border-t border-red-700">
+        <div class="container mx-auto px-4 py-4 space-y-3">
+            <a href="/search" class="block text-white hover:text-red-200 py-2 border-b border-red-700 transition-colors">
+                <i class="fas fa-search mr-3"></i>Cari Properti
+            </a>
+            <a href="/about" class="block text-white hover:text-red-200 py-2 border-b border-red-700 transition-colors">
+                <i class="fas fa-info-circle mr-3"></i>Tentang Kami
+            </a>
+            <a href="/contact" class="block text-white hover:text-red-200 py-2 transition-colors">
+                <i class="fas fa-phone mr-3"></i>Kontak
+            </a>
+        </div>
+    </div>
             <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
                 <i class="fas fa-user-plus mr-2"></i>
                 Daftar
@@ -642,6 +708,80 @@
         } catch (err) {
             errorDiv.textContent = 'Gagal mengirim data. Coba lagi.';
             errorDiv.classList.remove('hidden');
+        }
+    });
+
+    // Mobile Menu Toggle
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.querySelector('[onclick="toggleMobileMenu()"] i');
+
+        if (mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.remove('hidden');
+            menuIcon.classList.remove('fa-bars');
+            menuIcon.classList.add('fa-times');
+        } else {
+            mobileMenu.classList.add('hidden');
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+        }
+    }
+
+    // Mobile Search Toggle
+    function toggleMobileSearch() {
+        const mobileSearch = document.getElementById('mobileSearch');
+        const searchIcon = document.querySelector('[onclick="toggleMobileSearch()"] i');
+
+        if (mobileSearch.classList.contains('hidden')) {
+            mobileSearch.classList.remove('hidden');
+            searchIcon.classList.remove('fa-search');
+            searchIcon.classList.add('fa-times');
+            // Focus on search input
+            setTimeout(() => {
+                mobileSearch.querySelector('input[type="search"]').focus();
+            }, 100);
+        } else {
+            mobileSearch.classList.add('hidden');
+            searchIcon.classList.remove('fa-times');
+            searchIcon.classList.add('fa-search');
+        }
+    }
+
+    // Close mobile menus when clicking outside
+    document.addEventListener('click', function(event) {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileSearch = document.getElementById('mobileSearch');
+        const menuButton = document.querySelector('[onclick="toggleMobileMenu()"]');
+        const searchButton = document.querySelector('[onclick="toggleMobileSearch()"]');
+
+        // Close mobile menu
+        if (!mobileMenu.contains(event.target) && !menuButton.contains(event.target)) {
+            mobileMenu.classList.add('hidden');
+            const menuIcon = menuButton.querySelector('i');
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+        }
+
+        // Close mobile search
+        if (!mobileSearch.contains(event.target) && !searchButton.contains(event.target)) {
+            mobileSearch.classList.add('hidden');
+            const searchIcon = searchButton.querySelector('i');
+            searchIcon.classList.remove('fa-times');
+            searchIcon.classList.add('fa-search');
+        }
+    });
+
+    // Close mobile menus on window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 768) {
+            document.getElementById('mobileMenu').classList.add('hidden');
+            document.getElementById('mobileSearch').classList.add('hidden');
+            const menuIcon = document.querySelector('[onclick="toggleMobileMenu()"] i');
+            const searchIcon = document.querySelector('[onclick="toggleMobileSearch()"] i');
+            menuIcon.classList.remove('fa-times');
+            menuIcon.classList.add('fa-bars');
+            searchIcon.classList.remove('fa-times');
+            searchIcon.classList.add('fa-search');
         }
     });
 </script>

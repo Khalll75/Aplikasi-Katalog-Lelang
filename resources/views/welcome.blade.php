@@ -4,7 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Landing Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Consistent styling with app layouts -->
+    @if(file_exists(public_path('build/manifest.json')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script>
+            tailwind.config = {
+                content: ["./**/*.{html,js,php,blade.php}"],
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        </script>
+        <style>
+            * { box-sizing: border-box; }
+            html { line-height: 1.5; font-size: 16px; }
+            body { margin: 0; font-size: 14px; }
+            @media (max-width: 640px) {
+                html { font-size: 14px; }
+                body { font-size: 13px; }
+            }
+        </style>
+    @endif
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-md mx-auto p-6">

@@ -8,8 +8,13 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libicu-dev \
     unzip \
+    curl \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip pdo pdo_mysql intl
+
+# Install Node.js and npm for asset building
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
 
 
 # Enable Apache mod_rewrite
@@ -24,6 +29,15 @@ COPY . /var/www/laravel
 # Copy and set permissions for startup script
 COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
+
+# Build assets with Vite
+WORKDIR /var/www/laravel
+RUN if [ -f "package.json" ]; then \
+        npm install && \
+        npm run build; \
+    else \
+        echo "No package.json found, skipping asset build"; \
+    fi
 
 # Configure Apache to serve Laravel application
 RUN echo '<VirtualHost *:80>\n\
