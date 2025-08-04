@@ -46,7 +46,9 @@ else
     sed -i 's/SESSION_DRIVER=database/SESSION_DRIVER=file/' .env
     sed -i 's/CACHE_STORE=database/CACHE_STORE=file/' .env
     sed -i 's/QUEUE_CONNECTION=database/QUEUE_CONNECTION=sync/' .env
-fi# Cache configuration for better performance (only if no errors)
+fi
+
+# Cache configuration for better performance (only if no errors)
 if php artisan config:cache 2>/dev/null; then
     echo "Configuration cached successfully"
 else
