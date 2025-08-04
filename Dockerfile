@@ -1,10 +1,4 @@
-# Use official PHP image with Apache
 FROM php:8.2-apache
-
-# Install system dependencies and PHP extensions
-RUN apt-get update && apt-get install -y \
-    zip unzip git curl libpng-dev libonig-dev libxml2-dev libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl bcmath gd
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -12,15 +6,19 @@ RUN a2enmod rewrite
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy existing app
+# Copy everything
 COPY . /var/www/html
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Move Laravel's public directory to Apache's root
+RUN rm -rf /var/www/html/index.html \
+    && cp -r public/* /var/www/html/
 
-# Set proper permissions
+# Set proper permissions (optional but useful)
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html
 
-# Expose port 80
-EXPOSE 80
+# Set environment variables for Laravel
+ENV APACHE_DOCUMENT_ROOT /var/www/html
+
+# Restart apache
+CMD ["apache2-foreground"]
