@@ -24,8 +24,22 @@ php artisan cache:clear
 # Create storage link for public assets
 php artisan storage:link
 
-# Run database migrations (commented out - uncomment if needed)
-# php artisan migrate --force
+# Test database connection before running migrations
+echo "Testing database connection..."
+if php artisan db:show --database=mysql 2>/dev/null; then
+    echo "Database connection successful"
+
+    # Run migrations if database is accessible
+    php artisan migrate --force
+    echo "Database migrations completed"
+else
+    echo "Warning: Database connection failed - switching to file-based sessions and cache"
+
+    # Temporarily switch to file-based sessions and cache if database is not available
+    sed -i 's/SESSION_DRIVER=database/SESSION_DRIVER=file/' .env
+    sed -i 's/CACHE_STORE=database/CACHE_STORE=file/' .env
+    sed -i 's/QUEUE_CONNECTION=database/QUEUE_CONNECTION=sync/' .env
+fi
 
 # Cache configuration for better performance (only if no errors)
 if php artisan config:cache 2>/dev/null; then
