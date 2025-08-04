@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: laravel-app
+    env: docker
+    region: singapore
+    plan: free
+    branch: main
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_NAME
+        value: "Gudang Properti Jambi"
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_URL
+        value: https://gudangproperti-jambi.onrender.com
