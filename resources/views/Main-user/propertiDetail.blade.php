@@ -162,35 +162,29 @@
         </div>
     </div>
     <!-- Mobile Search -->
-    <div id="mobileSearch" class="hidden md:hidden bg-red-800 border-t border-red-700 px-4 py-3">
+    <div id="mobileSearch" class="hidden md:hidden bg-red-800 border-t border-red-700 px-3 py-2">
         <form action="{{ route('search') }}" method="GET">
             <div class="relative">
                 <input type="search" name="q" value="{{ request('q') }}" placeholder="Cari lelang..."
-                       class="w-full bg-white text-gray-800 px-4 py-2 pr-10 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-red-300">
-                <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <i class="fas fa-search"></i>
+                       class="w-full bg-white text-gray-800 px-3 py-2 pr-8 rounded-full text-sm focus:outline-none focus:ring-1 focus:ring-red-300">
+                <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-search text-sm"></i>
                 </button>
             </div>
         </form>
     </div>
     <!-- Mobile Menu -->
     <div id="mobileMenu" class="hidden md:hidden bg-red-800 border-t border-red-700">
-        <div class="container mx-auto px-4 py-4 space-y-3">
-            <a href="/search" class="block text-white hover:text-red-200 py-2 border-b border-red-700 transition-colors">
+        <div class="container mx-auto px-4 py-3 space-y-2">
+            <a href="/search" class="block text-white hover:text-red-200 py-2 border-b border-red-700 transition-colors text-sm">
                 <i class="fas fa-search mr-3"></i>Cari Properti
             </a>
-            <a href="/about" class="block text-white hover:text-red-200 py-2 border-b border-red-700 transition-colors">
+            <a href="/about" class="block text-white hover:text-red-200 py-2 border-b border-red-700 transition-colors text-sm">
                 <i class="fas fa-info-circle mr-3"></i>Tentang Kami
             </a>
-            <a href="/contact" class="block text-white hover:text-red-200 py-2 transition-colors">
+            <a href="/contact" class="block text-white hover:text-red-200 py-2 transition-colors text-sm">
                 <i class="fas fa-phone mr-3"></i>Kontak
             </a>
-        </div>
-    </div>
-            <button class="bg-white text-red-900 px-6 py-2 rounded-full font-medium hover:bg-red-50 hover:shadow-lg transition-all duration-300 button-hover" onclick="document.getElementById('daftarModal').classList.remove('hidden')">
-                <i class="fas fa-user-plus mr-2"></i>
-                Daftar
-            </button>
         </div>
     </div>
 </header>
