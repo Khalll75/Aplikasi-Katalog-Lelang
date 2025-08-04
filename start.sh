@@ -26,6 +26,13 @@ php artisan storage:link
 
 # Test database connection before running migrations
 echo "Testing database connection..."
+echo "Checking SSL certificate..."
+if [ -f "/var/www/laravel/storage/certificates/ca.pem" ]; then
+    echo "SSL certificate found at /var/www/laravel/storage/certificates/ca.pem"
+else
+    echo "WARNING: SSL certificate not found!"
+fi
+
 if timeout 10 php artisan db:show --database=mysql 2>/dev/null; then
     echo "Database connection successful"
 
@@ -39,9 +46,7 @@ else
     sed -i 's/SESSION_DRIVER=database/SESSION_DRIVER=file/' .env
     sed -i 's/CACHE_STORE=database/CACHE_STORE=file/' .env
     sed -i 's/QUEUE_CONNECTION=database/QUEUE_CONNECTION=sync/' .env
-fi
-
-# Cache configuration for better performance (only if no errors)
+fi# Cache configuration for better performance (only if no errors)
 if php artisan config:cache 2>/dev/null; then
     echo "Configuration cached successfully"
 else
