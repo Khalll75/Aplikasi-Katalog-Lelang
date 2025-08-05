@@ -306,10 +306,28 @@
                         <div id="lokasi-content" class="hidden px-4 pb-3 space-y-3">
                             <!-- Lokasi -->
                             <div class="grid grid-cols-2 gap-2">
-                                <input type="text" name="kota" value="{{ request('kota') }}" placeholder="Kota"
+                                <input type="text" name="kota" value="{{ request('kota') }}" placeholder="Kota/Kabupaten"
+                                       list="kota-list-mobile" id="kota-mobile" onchange="updateKecamatanMobile()"
                                        class="border border-gray-300 rounded px-2 py-1 text-sm focus:border-red-500">
+                                <datalist id="kota-list-mobile">
+                                    <option value="Kota Jambi">
+                                    <option value="Kota Sungai Penuh">
+                                    <option value="Kab. Batanghari">
+                                    <option value="Kab. Bungo">
+                                    <option value="Kab. Kerinci">
+                                    <option value="Kab. Merangin">
+                                    <option value="Kab. Muaro Jambi">
+                                    <option value="Kab. Sarolangun">
+                                    <option value="Kab. Tanjung Jabung Barat">
+                                    <option value="Kab. Tanjung Jabung Timur">
+                                    <option value="Kab. Tebo">
+                                </datalist>
                                 <input type="text" name="kecamatan" value="{{ request('kecamatan') }}" placeholder="Kecamatan"
+                                       list="kecamatan-list-mobile" id="kecamatan-mobile"
                                        class="border border-gray-300 rounded px-2 py-1 text-sm focus:border-red-500">
+                                <datalist id="kecamatan-list-mobile">
+                                    <!-- Options will be populated by JavaScript -->
+                                </datalist>
                             </div>
                             <!-- Kondisi -->
                             <div>
@@ -522,14 +540,32 @@
                                 <!-- Kota/Kabupaten -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Kota/Kabupaten</label>
-                                    <input type="text" name="kota" value="{{ request('kota') }}" placeholder="Masukkan kota"
+                                    <input type="text" name="kota" value="{{ request('kota') }}" placeholder="Pilih atau ketik kota/kabupaten"
+                                           list="kota-list" id="kota-desktop" onchange="updateKecamatanDesktop()"
                                            class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full input-focus focus:border-red-500 focus:outline-none">
+                                    <datalist id="kota-list">
+                                        <option value="Kota Jambi">
+                                        <option value="Kota Sungai Penuh">
+                                        <option value="Kab. Batanghari">
+                                        <option value="Kab. Bungo">
+                                        <option value="Kab. Kerinci">
+                                        <option value="Kab. Merangin">
+                                        <option value="Kab. Muaro Jambi">
+                                        <option value="Kab. Sarolangun">
+                                        <option value="Kab. Tanjung Jabung Barat">
+                                        <option value="Kab. Tanjung Jabung Timur">
+                                        <option value="Kab. Tebo">
+                                    </datalist>
                                 </div>
                                 <!-- Kecamatan -->
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Kecamatan</label>
-                                    <input type="text" name="kecamatan" value="{{ request('kecamatan') }}" placeholder="Masukkan kecamatan"
+                                    <input type="text" name="kecamatan" value="{{ request('kecamatan') }}" placeholder="Pilih atau ketik kecamatan"
+                                           list="kecamatan-list-desktop" id="kecamatan-desktop"
                                            class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full input-focus focus:border-red-500 focus:outline-none">
+                                    <datalist id="kecamatan-list-desktop">
+                                        <!-- Options will be populated by JavaScript -->
+                                    </datalist>
                                 </div>
                             </div>
                         </div>
@@ -1074,6 +1110,152 @@
             document.getElementById('filterToggleIcon').classList.add('fa-chevron-down');
         } else {
             document.getElementById('mobileFilters').classList.add('hidden');
+        }
+    });
+
+    // Kecamatan data based on Kota/Kabupaten
+    const kecamatanData = {
+        'Kota Jambi': [
+            'Jambi Selatan',
+            'Jambi Timur',
+            'Pasar Jambi',
+            'Kota Baru',
+            'Telanaipura',
+            'Danau Sipin',
+            'Danau Teluk',
+            'Pelayangan',
+            'Paal Merah',
+            'Alam Barajo',
+            'Jelutung'
+        ],
+        'Kota Sungai Penuh': [
+            'Hamparan Rawang',
+            'Tanah Kampung',
+            'Kumun Debai',
+            'Sungai Bungkal',
+            'Sungai Penuh'
+        ],
+        'Kab. Batanghari': [
+            'Muara Bulian',
+            'Muara Tembesi',
+            'Bajubang',
+            'Pemayung',
+            'Batin XXIV'
+        ],
+        'Kab. Bungo': [
+            'Muara Bungo',
+            'Bathin III',
+            'Rantau Pandan',
+            'Pelepat',
+            'Jujuhan'
+        ],
+        'Kab. Kerinci': [
+            'Air Hangat',
+            'Gunung Kerinci',
+            'Siulak',
+            'Kayu Aro',
+            'Depati VII'
+        ],
+        'Kab. Merangin': [
+            'Bangko',
+            'Tabir',
+            'Pamenang',
+            'Margo Tabir',
+            'Sungai Manau'
+        ],
+        'Kab. Muaro Jambi': [
+            'Sekernan',
+            'Kumpeh',
+            'Maro Sebo',
+            'Mestong',
+            'Jambi Luar Kota'
+        ],
+        'Kab. Sarolangun': [
+            'Sarolangun',
+            'Batang Asai',
+            'Pauh',
+            'Pelawan',
+            'Air Hitam'
+        ],
+        'Kab. Tanjung Jabung Barat': [
+            'Kuala Tungkal',
+            'Betara',
+            'Merlung',
+            'Tebing Tinggi',
+            'Pengabuan'
+        ],
+        'Kab. Tanjung Jabung Timur': [
+            'Muara Sabak Timur',
+            'Nipah Panjang',
+            'Mendahara',
+            'Dendang',
+            'Sadu'
+        ],
+        'Kab. Tebo': [
+            'Muara Tebo',
+            'Tebo Tengah',
+            'Rimbo Bujang',
+            'Tebo Ilir',
+            'VII Koto'
+        ]
+    };
+
+    // Function to update Kecamatan options for mobile
+    function updateKecamatanMobile() {
+        const kotaInput = document.getElementById('kota-mobile');
+        const kecamatanDatalist = document.getElementById('kecamatan-list-mobile');
+        const kecamatanInput = document.getElementById('kecamatan-mobile');
+
+        const selectedKota = kotaInput.value;
+
+        // Clear existing options
+        kecamatanDatalist.innerHTML = '';
+        kecamatanInput.value = '';
+
+        // Add new options based on selected kota
+        if (kecamatanData[selectedKota]) {
+            kecamatanData[selectedKota].forEach(kecamatan => {
+                const option = document.createElement('option');
+                option.value = kecamatan;
+                kecamatanDatalist.appendChild(option);
+            });
+        }
+    }
+
+    // Function to update Kecamatan options for desktop
+    function updateKecamatanDesktop() {
+        const kotaInput = document.getElementById('kota-desktop');
+        const kecamatanDatalist = document.getElementById('kecamatan-list-desktop');
+        const kecamatanInput = document.getElementById('kecamatan-desktop');
+
+        const selectedKota = kotaInput.value;
+
+        // Clear existing options
+        kecamatanDatalist.innerHTML = '';
+        kecamatanInput.value = '';
+
+        // Add new options based on selected kota
+        if (kecamatanData[selectedKota]) {
+            kecamatanData[selectedKota].forEach(kecamatan => {
+                const option = document.createElement('option');
+                option.value = kecamatan;
+                kecamatanDatalist.appendChild(option);
+            });
+        }
+    }
+
+    // Initialize kecamatan options on page load if kota is already selected
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check if kota is already set (from form request)
+        const kotaMobile = document.getElementById('kota-mobile');
+        const kotaDesktop = document.getElementById('kota-desktop');
+
+        if (kotaMobile && kotaMobile.value) {
+            updateKecamatanMobile();
+        }
+
+        if (kotaDesktop && kotaDesktop.value) {
+            updateKecamatanDesktop();
         }
     });
 </script>
