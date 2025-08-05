@@ -43,16 +43,27 @@
             background: white;
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            padding: 24px;
-            margin-bottom: 24px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+        @media (min-width: 640px) {
+            .form-section {
+                padding: 24px;
+                margin-bottom: 24px;
+            }
         }
         .form-input {
             width: 100%;
-            padding: 12px 16px;
+            padding: 10px 14px;
             border: 2px solid #e5e7eb;
             border-radius: 8px;
             font-size: 14px;
             transition: all 0.2s ease;
+        }
+        @media (min-width: 640px) {
+            .form-input {
+                padding: 12px 16px;
+            }
         }
         .form-input:focus {
             outline: none;
@@ -63,8 +74,14 @@
             display: block;
             font-weight: 600;
             color: #374151;
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+        @media (min-width: 640px) {
+            .form-label {
+                margin-bottom: 8px;
+                font-size: 14px;
+            }
         }
         .btn-primary {
             background: #3b82f6;
@@ -216,58 +233,65 @@
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50" x-data="{ mobileMenuOpen: false }">
     <div style="position:fixed;z-index:0;top:0;left:0;width:100vw;height:100vh;background:url('/images/jalan%20setapak%20gang%20rumah%20yang%20syahdu.jpg') center center/cover no-repeat;filter:blur(8px);opacity:0.5;"></div>
         <nav class="border-b border-gray-100 sticky top-0 z-10" style="background: linear-gradient(135deg, #0f766e 0%, #06b6d4 100%);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center">
                     <a href="{{ route('home') }}">
-                        <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-12 w-auto mr-4 cursor-pointer hover:opacity-80 transition-opacity" style="max-height:48px;">
+                        <img src="/images/logo-ACR.png" alt="Logo ACR" class="h-10 sm:h-12 w-auto mr-2 sm:mr-4 cursor-pointer hover:opacity-80 transition-opacity" style="max-height:48px;">
                     </a>
                     <div class="flex">
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <div class="hidden space-x-4 sm:space-x-8 sm:-my-px sm:ms-6 lg:ms-10 sm:flex">
                             <a href="{{ route('dashboard') }}" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-white hover:border-white hover:text-white focus:outline-none transition duration-150 ease-in-out">
                                 Admin Dashboard
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
+
+                <!-- Mobile menu button -->
+                <div class="sm:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" type="button" class="text-white hover:text-gray-200 focus:outline-none focus:text-gray-200 p-2">
+                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                            <path :class="{'hidden': mobileMenuOpen, 'inline-flex': !mobileMenuOpen }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                            <path :class="{'hidden': !mobileMenuOpen, 'inline-flex': mobileMenuOpen }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="hidden sm:flex items-center space-x-4">
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
-                        <button type="submit" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center space-x-2">
+                        <button type="submit" class="bg-white bg-opacity-20 hover:bg-opacity-30 text-white px-3 sm:px-4 py-2 rounded-lg font-medium transition-all duration-300 flex items-center space-x-2 text-sm">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
                             </svg>
-                            <span>Logout</span>
+                            <span class="hidden sm:inline">Logout</span>
                         </button>
                     </form>
                 </div>
             </div>
         </div>
-        <!-- Responsive Navigation Menu -->
-        <div id="mobile-menu" class="hidden sm:hidden">
-            <div class="pt-2 pb-3 space-y-1">
-                <a href="{{ route('dashboard') }}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:border-green-600 hover:text-green-700 focus:outline-none transition duration-150 ease-in-out">Admin Dashboard</a>
-            </div>
-            <div class="pt-4 pb-1 border-t border-gray-200">
-                <div class="px-4">
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name ?? 'Admin User' }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email ?? '' }}</div>
-                </div>
-                <div class="mt-3 space-y-1">
-                    <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log Out</button>
-                    </form>
-                </div>
+
+        <!-- Mobile menu -->
+        <div :class="{'block': mobileMenuOpen, 'hidden': !mobileMenuOpen}" class="hidden sm:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-teal-800 bg-opacity-50">
+                <a href="{{ route('dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-200 hover:bg-white hover:bg-opacity-10">
+                    Admin Dashboard
+                </a>
+                <form method="POST" action="{{ route('logout') }}" class="block">
+                    @csrf
+                    <button type="submit" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-gray-200 hover:bg-white hover:bg-opacity-10">
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </nav>
-    <div class="min-h-screen py-8" style="position:relative;z-index:1;">
-        <div class="max-w-4xl mx-auto px-4">
+    <div class="min-h-screen py-4 sm:py-8" style="position:relative;z-index:1;">
+        <div class="max-w-4xl mx-auto px-3 sm:px-4">
             <form action="{{ route('admin.properties.storeStep2', $property->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Upload Gambar -->
