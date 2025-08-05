@@ -104,7 +104,7 @@
             background: white;
             border-radius: 6px;
         }
-        
+
         /* Mobile-specific styles */
         @media (max-width: 640px) {
             .property-card:hover {
@@ -115,12 +115,12 @@
                 transform: none;
             }
         }
-        
+
         /* Mobile filter transitions */
         .transition-transform {
             transition: transform 0.3s ease;
         }
-        
+
         .rotate-180 {
             transform: rotate(180deg);
         }
@@ -180,12 +180,10 @@
 
     <!-- Search and Filter Section -->
     <form method="GET" action="{{ route('search') }}">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 mb-8">
+        <div class="w-full mb-8">
 
-            <!-- Sidebar Filters -->
-            <div class="lg:col-span-1 space-y-4 lg:space-y-6">
-                <!-- Mobile Collapsible Filters -->
-                <div class="lg:hidden space-y-3">
+            <!-- Mobile Filters - Only show on mobile -->
+            <div class="lg:hidden space-y-3 mb-6 max-w-6xl mx-auto">
                     <!-- Kategori Filter -->
                     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
                         <button type="button" onclick="toggleFilter('kategori')" class="w-full px-4 py-3 text-left text-sm font-medium text-gray-800 hover:bg-gray-50 flex items-center justify-between">
@@ -336,13 +334,12 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Main Content -->
-            <div class="lg:col-span-3">
+            <!-- Main Content Area -->
+            <div class="w-full">
                 <!-- Search Bar and Buttons -->
-                <div class="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-6 filter-card">
+                <div class="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-6 filter-card max-w-6xl mx-auto">
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-4">
                         <div class="flex-1 min-w-0 relative">
                             <i class="fas fa-search absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm md:text-base"></i>
@@ -366,7 +363,7 @@
 
                 <!-- Desktop Filter Sections -->
                 <div class="hidden lg:block">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mb-6 max-w-6xl mx-auto">
                         <!-- Kategori Lot -->
                         <div class="gradient-border filter-card">
                             <div class="gradient-border-inner p-5">
@@ -567,7 +564,7 @@
     </form>
 
     <!-- Results Section -->
-    <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+    <div class="bg-white rounded-xl shadow-sm p-6 mb-6 max-w-6xl mx-auto">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold text-gray-800 flex items-center">
                 <i class="fas fa-list mr-2 text-blue-600"></i>
@@ -581,7 +578,7 @@
     </div>
 
     <!-- Property Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8 max-w-6xl mx-auto">
         @forelse($query as $property)
             <a href="{{ route('properties.show', $property->id) }}" class="bg-white rounded-xl shadow-sm overflow-hidden property-card">
                 <div class="w-full h-32 sm:h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden">
