@@ -568,6 +568,132 @@
                 </div>
             </section>
 
+            <!-- Tata Cara Mengikuti Lelang E-Auction Section -->
+            <section class="mb-12 sm:mb-16 animate-slide-up">
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl sm:rounded-3xl shadow-lg border border-blue-200 p-6 sm:p-8 md:p-12 max-w-5xl mx-auto">
+                    <h2 class="text-lg sm:text-2xl md:text-3xl font-bold text-blue-900 mb-3 sm:mb-4 text-center adlam-heading">
+                        TATA CARA MENGIKUTI LELANG E-AUCTION
+                    </h2>
+                    <div class="text-center mb-6 sm:mb-8">
+                        <a href="https://lelang.go.id/" target="_blank" rel="noopener noreferrer" class="group inline-block">
+                            <div class="bg-gradient-to-r from-blue-400 to-indigo-500 hover:from-blue-500 hover:to-indigo-600 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg border-2 border-white border-opacity-30 inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 hover:scale-105 hover:shadow-xl btn-primary cursor-pointer">
+                                <div class="text-left">
+                                    <div class="text-xs sm:text-sm font-bold">LELANG.GO.ID</div>
+                                    <div class="text-xs opacity-90">Klik untuk mengakses</div>
+                                </div>
+                                <i class="fas fa-external-link-alt text-white text-xs opacity-70 group-hover:opacity-100 transition-opacity"></i>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <!-- Step 1: Sign In/Sign Up -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-user-plus text-blue-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Sign In/Sign Up</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Peminat registrasi di lelang.go.id</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Kode Aktivasi -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-purple-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-key text-purple-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Kode Aktivasi</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Peserta mendapatkan kode aktivasi</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Setor Jaminan -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-money-check text-green-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Setor Jaminan</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Setor uang jaminan lelang</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4: Pilih Objek -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-indigo-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-mouse-pointer text-indigo-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Pilih Objek</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Peserta memilih objek agunan lelang</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 5: Pemenang Lelang -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-trophy text-yellow-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Pemenang Lelang</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Pengumuman hasil lelang</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 6: Ambil Jaminan -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-gray-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-hand-holding-usd text-gray-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Ambil Jaminan</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Peserta datang ke KPKNL untuk mengambil uang jaminan (jika tidak menang)</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 7: Pelunasan -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-red-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-clock text-red-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Pelunasan</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Pelunasan maksimal H+5</div>
+                            </div>
+                        </div>
+
+                        <!-- Step 8: Terbit Risalah -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex flex-col items-center text-center">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-teal-100 rounded-full flex items-center justify-center mb-3 sm:mb-4">
+                                    <i class="fas fa-certificate text-teal-600 text-lg sm:text-xl"></i>
+                                </div>
+                                <div class="font-bold text-gray-900 mb-2 text-sm sm:text-base">Terbit Risalah</div>
+                                <div class="text-gray-600 text-xs sm:text-sm">Terbit risalah lelang & pemenang datang ke Bank untuk mengambil sertifikat</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Info -->
+                    <div class="mt-6 sm:mt-8 bg-blue-100 rounded-xl p-4 sm:p-6 border border-blue-300">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-blue-600 text-lg mt-1"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-blue-900 mb-2">Informasi Penting:</div>
+                                <div class="text-blue-800 text-sm">
+                                    Pastikan Anda mengikuti semua tahapan dengan benar untuk dapat berpartisipasi dalam lelang e-auction.
+                                    Untuk informasi lebih detail, kunjungi <a href="https://lelang.go.id/" target="_blank" class="font-semibold underline">lelang.go.id</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Alur Pasca Lelang Section -->
             <section class="mb-12 sm:mb-16 animate-slide-up">
                 <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl sm:rounded-3xl shadow-lg border border-orange-200 p-6 sm:p-8 md:p-12 max-w-5xl mx-auto">
@@ -910,6 +1036,39 @@
                 menuIcon.classList.remove('fa-times');
                 menuIcon.classList.add('fa-bars');
             }
+        });
+
+        // Enhanced link functionality for lelang.go.id
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click feedback for lelang.go.id link
+            const lelangLinks = document.querySelectorAll('a[href="https://lelang.go.id/"]');
+            lelangLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Add visual feedback
+                    const button = this.querySelector('div');
+                    if (button) {
+                        button.style.transform = 'scale(0.95)';
+                        setTimeout(() => {
+                            button.style.transform = '';
+                        }, 150);
+                    }
+
+                    // Optional: Add console log for debugging
+                    console.log('Opening lelang.go.id in new tab');
+
+                    // The link will open naturally due to target="_blank"
+                    // No need to prevent default or manually open
+                });
+
+                // Ensure proper cursor and accessibility
+                link.style.cursor = 'pointer';
+                if (!link.hasAttribute('role')) {
+                    link.setAttribute('role', 'button');
+                }
+                if (!link.hasAttribute('aria-label')) {
+                    link.setAttribute('aria-label', 'Buka website lelang.go.id di tab baru');
+                }
+            });
         });
     </script>
 </body>
