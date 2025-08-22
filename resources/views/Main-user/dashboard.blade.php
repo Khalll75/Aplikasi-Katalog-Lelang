@@ -568,130 +568,100 @@
                 </div>
             </section>
 
-            <!-- Tata Cara Mengikuti Lelang E-Auction Section -->
+            <!-- Alur Pasca Lelang Section -->
             <section class="mb-12 sm:mb-16 animate-slide-up">
                 <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-2xl sm:rounded-3xl shadow-lg border border-orange-200 p-6 sm:p-8 md:p-12 max-w-5xl mx-auto">
                     <h2 class="text-lg sm:text-2xl md:text-3xl font-bold text-orange-900 mb-3 sm:mb-4 text-center adlam-heading">
-                        TATA CARA MENGIKUTI LELANG E-AUCTION
+                        ALUR PASCA LELANG
                     </h2>
                     <div class="text-center mb-6 sm:mb-8">
-                        <a href="https://lelang.go.id/" target="_blank" rel="noopener noreferrer" class="group">
-                            <div class="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg border-2 border-white border-opacity-30 inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 hover:scale-105 hover:shadow-xl btn-primary">
-                                <div class="text-left">
-                                    <div class="text-xs sm:text-sm font-bold">LELANG.GO.ID</div>
-                                </div>
-                                <i class="fas fa-external-link-alt text-white text-xs opacity-70 group-hover:opacity-100 transition-opacity"></i>
-                            </div>
-                        </a>
+                        <div class="bg-gradient-to-r from-orange-400 to-red-500 text-white px-4 sm:px-8 py-2 sm:py-3 rounded-full shadow-lg border-2 border-white border-opacity-30 inline-flex items-center gap-2 sm:gap-3">
+                            <i class="fas fa-gavel text-white text-xs sm:text-sm"></i>
+                            <div class="text-xs sm:text-sm font-bold">Langkah-langkah setelah memenangkan lelang</div>
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
-                        <!-- Left column: Steps 1, 3, 5, 7 -->
-                        <div class="space-y-4 sm:space-y-6">
-                            <!-- Step 1 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                        <!-- Step 1: Pelunasan -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex items-start space-x-3 sm:space-x-4">
                                 <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-user-plus text-blue-600 text-sm sm:text-base"></i>
+                                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-red-100 rounded-full flex items-center justify-center step-number">
+                                        <span class="text-red-600 font-bold text-lg sm:text-xl">1</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Sign in/Sign Up</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Peminat registrasi di lelang.go.id</div>
-                                </div>
-                            </div>
-
-                            <!-- Step 3 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-money-check text-green-600 text-sm sm:text-base"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Setor Jaminan</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Setor uang jaminan lelang</div>
-                                </div>
-                            </div>
-
-                            <!-- Step 5 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-trophy text-yellow-600 text-sm sm:text-base"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Pemenang Lelang</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Pengumuman hasil lelang</div>
-                                </div>
-                            </div>
-
-                            <!-- Step 7 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-red-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-clock text-red-600 text-sm sm:text-base"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Pelunasan</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Pelunasan maksimal H+5</div>
+                                <div class="flex-1">
+                                    <div class="font-bold text-gray-900 mb-2 text-base sm:text-lg">PELUNASAN</div>
+                                    <div class="text-gray-600 text-sm sm:text-base">Melakukan pelunasan pembayaran sesuai dengan hasil lelang yang telah dimenangkan</div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Right column: Steps 2, 4, 6, 8 -->
-                        <div class="space-y-4 sm:space-y-6">
-                            <!-- Step 2 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
+                        <!-- Step 2: Pengambilan Kuitansi -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex items-start space-x-3 sm:space-x-4">
                                 <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-key text-purple-600 text-sm sm:text-base"></i>
+                                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-blue-100 rounded-full flex items-center justify-center step-number">
+                                        <span class="text-blue-600 font-bold text-lg sm:text-xl">2</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Kode Aktivasi</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Peserta mendapatkan kode aktivasi</div>
+                                <div class="flex-1">
+                                    <div class="font-bold text-gray-900 mb-2 text-base sm:text-lg">PENGAMBILAN KUITANSI DI KPKNL JAMBI</div>
+                                    <div class="text-gray-600 text-sm sm:text-base">Mengambil kuitansi pembayaran di kantor KPKNL Jambi sebagai bukti pelunasan</div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Step 4 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
+                        <!-- Step 3: Pembayaran BPHTB -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex items-start space-x-3 sm:space-x-4">
                                 <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-indigo-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-mouse-pointer text-indigo-600 text-sm sm:text-base"></i>
+                                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-green-100 rounded-full flex items-center justify-center step-number">
+                                        <span class="text-green-600 font-bold text-lg sm:text-xl">3</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Pilih Objek</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Peserta memilih objek agunan lelang</div>
+                                <div class="flex-1">
+                                    <div class="font-bold text-gray-900 mb-2 text-base sm:text-lg">PEMBAYARAN BPHTB DI DISPENDA SETEMPAT</div>
+                                    <div class="text-gray-600 text-sm sm:text-base mb-2">(UNTUK TANAH DAN BANGUNAN)</div>
+                                    <div class="text-gray-600 text-sm sm:text-base">Melakukan pembayaran Bea Perolehan Hak atas Tanah dan Bangunan di Dinas Pendapatan Daerah setempat</div>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Step 6 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
+                        <!-- Step 4: Mengajukan Kutipan Risalah -->
+                        <div class="step-item bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+                            <div class="flex items-start space-x-3 sm:space-x-4">
                                 <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-gray-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-hand-holding-usd text-gray-600 text-sm sm:text-base"></i>
+                                    <div class="w-10 h-10 sm:w-14 sm:h-14 bg-purple-100 rounded-full flex items-center justify-center step-number">
+                                        <span class="text-purple-600 font-bold text-lg sm:text-xl">4</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Ambil Jaminan</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Peserta datang ke KPKNL untuk mengambil uang jaminan (jika tidak menang)</div>
+                                <div class="flex-1">
+                                    <div class="font-bold text-gray-900 mb-2 text-base sm:text-lg">MENGAJUKAN KUTIPAN RISALAH LELANG DI KPKNL JAMBI</div>
+                                    <div class="text-gray-600 text-sm sm:text-base mb-3"><strong>DENGAN SYARAT:</strong></div>
+                                    <ul class="text-gray-600 text-xs sm:text-sm space-y-1 list-disc list-inside pl-4">
+                                        <li>Fotocopy kuitansi</li>
+                                        <li>Fotocopy KTP pemberi & penerima (jika dikuasakan)</li>
+                                        <li>Bukti pembayaran BPHTB (untuk tanah dan bangunan)</li>
+                                        <li>Meterai 10,000</li>
+                                        <li>Surat kuasa (jika dikuasakan) untuk tanah dan bangunan dilegalisir oleh notaris</li>
+                                    </ul>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <!-- Step 8 -->
-                            <div class="step-item flex items-start space-x-3 sm:space-x-4">
-                                <div class="flex-shrink-0">
-                                    <div class="w-8 h-8 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                        <i class="fas fa-certificate text-green-600 text-sm sm:text-base"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="font-semibold text-gray-900 mb-1 text-sm sm:text-base">Terbit Risalah</div>
-                                    <div class="text-gray-600 text-xs sm:text-sm">Terbit risalah lelang & pemenang datang ke Bank untuk mengambil sertifikat</div>
+                    <!-- Additional Info -->
+                    <div class="mt-6 sm:mt-8 bg-orange-100 rounded-xl p-4 sm:p-6 border border-orange-300">
+                        <div class="flex items-start space-x-3">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-info-circle text-orange-600 text-lg mt-1"></i>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-orange-900 mb-2">Catatan Penting:</div>
+                                <div class="text-orange-800 text-sm">
+                                    Pastikan semua dokumen lengkap dan sesuai persyaratan untuk memperlancar proses pengurusan kutipan risalah lelang.
+                                    Untuk informasi lebih lanjut, silakan hubungi KPKNL Jambi.
                                 </div>
                             </div>
                         </div>
