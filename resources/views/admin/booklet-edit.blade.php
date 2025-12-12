@@ -1,7 +1,56 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Booklet Download</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
-@section('content')
-<div class="container mx-auto px-4 py-8">
+    @if(file_exists(public_path('build/manifest.json')))
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <script src="https://cdn.tailwindcss.com"></script>
+    @endif
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        input:checked ~ .dot {
+            transform: translateX(100%);
+            background-color: #dc2626;
+        }
+        input:checked ~ .block {
+            background-color: #fca5a5;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-red-900 to-red-800 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <a href="{{ route('dashboard') }}" class="text-xl font-bold hover:text-red-200 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Admin Panel
+                </a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm">{{ Auth::user()->name ?? 'Admin' }}</span>
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="text-sm hover:text-red-200 transition-colors">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto px-4 py-8">
     <div class="max-w-3xl mx-auto">
         <!-- Header -->
         <div class="mb-6">
@@ -130,16 +179,6 @@
     </div>
 </div>
 
-<style>
-    input:checked ~ .dot {
-        transform: translateX(100%);
-        background-color: #dc2626;
-    }
-    input:checked ~ div {
-        background-color: #fca5a5;
-    }
-</style>
-
 <script>
     // Live preview update
     document.getElementById('title').addEventListener('input', function() {
@@ -150,4 +189,5 @@
         document.getElementById('preview-description').textContent = this.value || 'Agustus 2025 - Klik untuk download';
     });
 </script>
-@endsection
+</body>
+</html>
