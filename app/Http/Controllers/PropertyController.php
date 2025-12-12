@@ -24,7 +24,11 @@ class PropertyController extends Controller
         $properties = Property::with(['images', 'lelangSchedule', 'pointsOfInterest', 'contactPersons'])
             ->orderByDesc('id')
             ->paginate(10);
-        return view('Main-user.dashboard', compact('properties'));
+
+        // Get booklet data from JSON
+        $booklet = $this->getBookletData();
+
+        return view('Main-user.dashboard', compact('properties', 'booklet'));
     }
 
     /**
@@ -523,6 +527,69 @@ class PropertyController extends Controller
         $lokasiLelangList = \App\Models\LelangSchedule::query()->distinct()->pluck('lokasi');
         // tampilkan form edit property
         return view('admin.property-edit', compact('property', 'contactPersonNames', 'contactPersonData', 'poiList', 'lokasiLelangList'));
+    }
+
+    /**
+     * Get booklet data from JSON file
+     */
+    private function getBookletData()
+    {
+        $filePath = storage_path('app/ctas/booklet.json');
+
+        if (!file_exists($filePath)) {
+            // Return default data if file doesn't exist
+            return [
+                'active' => true,
+                'title' => '📚 Booklet Properti',
+                'description' => 'Agustus 2025 - Klik untuk download',
+                'url' => 'https://bit.ly/BOOKLET_PROPERTY_AGUSTUS_2025'
+            ];
+        }
+
+        $json = file_get_contents($filePath);
+        return json_decode($json, true) ?? [];
+    }
+
+    /**
+     * Save booklet data to JSON file
+     */
+    private function saveBookletData($data)
+    {
+        $filePath = storage_path('app/ctas/booklet.json');
+        $directory = dirname($filePath);
+
+        if (!is_dir($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        return file_put_contents($filePath, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+    }
+
+    /**
+     * Show booklet edit form (Admin)
+     */
+    public function editBooklet()
+    {
+        $booklet = $this->getBookletData();
+        return view('admin.booklet-edit', compact('booklet'));
+    }
+
+    /**
+     * Update booklet data (Admin)
+     */
+    public function updateBooklet(Request $request)
+    {
+        $validated = $request->validate([
+            'active' => 'required|boolean',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'url' => 'required|url|max:500',
+        ]);
+
+        $this->saveBookletData($validated);
+
+        return redirect()->route('admin.booklet.edit')
+            ->with('success', 'Booklet berhasil diperbarui!');
     }
 
 }

@@ -343,20 +343,22 @@
                 </form>
 
                 <!-- Enhanced Link Box -->
+                @if(isset($booklet) && $booklet['active'])
                 <div class="mt-4 sm:mt-6 px-4 sm:px-0">
-                    <a href="https://bit.ly/BOOKLET_PROPERTY_AGUSTUS_2025" target="_blank" rel="noopener noreferrer" class="group">
+                    <a href="{{ $booklet['url'] }}" target="_blank" rel="noopener noreferrer" class="group">
                         <div class="bg-gradient-to-r from-red-700 to-orange-600 hover:from-red-800 hover:to-orange-700 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-full shadow-lg border-2 border-white border-opacity-30 inline-flex items-center gap-2 sm:gap-3 transition-all duration-300 hover:scale-105 hover:shadow-xl btn-primary">
                             <div class="bg-white bg-opacity-90 rounded-full p-1.5 sm:p-2">
                                 <i class="fas fa-download text-red-800 text-xs sm:text-sm"></i>
                             </div>
                             <div class="text-left">
-                                <div class="text-xs sm:text-sm font-bold">📚 Booklet Properti</div>
-                                <div class="text-xs opacity-90">Agustus 2025 - Klik untuk download</div>
+                                <div class="text-xs sm:text-sm font-bold">{{ $booklet['title'] }}</div>
+                                <div class="text-xs opacity-90">{{ $booklet['description'] }}</div>
                             </div>
                             <i class="fas fa-external-link-alt text-white text-xs opacity-70 group-hover:opacity-100 transition-opacity"></i>
                         </div>
                     </a>
                 </div>
+                @endif
             </div>
         </section>
 
